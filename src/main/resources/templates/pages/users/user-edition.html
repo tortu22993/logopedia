@@ -176,36 +176,7 @@
                                                                                         <small class="invalid-feedback" th:if="${#fields.hasErrors('duties')}" th:errors="*{duties}"></small>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="col-xs-12 col-sm-6">
-                                                                                    <div class="form-group">
-                                                                                        <label for="divisionId" class="form-label" title="División">División</label>
-                                                                                        <select class="form-select" th:field="*{divisionId}" th:errorclass="${'form-control is-invalid'}" data-choices>
-                                                                                            <option value="">--- Seleccionar---</option>
-                                                                                            <option th:each="division : ${divisions}" th:value="${division.id}" th:text="${division.name}"></option>
-                                                                                        </select>
-                                                                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('divisionId')}" th:errors="*{divisionId}"></small>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-xs-12 col-sm-6">
-                                                                                    <div class="form-group">
-                                                                                        <label for="departmentId" class="form-label" title="Departamento">Departamento</label>
-                                                                                        <select class="form-select" th:field="*{departmentId}" th:errorclass="${'form-control is-invalid'}" data-choices>
-                                                                                            <option value="">--- Seleccionar---</option>
-                                                                                            <option th:each="department : ${departments}" th:value="${department.id}" th:text="${department.name}"></option>
-                                                                                        </select>
-                                                                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('departmentId')}" th:errors="*{departmentId}"></small>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-xs-12 col-sm-6">
-                                                                                    <div class="form-group">
-                                                                                        <label for="teamId" class="form-label" title="Equipo">Equipo</label>
-                                                                                        <select class="form-select" th:field="*{teamId}" th:errorclass="${'form-control is-invalid'}" data-choices>
-                                                                                            <option value="">--- Seleccionar---</option>
-                                                                                            <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
-                                                                                        </select>
-                                                                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('teamId')}" th:errors="*{teamId}"></small>
-                                                                                    </div>
-                                                                                </div>
+                                                                               
                                                                             </div>
                                                                         </div>
                                                                     </div>

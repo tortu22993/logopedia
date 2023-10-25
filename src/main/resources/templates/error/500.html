@@ -1,0 +1,7 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <th:block th:insert="~{fragments/common :: head}"></th:block>
+    <body>
+        <th:block th:insert="~{fragments/error :: error(httpStatusCode = 500, title = '¡Error desconocido!', message = '¡Pero relájate! Nuestro gato está aquí para tocar algo de música.')}"></th:block>
+    </body>
+</html>

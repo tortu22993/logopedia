@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head></head>
+    <body>
+        <main th:fragment="error(httpStatusCode, title, message)" id="top" class="main">
+            <div class="container-fluid p-0">
+                <div class="px-3">
+                    <div class="row min-vh-100 flex-center p-5">
+                        <div class="col-12 col-xl-10 col-xxl-8">
+                            <div class="row justify-content-center g-5">
+                                <div class="col-12 col-lg-6 text-center order-lg-1">
+                                    <img class="img-fluid w-md-50 w-lg-100 d-dark-none" th:src="@{'/resources/images/spot-illustrations/' + ${httpStatusCode} + '-illustration.png'}" alt="Imagen de error" width="540">
+                                    <img class="img-fluid w-md-50 w-lg-100 d-light-none" th:src="@{'/resources/images/spot-illustrations/dark_' + ${httpStatusCode} + '-illustration.png'}" alt="Imagen de error" width="540">
+                                </div>
+                                <div class="col-12 col-lg-6 text-center text-lg-start">
+                                    <img class="img-fluid mb-6 w-50 w-lg-75 d-dark-none" th:src="@{'/resources/images/spot-illustrations/' + ${httpStatusCode} + '.png'}" alt="Error">
+                                    <img class="img-fluid mb-6 w-50 w-lg-75 d-light-none" th:src="@{'/resources/images/spot-illustrations/dark_' + ${httpStatusCode} + '.png'}" alt="Error">
+                                    <h2 class="text-800 fw-bolder mb-3" th:text="${title}"></h2>
+                                    <p class="text-900 mb-5" th:text="${message}"></p>
+                                    <a sec:authorize="isAuthenticated()" th:href="@{/my-apps}" class="btn btn-lg btn-primary" title="Ir a la página de inicio">Ir a la página de inicio</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>
