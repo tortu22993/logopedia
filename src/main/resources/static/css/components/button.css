@@ -1,0 +1,48 @@
+/*
+ * Fichero de estilos para botones.
+ *
+ * @author Enrique Escalante
+ */
+button, .btn {
+    min-width: max-content !important;
+}
+
+.btn-close {
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    -ms-box-shadow: none !important;
+    -o-box-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.dark .btn-close {
+    -webkit-filter: invert(0);
+    -moz-filter: invert(0);
+    -ms-filter: invert(0);
+    -o-filter: invert(0);
+    filter: invert(0);
+}
+
+.button-collapse-plus-info.collapsed > .fa-plus {
+    display: block;
+}
+
+.button-collapse-plus-info:not(.collapsed) > .fa-plus {
+    display: none;
+}
+
+.button-collapse-plus-info.collapsed > .fa-minus {
+    display: none;
+}
+
+.button-collapse-plus-info:not(.collapsed) > .fa-minus {
+    display: block;
+}
+
+.button-collapse-plus-info {
+    padding: .3rem 5px;
+    padding-top: 0;
+    margin-bottom: 0;
+    line-height: 1.49;
+    font-size: 0.875rem !important;
+}

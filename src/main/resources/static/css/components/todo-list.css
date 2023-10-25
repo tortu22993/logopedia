@@ -1,0 +1,9 @@
+/*
+ * Estilos relativos al componente de lista de tareas.
+ *
+ * @author Enrique Escalante
+ */
+.todo-list .todo-completed {
+    color: var(--phoenix-gray-500);
+    text-decoration: line-through;
+}

@@ -1,0 +1,19 @@
+/*
+ * Estilos relativos al componente de tabla y elementos hijos.
+ *
+ * @author Enrique Escalante
+ */
+.table-responsive.scrollbar-overlay {
+    padding-bottom: .5rem;
+}
+
+.table tbody .long-column {
+    max-width: 400px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.th-action-column {
+    width: 10%;
+}

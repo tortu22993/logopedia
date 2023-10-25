@@ -1,0 +1,8 @@
+/*
+ * Contiene estilos personalizados para el plugin Simplebar.js.
+ *
+ * @author Enrique Escalante
+ */
+.dark .simplebar-scrollbar:before {
+    background: var(--phoenix-600);
+}

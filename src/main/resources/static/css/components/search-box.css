@@ -1,0 +1,28 @@
+/*
+ * Estilos relativos al componente de buscador (buscador del
+ * menú de la barra superior).
+ *
+ * @author Enrique Escalante
+ */
+#globalSearch {
+    width: 25rem;
+}
+
+.search-box:not(#globalSearch) {
+    max-width: 25rem;
+}
+
+.dark #globalSearch .btn-close {
+    -webkit-filter: invert(1);
+    -moz-filter: invert(1);
+    -ms-filter: invert(1);
+    -o-filter: invert(1);
+    filter: invert(1);
+}
+
+@media(max-width: 767px) {
+    .search-box:not(#globalSearch) {
+        width: auto;
+        max-width: unset;
+    }
+}

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+		<th:block th:insert="~{fragments/common :: head-commons}"></th:block>
+		<script th:src="@{/pages/users/user-list.js}" type="module"></script>
+	</head>
+    <body>
+        <main id="top" class="main">
+            <div class="container-fluid px-0">
+                <th:block th:insert="~{fragments/menu-asides :: simple-left-vertical-menu}"></th:block>
+                <th:block th:insert="~{fragments/menu-headers :: simple-menu-header}"></th:block>
+                <div class="content" th:with="hasUsers = ${not #lists.isEmpty(users)}">
+                    <th:block th:insert="~{fragments/common :: breadcrumb}"></th:block>
+                    <div class="mt-0 mt-md-3 mb-9">
+                        <div class="row g-2 mb-4">
+                            <div class="col-auto">
+                                <h4 class="mb-0" th:title="${title}">
+                                    <i class="fa fa-users text-primary me-2"></i>
+                                    <span th:text="${title}"></span>
+                                </h4>
+                            </div>
+                        </div>
+                        <div th:if="${not hasUsers}" class="position-absolute top-50 start-50 translate-middle">
+                            <p class="mb-0" title="No hay elementos para mostrar.">No hay elementos para mostrar.</p>
+                        </div>
+                        <div id="users" data-list th:with="formFiltersId = 'formFilters'">
+                            <header class="mb-2">
+                                <div th:class="'d-flex align-items-center flex-column flex-sm-row gap-3 ' + ${hasUsers ? 'justify-content-between' : 'justify-content-end'}">
+                                    <div th:if="${hasUsers}" class="search-box flex-grow-1 w-100 w-sm-auto">
+                                        <form class="position-relative" data-bs-toggle="search" data-bs-display="static">
+                                            <input type="search" class="form-control form-control-sm search-input search" placeholder="Buscar en esta lista..." aria-label="Buscar">
+                                            <i class="fa fa-magnifying-glass search-box-icon"></i>
+                                        </form>
+                                    </div>
+                                    <div class="d-grid d-sm-flex gap-2 w-100 w-sm-auto">
+                                        <button id="btnFilters" type="button" class="btn btn-sm btn-phoenix-secondary d-none px-5" data-bs-toggle="collapse" data-bs-target="#filters" th:aria-expanded="${userListDtoFilter.openedFiltersSection}" aria-controls="filters" title="Filtros">
+                                            <i class="fa fa-filter me-2"></i>
+                                            Filtros
+                                        </button>
+                                        <a sec:authorize="hasAnyRole('ROLE_MASTER', 'ROLE_ADMIN')" th:href="@{/users/action/new}" class="btn btn-sm btn-primary px-5" role="button" title="Nuevo">
+                                            <i class="fa fa-plus me-2"></i>
+                                            Nuevo
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col">
+                                        <div id="filters" th:class="${userListDtoFilter.openedFiltersSection ? 'collapse show' : 'collapse'}">
+                                            <form th:id="${formFiltersId}" th:object="${userListDtoFilter}" th:action="@{/users}" method="get" class="border border-2 border-start-0 border-bottom-0 border-end-0 py-3">
+                                                <input type="hidden" th:field="*{openedFiltersSection}" data-clean-value="false">
+                                                
+                                                <div class="row gy-3">
+                                                    <div class="col-xs-12 col-sm-6 col-xl-3">
+                                                        <div class="form-group">
+                                                            <label for="fullName" class="form-label">Nombre</label>
+                                                            <input type="text" class="form-control" th:field="*{fullName}" data-clean-value>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6 col-xl-3">
+                                                        <div class="form-group">
+                                                            <label for="email" class="form-label">Correo electrónico</label>
+                                                            <input type="text" class="form-control" th:field="*{email}" data-clean-value>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6 col-xl-3">
+                                                        <div class="form-group">
+                                                            <label for="lockedAccount" class="form-label">Cuenta bloqueada</label>
+                                                            <select class="form-select" th:field="*{lockedAccount}" data-choices>
+                                                                <option value="">--- Seleccionar ---</option>
+                                                                <option value="true">Sí</option>
+                                                                <option value="false">No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6 col-xl-3">
+                                                        <div class="form-group">
+                                                            <label for="enabled" class="form-label">Habilitado</label>
+                                                            <select class="form-select" th:field="*{enabled}" data-choices>
+                                                                <option value="">--- Seleccionar ---</option>
+                                                                <option value="true">Sí</option>
+                                                                <option value="false">No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row justify-content-end mt-3">
+                                                    <div class="col-auto">
+                                                        <button id="btnClearFilters" type="button" class="btn btn-sm btn-phoenix-secondary" title="Limpiar">
+                                                            <i class="fa fa-eraser me-2"></i>
+                                                            Limpiar
+                                                        </button>
+                                                        <button type="submit" class="btn btn-sm btn-secondary" title="Buscar">
+                                                            <i class="fa fa-search me-2"></i>
+                                                            Buscar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </header>
+                            <div th:if="${hasUsers}" class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
+                                <div class="table-responsive scrollbar-overlay mx-n1 px-1">
+                                    <table class="table table-sm fs--1 mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="align-middle" scope="col"></th>
+                                                <th class="sort align-middle" scope="col" data-sort="name" title="NOMBRE">NOMBRE</th>
+                                                <th class="sort align-middle" scope="col" data-sort="email" title="CORREO ELECTRÓNICO">CORREO ELECTRÓNICO</th>
+                                                <th class="sort align-middle" scope="col" data-sort="jobPosition" title="PUESTO DE TRABAJO">PUESTO DE TRABAJO</th>
+                                                <th class="sort align-middle" scope="col" data-sort="lockedAccount" title="CUENTA BLOQUEADA">CUENTA BLOQUEADA</th>
+                                                <th class="sort align-middle" scope="col" data-sort="enabled" title="HABILITADO">HABILITADO</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="list" id="users-table-body">
+                                            <tr th:each="user : ${users}" class="position-static">
+                                                <td>
+                                                    <div class="avatar avatar-l me-2" th:with="imageDescription = 'Foto de ' + ${user.fullName}" th:title="${imageDescription}">
+                                                        <img th:src="@{/resources/images/team/avatar-rounded.webp}" th:alt="${imageDescription}" class="rounded-circle" loading="lazy">
+                                                    </div>
+                                                </td>
+                                                <td class="name align-middle white-space-nowrap">
+                                                    <a th:href="@{/users/{username}(username = ${user.username})}" class="link-primary" th:text="${user.fullName}" th:title="${user.fullName}"></a>
+                                                </td>
+                                                <td class="email align-middle white-space-nowrap">
+                                                    <a th:href="'mailto:' + ${user.email}" class="link-primary" th:text="${user.email}" th:title="${user.email}"></a>
+                                                </td>
+                                                <td class="jobPosition align-middle white-space-nowrap" th:text="${user.jobPositionName}" th:title="${user.jobPositionName}"></td>
+                                                <td class="lockedAccount align-middle white-space-nowrap" th:with="lockedAccount = ${user.lockedAccount ? 'Sí' : 'No'}" th:text="${lockedAccount}" th:title="${lockedAccount}"></td>
+                                                <td class="enabled align-middle white-space-nowrap" th:with="enabled = ${user.enabled ? 'Sí' : 'No'}" th:text="${enabled}" th:title="${enabled}"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <th:block th:insert="~{fragments/tables :: table-pagination(page = ${page}, formId = ${formFiltersId})}"></th:block>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

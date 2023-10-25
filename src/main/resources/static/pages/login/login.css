@@ -1,0 +1,32 @@
+/*
+ * Estilos relativos a la pantalla de inicio de sesión.
+ *
+ * @author Enrique Escalante
+ */
+.login-wallpaper {
+    background-image: url(../../resources/images/bg/above-clouds-planet.png);
+}
+
+.login-wallpaper-content {
+    padding: 30px;
+}
+
+.form-control:not(.search-input),
+.form-select {
+    border: 1px solid var(--phoenix-input-border-color) !important;
+    border-radius: .375rem;
+    background-color: var(--phoenix-input-bg);
+}
+
+.form-control:not(.search-input):focus,
+.form-control-sm:not(.search-input):focus,
+.form-select:focus,
+.form-select-sm:focus {
+    box-shadow: none;
+    border-color: var(--phoenix-primary) !important;
+}
+
+.spinner-grow-sm {
+    --phoenix-spinner-width: 0.8rem;
+    --phoenix-spinner-height: 0.8rem;
+}

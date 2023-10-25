@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head></head>
+    <body>
+        <header th:fragment="simple-menu-header" class="navbar navbar-top fixed-top navbar-expand">
+            <div class="navbar-collapse collapse justify-content-between">
+                <div class="navbar-logo">
+                    <button class="btn navbar-toggle navbar-toggler-hamburger-icon hover-bg-transparent collapsed d-lg-none ps-0 pe-3"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#lateralMenu"
+                            aria-controls="lateralMenu"
+                            aria-expanded="false"
+                            aria-label="Menú de navegación">
+                        <span class="navbar-toggle-icon">
+                            <span class="toggle-line"></span>
+                        </span>    
+                    </button>
+                    <a th:href="@{/my-apps}" class="d-none d-sm-block navbar-brand me-0" title="Inicio">
+                        <img th:src="@{/resources/images/customers/Logopedia.png}" alt="LOGOPEDICUM" class="customer-logo-light"loading="lazy" title="Logo de LOGOPEDICUM" width="150">
+                        <img th:src="@{/resources/images/customers/Logopedia.png}" alt="LOGOPEDICUM" class="customer-logo-dark"loading="lazy" title="Logo de LOGOPEDICUM" width="150">
+                    </a>
+                </div>
+                <div id="globalSearch" class="search-box d-none d-lg-block">
+                    <form class="position-relative show" data-bs-toggle="search" data-bs-display="static">
+                        <input type="search" class="form-control form-control-sm rounded-pill search-input fuzzy-search" placeholder="Buscar..." aria-label="Buscar">
+                        <i class="fa fa-magnifying-glass search-box-icon"></i>
+                    </form>
+                    <div class="btn-close position-absolute end-0 top-50 translate-middle cursor-pointer shadow-none" data-bs-dismiss="search" title="Restablecer">
+                        <button class="btn btn-link btn-close-falcon p-0" aria-label="Restablecer" title="Restablecer"></button>
+                    </div>
+                </div>
+                <ul class="navbar-nav navbar-nav-icons flex-row">
+                    <li class="nav-item">
+                        <div id="themeToggler" class="theme-control-toggle fa-icon-wait px-2">
+                            <input class="form-check-input ms-0 theme-control-toggle-input" type="checkbox" data-theme-control="phoenixTheme" value="light" id="themeControlToggle">
+                            <label class="mb-0 theme-control-toggle-label theme-control-toggle-light" for="themeControlToggle" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Cambiar tema" data-bs-original-title="Cambiar tema">
+                                <i data-feather="moon"></i>
+                            </label>
+                            <label class="mb-0 theme-control-toggle-label theme-control-toggle-dark" for="themeControlToggle" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Cambiar tema" data-bs-original-title="Cambiar tema">
+                                <i data-feather="sun"></i>
+                            </label>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a id="navbarApps" href="#" class="nav-link" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Mis aplicaciones">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="2" cy="2" r="2" fill="currentColor"></circle>
+                                <circle cx="2" cy="8" r="2" fill="currentColor"></circle>
+                                <circle cx="2" cy="14" r="2" fill="currentColor"></circle>
+                                <circle cx="8" cy="8" r="2" fill="currentColor"></circle>
+                                <circle cx="8" cy="14" r="2" fill="currentColor"></circle>
+                                <circle cx="14" cy="8" r="2" fill="currentColor"></circle>
+                                <circle cx="14" cy="14" r="2" fill="currentColor"></circle>
+                                <circle cx="8" cy="2" r="2" fill="currentColor"></circle>
+                                <circle cx="14" cy="2" r="2" fill="currentColor"></circle>
+                            </svg>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-nide-dots shadow border border-300" aria-labelledby="navbarApps" data-bs-popper="static">
+                            <div class="card bg-white position-relative border-0">
+                                <div class="card-body pt-3 px-3 pb-0 overflow-auto scrollbar">
+                                    <div class="row justify-content-center align-items-center gx-0 gy-0">
+                                        <div class="col-4">
+                                            <a href="https://www.linkedin.com/in/enriqueescalante" target="_blank" role="link" class="d-block hover-bg-200 p-2 rounded-3 text-center text-decoration-none mb-3" title="Linkedin">
+                                                <img th:src="@{/resources/images/logos/linkedin.svg}" alt="Linkedin" class="navbar-application-selector-image" title="Logo de Linkedin" loading="lazy">
+                                                <p class="mb-0 text-black text-truncate fs--2 mt-1 pt-1">Linkedin</p>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a id="navbarUser" href="#" class="nav-link lh-1 pe-0" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Mi cuenta">
+                            <div class="avatar avatar-l">
+                                <img th:src="@{/resources/images/team/avatar-rounded.webp}" alt="Foto de mi perfil" class="rounded-circle" loading="lazy">
+                            </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow border border-300" aria-labelledby="navbarUser">
+                            <div class="card position-relative border-0">
+                                <div class="card-body p-0">
+                                    <div class="text-center pt-4 pb-3">
+                                        <div class="avatar avatar-xl">
+                                            <img th:src="@{/resources/images/team/avatar-rounded.webp}" alt="Foto de mi perfil" class="rounded-circle" loading="lazy">
+                                        </div>
+                                        <h6 class="mt-2 text-black" th:text="${#authentication.principal.fullName}" th:title="${#authentication.principal.fullName}"></h6>
+                                    </div>
+                                </div>
+                                <div class="overflow-auto scrollbar">
+                                    <ul class="nav d-flex flex-column mb-2 pb-1">
+                                        <li class="nav-item">
+                                            <a th:href="@{'/users/' + ${#authentication.principal.id}}" class="nav-link px-3" title="Perfil">
+                                                <i class="fa fa-user me-2 text-900"></i>
+                                                Perfil
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a th:href="@{/settings}" class="nav-link px-3 disabled" title="Ajustes y preferencias">
+                                                <i class="fa fa-gear me-2 text-900"></i>
+                                                Ajustes y preferencias
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a th:href="@{/help}" class="nav-link px-3 disabled" title="Ayuda">
+                                                <i class="fa fa-circle-question me-2 text-900"></i>
+                                                Ayuda
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="card-footer p-0 border-top">
+                                    <th:block sec:authorize="hasAnyRole('ROLE_MASTER', 'ROLE_ADMIN')">
+                                        <ul class="nav d-flex flex-column my-3">
+                                            <li class="nav-item">
+                                                <a href="#" class="nav-link px-3 disabled" role="button" title="Cambiar de empresa">
+                                                    <i class="fa fa-arrow-right-arrow-left me-2 text-900"></i>
+                                                    Cambiar de empresa
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <hr>
+                                    </th:block>
+                                    <div class="px-3 my-3">
+                                        <form th:action="@{/auth/logout}" method="post">
+                                            <button type="submit" class="btn btn-phoenix-secondary d-flex flex-center w-100" title="Cerrar sesión">
+                                                <i class="fa fa-arrow-right-from-bracket me-2"></i>
+                                                Cerrar sesión
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <th:block th:insert="~{fragments/feedback :: toast}"></th:block>
+        </header>
+    </body>
+</html>

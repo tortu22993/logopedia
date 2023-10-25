@@ -1,0 +1,31 @@
+/*
+ * Fichero de estilos globales que sobrescriben los estilos por defecto
+ * de la plantilla.
+ *
+ * @author Enrique Escalante
+ * @author Félix Molina
+ */
+
+.row:not([class *= "gx-"]) {
+    --phoenix-gutter-x: 1.5rem;
+}
+
+.btn-sm,
+.btn-group-sm > .btn,
+.google-map-control-btn .btn-group-sm > .zoomIn,
+.google-map-control-btn .btn-group-sm > .zoomOut,
+.tox .tox-dialog__footer .btn-group-sm > .tox-button:last-child,
+.tox .tox-dialog__footer .btn-group-sm > .tox-button--secondary,
+.tox .btn-group-sm > .tox-button-secondary,
+.tox .btn-group-sm > .tox-button,
+[data-list] .btn-group-sm > .page {
+    --phoenix-btn-font-size: 0.7rem;
+}
+
+.alert-danger {
+    --phoenix-alert-color: white;
+}
+
+.search-box {
+    width: auto;
+}

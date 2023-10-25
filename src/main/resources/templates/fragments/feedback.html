@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+	<head></head>
+	<body>
+		<div th:fragment="toast" th:if="${httpResponse != null}" class="d-flex position-fixed bottom-0 start-0 ms-3 mb-3">
+			<div th:class="'toast show py-0 align-items-center text-white border-0 bg-' + ${httpResponse.type}" th:role="${httpResponse.type == 'danger' ? 'alert' : 'status'}" data-bs-autohide="true" th:aria-live="${httpResponse.type == 'danger' ? 'assertive' : 'polite'}" aria-atomic="true">
+				<div class="d-flex align-items-center justify-content-between">
+					<div class="toast-body">
+						<i th:class="'me-2 fa fa-' + ${httpResponse.icon}"></i>
+                    	<span th:text="${httpResponse.message}"></span>
+					</div>
+					<button class="btn-close btn-close-white" type="button" data-bs-dismiss="toast" aria-label="Cerrar"></button>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

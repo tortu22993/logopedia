@@ -1,0 +1,8 @@
+/*
+ * Estilos relativos al componente de cards (tarjetas).
+ *
+ * @author Enrique Escalante
+ */
+.card:not(:has(.card-body)) .card-header {
+    border-bottom: none;
+}

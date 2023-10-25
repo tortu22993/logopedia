@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <!-- MANDATORY PLUGINS -->
+        <th:block th:fragment="necessary-plugins">
+            <th:block th:insert="~{fragments/plugins :: plugin-popper}"></th:block>
+            <th:block th:insert="~{fragments/plugins :: plugin-bootstrap}"></th:block>
+            <th:block th:insert="~{fragments/plugins :: plugin-anchorjs}"></th:block>
+            <th:block th:insert="~{fragments/plugins :: plugin-choices}"></th:block>
+            <th:block th:insert="~{fragments/plugins :: plugin-flatpickr}"></th:block>
+            <th:block th:insert="~{fragments/plugins :: plugin-font-awesome}"></th:block>
+            <th:block th:insert="~{fragments/plugins :: plugin-feather-icons}"></th:block>
+            <th:block th:insert="~{fragments/plugins :: plugin-lodash}"></th:block>
+            <th:block th:insert="~{fragments/plugins :: plugin-simplebar}"></th:block>
+            <th:block th:insert="~{fragments/plugins :: plugin-is}"></th:block>
+            <th:block th:insert="~{fragments/plugins :: plugin-sweet-alert-2}"></th:block>
+            <th:block th:insert="~{fragments/plugins :: plugin-autocomplete-js}"></th:block>
+            <th:block th:insert="~{fragments/plugins :: plugin-autocomplete-locations}"></th:block>
+        </th:block>
+
+        <!-- PHOENIX TEMPLATE -->
+        <th:block th:fragment="phoenix-template">
+            <script th:src="@{/js/theme/config.js}"></script>
+            <script th:src="@{/js/theme/phoenix.js}" defer></script>
+            <script th:src="@{/js/theme/mandatory.js}" type="module"></script>
+        </th:block>
+
+        <!-- ANCHOR JS -->
+        <th:block th:fragment="plugin-anchorjs">
+            <script th:src="@{/plugins/anchorjs/anchor.min.js}" defer></script>
+        </th:block>
+
+        <!-- AUTOCOMPLETE JS -->
+        <th:block th:fragment="plugin-autocomplete-js">
+            <link rel="stylesheet" th:href="@{/plugins/autoComplete.js/autocomplete.phoenix.css}">
+            <script th:src="@{/plugins/autoComplete.js/autoComplete.min.js}" defer></script>
+        </th:block>
+
+        <!-- AUTOCOMPLETE LOCATIONS -->
+        <th:block th:fragment="plugin-autocomplete-locations">
+            <script th:src="@{/plugins/autoCompleteLocations/autoCompleteLocations.js}" defer></script>
+            <link rel="stylesheet" th:href="@{/plugins/autoCompleteLocations/autocomplete-locations.min.css}">
+            <link rel="stylesheet" th:href="@{/plugins/autoCompleteLocations/autocomplete-locations.phoenix.css}">
+        </th:block>
+
+        <!-- BIGPICTURE -->
+        <th:block th:fragment="plugin-big-picture">
+            <script th:src="@{/plugins/bigpicture/BigPicture.js}" defer></script>
+        </th:block>
+
+        <!-- BOOTSTRAP -->
+        <th:block th:fragment="plugin-bootstrap">
+            <script th:src="@{/plugins/bootstrap/bootstrap.min.js}" defer></script>
+        </th:block>
+
+        <!-- CHART -->
+        <th:block th:fragment="plugin-chart">
+            <script th:src="@{/plugins/chart/chart.min.js}" defer></script>
+        </th:block>
+
+        <!-- CHOICES -->
+        <th:block th:fragment="plugin-choices">
+            <link rel="stylesheet" th:href="@{/plugins/choices/choices.min.css}">
+            <link rel="stylesheet" th:href="@{/plugins/choices/choices.phoenix.css}">
+            <script th:src="@{/plugins/choices/choices.min.js}" defer></script>
+            <script th:src="@{/plugins/choices/choices.phoenix.js}" type="module"></script>
+        </th:block>
+
+        <!-- COUNT UP -->
+        <th:block th:fragment="plugin-count-up">
+            <script th:src="@{/plugins/countup/countUp.umd.js}" defer></script>
+        </th:block>
+
+        <!-- DAY JS -->
+        <th:block th:fragment="plugin-dayjs">
+            <script th:src="@{/plugins/dayjs/dayjs.min.js}" defer></script>
+        </th:block>
+    
+        <!-- DHTMLX-GANTT -->
+        <th:block th:fragment="plugin-dhtmlx-gantt">
+            <link rel="stylesheet" th:href="@{/plugins/dhtmlx-gantt/dhtmlxgantt.css}">
+            <script th:src="@{/plugins/dhtmlx-gantt/dhtmlxgantt.js}" defer></script>
+        </th:block>
+
+        <!-- DRAGGABLE -->
+        <th:block th:fragment="plugin-draggable">
+            <script th:src="@{/plugins/draggable/draggable.bundle.legacy.js}" defer></script>
+        </th:block>
+
+        <!-- DROPZONE -->
+        <th:block th:fragment="plugin-dropzone">
+            <link rel="stylesheet" th:href="@{/plugins/dropzone/dropzone.min.css}">
+            <script th:src="@{/plugins/dropzone/dropzone.min.js}" defer></script>
+        </th:block>
+
+        <!-- ECHARTS -->
+        <th:block th:fragment="plugin-echarts">
+            <script th:src="@{/plugins/echarts/echarts.min.js}" defer></script>
+        </th:block>
+
+        <!-- FEATHER ICONS -->
+        <th:block th:fragment="plugin-feather-icons">
+            <script th:src="@{/plugins/feather-icons/feather.min.js}" defer></script>
+        </th:block>
+
+        <!-- FLATPICKR -->
+        <th:block th:fragment="plugin-flatpickr">
+            <link rel="stylesheet" th:href="@{/plugins/flatpickr/flatpickr.min.css}">
+            <link rel="stylesheet" th:href="@{/plugins/flatpickr/flatpickr.phoenix.css}">
+            <script th:src="@{/plugins/flatpickr/flatpickr.min.js}" defer></script>
+            <script th:src="@{/plugins/flatpickr/flatpickr.phoenix.js}" type="module"></script>
+        </th:block>
+
+        <!-- FRAPPE-GANTT -->
+        <th:block th:fragment="plugin-frappe-gantt">
+            <link rel="stylesheet" th:href="@{/plugins/frappe-gantt/frappe-gantt.min.css}">
+            <script th:src="@{/plugins/frappe-gantt/frappe-gantt.min.js}" defer></script>
+        </th:block>
+
+        <!-- FONT AWESOME -->
+        <th:block th:fragment="plugin-font-awesome">
+            <script th:src="@{/plugins/fontawesome/all.min.js}" defer></script>
+        </th:block>
+
+        <!-- FULLCALENDAR -->
+        <th:block th:fragment="plugin-fullcalendar">
+            <link rel="stylesheet" th:href="@{/plugins/fullcalendar/main.min.css}">
+            <script th:src="@{/plugins/fullcalendar/main.min.js}" defer></script>
+        </th:block>
+
+        <!-- GLIGHTBOX -->
+        <th:block th:fragment="plugin-glightbox">
+            <link rel="stylesheet" th:href="@{/plugins/glightbox/glightbox.min.css}">
+            <script th:src="@{/plugins/glightbox/glightbox.min.js}" defer></script>
+        </th:block>
+
+        <!-- IMAGES LOADED -->
+        <th:block th:fragment="plugin-images-loaded">
+            <script th:src="@{/plugins/imagesloaded/imagesloaded.pkgd.min.js}" defer></script>
+        </th:block>
+
+        <!-- IS -->
+        <th:block th:fragment="plugin-is">
+            <script th:src="@{/plugins/is/is.min.js}" defer></script>
+        </th:block>
+
+        <!-- ISOTOPE LAYOUT -->
+        <th:block th:fragment="plugin-isotope-layout">
+            <script th:src="@{/plugins/isotope-layout/isotope.pkgd.min.js}" defer></script>
+        </th:block>
+
+        <!-- ISOTOPE PACKERY -->
+        <th:block th:fragment="plugin-isotope-packery">
+            <script th:src="@{/plugins/isotope-packery/packery-mode.pkgd.min.js}" defer></script>
+        </th:block>
+
+        <!-- JUST DEBOUNCE -->
+        <th:block th:fragment="plugin-just-debounce">
+            <script th:src="@{/plugins/just-debounce/index.js}" defer></script>
+        </th:block>
+
+        <!-- LEAFLET -->
+        <th:block th:fragment="plugin-leaflet">
+            <link rel="stylesheet" th:href="@{/plugins/leaflet/leaflet.css}">
+            <script th:src="@{/plugins/leaflet/leaflet.js}" defer></script>
+        </th:block>
+
+        <!-- LEAFLET MARKER CLUSTER -->
+        <th:block th:fragment="plugin-leaflet-marker-cluster">
+            <link rel="stylesheet" th:href="@{/plugins/leaflet.markercluster/MarkerCluster.css}">
+            <script th:src="@{/plugins/leaflet.markercluster/leaflet.markercluster.js}" defer></script>
+        </th:block>
+
+        <!-- LEAFLET TILE LAYER COLOR FILTER -->
+        <th:block th:fragment="plugin-leaflet-tile-layer-color-filter">
+            <script th:src="@{/plugins/leaflet.tilelayer.colorfilter/leaflet-tilelayer-colorfilter.min.js}" defer></script>
+        </th:block>
+
+        <!-- LIST JS -->
+        <th:block th:fragment="plugin-list-js">
+            <script th:src="@{/plugins/list.js/list.min.js}" defer></script>
+        </th:block>
+
+        <!-- LODASH -->
+        <th:block th:fragment="plugin-lodash">
+            <script th:src="@{/plugins/lodash/lodash.min.js}" defer></script>
+        </th:block>
+
+        <!-- LOTTIE -->
+        <th:block th:fragment="plugin-lottie">
+            <script th:src="@{/plugins/lottie/lottie.min.js}" defer></script>
+        </th:block>
+
+        <!-- OVERLAY SCROLLBARS -->
+        <th:block th:fragment="plugin-overlay-scrollbars">
+            <link rel="stylesheet" th:href="@{/plugins/overlayscrollbars/OverlayScrollbars.min.css}">
+            <script th:src="@{/plugins/overlayscrollbars/OverlayScrollbars.min.js}" defer></script>
+        </th:block>
+
+        <!-- PLYR -->
+        <th:block th:fragment="plugin-plyr">
+            <link rel="stylesheet" th:href="@{/plugins/plyr/plyr.css}">
+            <script th:src="@{/plugins/plyr/plyr.polyfilled.min.js}" defer></script>
+        </th:block>
+
+        <!-- POPPER -->
+        <th:block th:fragment="plugin-popper">
+            <script th:src="@{/plugins/popper/popper.min.js}" defer></script>
+        </th:block>
+
+        <!-- PRISM -->
+        <th:block th:fragment="plugin-prism">
+            <link rel="stylesheet" th:href="@{/plugins/prism/prism-okaidia.css}">
+            <script th:src="@{/plugins/prism/prism.js}" defer></script>
+        </th:block>
+
+        <!-- RATER JS -->
+        <th:block th:fragment="plugin-raterjs">
+            <link rel="stylesheet" th:href="@{/plugins/rater-js/style.css}">
+            <script th:src="@{/plugins/rater-js/style.js}" defer></script>
+        </th:block>
+
+        <!-- SIMPLEBAR -->
+        <th:block th:fragment="plugin-simplebar">
+            <link rel="stylesheet" th:href="@{/plugins/simplebar/simplebar.min.css}">
+            <link rel="stylesheet" th:href="@{/plugins/simplebar/simplebar.phoenix.css}">
+            <script th:src="@{/plugins/simplebar/simplebar.min.js}" defer></script>
+        </th:block>
+
+        <!-- SIMPLEBAR -->
+        <th:block th:fragment="plugin-sortable">
+            <script th:src="@{/plugins/sortablejs/sortable.min.js}" defer></script>
+        </th:block>
+
+        <!-- SWEET ALERT 2 -->
+        <th:block th:fragment="plugin-sweet-alert-2">
+            <link id="sweetAlert2Styles" rel="stylesheet" th:href="@{/plugins/sweet-alert-2/themes/default.css}">
+            <link rel="stylesheet" th:href="@{/plugins/sweet-alert-2/sweetalert2.phoenix.css}">
+            <script th:src="@{/plugins/sweet-alert-2/sweetalert2.min.js}" defer></script>
+            <script th:src="@{/plugins/sweet-alert-2/sweetalert2.phoenix.js}" defer></script>
+        </th:block>
+
+        <!-- SWIPER -->
+        <th:block th:fragment="plugin-swiper">
+            <link rel="stylesheet" th:href="@{/plugins/swiper/swiper-bundle.min.css}">
+            <script th:src="@{/plugins/swiper/swiper-bundle.min.js}" defer></script>
+        </th:block>
+
+        <!-- TYPED -->
+        <th:block th:fragment="plugin-typed">
+            <script th:src="@{/plugins/typed/typed.js}" defer></script>
+        </th:block>
+    </head>
+    <body></body>
+</html>

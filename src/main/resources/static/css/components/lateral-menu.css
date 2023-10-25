@@ -1,0 +1,8 @@
+/*
+ * Estilos relativos al componente del menú lateral.
+ *
+ * @author Enrique Escalante
+ */
+#lateralMenu .nav-link.active .nav-link-icon {
+    color: var(--phoenix-navbar-vertical-link-active-color);
+}

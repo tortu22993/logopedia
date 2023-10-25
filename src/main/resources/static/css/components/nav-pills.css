@@ -1,0 +1,27 @@
+/*
+ * Estilos relativos al componente de las píldoras de navegación.
+ *
+ * @author Enrique Escalante
+ */
+.nav-pills .nav-link:not(.disabled) {
+    border-radius: 0;
+    border-bottom: 2px solid transparent;
+    color: var(--phoenix-secondary-color);
+}
+
+.nav-pills .nav-link:hover,
+.nav-pills .nav-link.active:hover {
+    border-bottom-color: var(--phoenix-primary-600);
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+    background-color: transparent;
+    color: var(--phoenix-secondary-color);
+    font-weight: bold;
+    border-bottom-color: var(--phoenix-nav-pills-link-active-bg);
+}
+
+.nav-pills .nav-link.active:active {
+    pointer-events: none;
+}

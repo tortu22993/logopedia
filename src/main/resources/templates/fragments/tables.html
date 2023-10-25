@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <th:block th:fragment="table-pagination(page, formId)" th:if="${page.getNumberOfElements() > 0}">
+            <div class="d-flex align-items-center justify-content-center justify-content-sm-between flex-wrap gap-3 py-5 py-sm-2 fs--1">
+                <p class="d-none d-md-block mb-0  me-3" data-list-info="data-list-info" th:with="registers = ${page.getFirstElementNumberOfCurrentPage() + ' - ' + page.getLastElementNumberOfCurrentPage()}, totalElements = ${page.getTotalElements()}" th:title="${registers} + ' registros de ' + ${totalElements}">
+                    <span class="fw-semi-bold text-900" th:text="${registers}"></span>
+                    <span class="text-600">registros de</span>
+                    <span class="fw-semi-bold text-900"th:text="${totalElements}"></span>
+                </p>
+                <th:block th:insert="~{fragments/pagination :: paginator-nav}"></th:block>
+                <div class="d-none d-sm-block form-group records-per-page-container">
+                    <label for="recordsPerPage" class="form-label" title="Registros por página">Registros por página</label>
+                    <select id="recordsPerPage" name="recordsPerPage" class="form-select border-0" aria-label="Registros por página" th:with="elementsPerPage = ${page.getNumberOfElementsPerPage()}" th:form="${formId}" data-choices>
+                        <option value="10" th:selected="${elementsPerPage == 10}">10</option>
+                        <option value="25" th:selected="${elementsPerPage == 25}">25</option>
+                        <option value="50" th:selected="${elementsPerPage == 50}">50</option>
+                        <option value="100" th:selected="${elementsPerPage == 100}">100</option>
+                    </select>
+                </div>
+            </div>
+        </th:block>
+    </body>
+</html>

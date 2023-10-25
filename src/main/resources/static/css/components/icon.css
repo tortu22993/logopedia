@@ -1,0 +1,15 @@
+/*
+ * Fichero de estilos para iconos, independientemente del
+ * plugin (FontAwesome, Feather Icons, etc.).
+ *
+ * @author Enrique Escalante
+ */
+
+/*
+ * Para los iconos al editar un registro. Estos iconos
+ * aparecen en la vista de detalle de un registro para
+ * hacer referencia al tipo de dato que se está editando.
+ */
+.data-type-icon-color {
+    color: var(--phoenix-primary);
+}

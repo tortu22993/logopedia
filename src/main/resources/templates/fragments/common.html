@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <!-- HEAD COMMONS -->
+        <th:block th:fragment="head-commons" th:with="includePhoenixConfig = ${includePhoenixConfig != null ? includePhoenixConfig : true}">
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta name="context-path" th:content="${contextPath}">
+            <meta name="csrf-header" th:content="${_csrf.headerName}">
+            <meta name="csrf-token" th:content="${_csrf.token}">
+            <title th:if="${title == null}" th:text="${applicationName}"></title>
+            <title th:unless="${title == null}" th:text="${title} + ' | ' + ${applicationName}"></title>
+            <link rel="stylesheet" th:href="@{/css/style.css}">
+            <!--<link rel="shortcut icon" th:href="@{/resources/images/favicons/favicon.png}" type="image/png">-->
+            <th:block th:insert="~{fragments/plugins :: necessary-plugins}"></th:block>
+            <th:block th:if="${includePhoenixConfig}" th:insert="~{fragments/plugins :: phoenix-template}"></th:block>
+        </th:block>
+    </head>
+    <body>
+        <!-- BREADCRUMB -->
+        <nav th:fragment="breadcrumb" class="d-none d-md-block" aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li th:each="option : ${breadcrumbOptions}" th:class="${option.active ? 'breadcrumb-item active' : 'breadcrumb-item'}">
+                    <a th:if="${not option.active and not #strings.isEmpty(option.url)}" th:href="@{${option.url}}" class="link-primary" th:text="${option.title}" th:title="${option.title}"></a>
+                    <span th:unless="${not option.active and not #strings.isEmpty(option.url)}" th:text="${option.title}" th:title="${option.title}"></span>
+                </li>
+            </ol>
+        </nav>
+
+        <!-- ERROR WARNING: debe insertarse dentro de una etiqueta <form> -->
+        <div th:fragment="error-warning" th:if="${#fields.hasAnyErrors()}" class="alert alert-danger">
+            <p class="mb-0">Revise los errores de esta página.</p>
+        </div>
+    </body>
+</html>
