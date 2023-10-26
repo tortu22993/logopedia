@@ -24,3 +24,6 @@ INSERT INTO [dbo].[PuestosTrabajo]([nombre], [fechaCreacion], [fechaUltimaModifi
 
 UPDATE PerfilesUsuarios SET puestoTrabajoId = 1 WHERE id = 1;
 UPDATE PerfilesUsuarios SET puestoTrabajoId = 2 WHERE id = 2;
+
+INSERT INTO [dbo].[Servicios]([nombre], [fechaCreacion], [fechaUltimaModificacion], [nombreUsuarioCreador], [nombreUsuarioUltimoModificador]) VALUES('Servicio de logopedia', GETDATE(), GETDATE(), 'enrique.escalante', 'enrique.escalante');
+INSERT INTO [dbo].[Servicios]([nombre], [fechaCreacion], [fechaUltimaModificacion], [nombreUsuarioCreador], [nombreUsuarioUltimoModificador]) VALUES('Servicio de psicologia', GETDATE(), GETDATE(), 'enrique.escalante', 'enrique.escalante');

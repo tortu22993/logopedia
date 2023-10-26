@@ -3,6 +3,8 @@ package crm.logopedia.util.environment;
 
 import crm.logopedia.data.jobposition.controller.JobPositionController;
 import crm.logopedia.data.jobposition.model.entity.JobPosition;
+import crm.logopedia.data.services.controller.ServicesController;
+import crm.logopedia.data.services.model.entity.Services;
 import crm.logopedia.data.user.controller.UserController;
 import crm.logopedia.security.controller.AuthController;
 
@@ -58,6 +60,14 @@ public abstract class ViewNames {
      * @see JobPosition
      */
     private static final String ROOT_JOB_POSITIONS = ROOT_PAGES + "/job-positions";
+
+    /**
+     * La carpeta raíz contenedora de todos los ficheros .html
+     * de las vistas relativas a los servicios.
+     *
+     * @see Services
+     */
+    private static final String ROOT_SERVICES = ROOT_PAGES + "/services";
 
 
     /*
@@ -163,5 +173,30 @@ public abstract class ViewNames {
      * @see JobPositionController
      */
     public static final String JOB_POSITION_EDITION = ROOT_JOB_POSITIONS + "/job-position-edition";
+
+
+    /**
+     * El nombre del fichero .html de la vista del listado
+     * de servicios.
+     *
+     * @see ServicesController
+     */
+    public static final String SERVICE_LIST = ROOT_SERVICES + "/services-list";
+
+    /**
+     * El nombre del fichero .html de la vista del detalle
+     * de servicios.
+     *
+     * @see ServicesController
+     */
+    public static final String SERVICE_DETAIL = ROOT_SERVICES + "/services-detail";
+
+    /**
+     * El nombre del fichero .html de la vista del detalle
+     * de servicios.
+     *
+     * @see ServicesController
+     */
+    public static final String SERVICE_EDITION = ROOT_SERVICES + "/services-edition";
 
 }

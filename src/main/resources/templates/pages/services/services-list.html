@@ -2,51 +2,51 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head>
 		<th:block th:insert="~{fragments/common :: head-commons}"></th:block>
-		<script th:src="@{/pages/job-positions/job-position-list.js}" type="module"></script>
+		<!--<script th:src="@{/pages/job-positions/job-position-list.js}" type="module"></script>-->
 	</head>
     <body>
         <main id="top" class="main">
             <div class="container-fluid px-0">
                 <th:block th:insert="~{fragments/menu-asides :: simple-left-vertical-menu}"></th:block>
                 <th:block th:insert="~{fragments/menu-headers :: simple-menu-header}"></th:block>
-                <div class="content" th:with="hasJobPositions = ${not #lists.isEmpty(jobPositions)}">
+                <div class="content" th:with="hasServices = ${not #lists.isEmpty(services)}">
                     <th:block th:insert="~{fragments/common :: breadcrumb}"></th:block>
                     <div class="mt-0 mt-md-3 mb-9">
                         <div class="row g-2 mb-4">
                             <div class="col-auto">
                                 <h4 class="mb-0" th:title="${title}">
-                                    <i class="fa-solid fa-user-doctor text-primary me-2"></i>
+                                    <i class="fa-solid fa-notes-medical text-primary me-2"></i>
                                     <span th:text="${title}"></span>
                                 </h4>
                             </div>
                         </div>
-                        <div th:if="${not hasJobPositions}" class="position-absolute top-50 start-50 translate-middle">
+                        <div th:if="${not hasServices}" class="position-absolute top-50 start-50 translate-middle">
                             <p class="mb-0" title="No hay elementos para mostrar.">No hay elementos para mostrar.</p>
                         </div>
-                        <div id="job-positions" data-list th:with="formFiltersId = 'formFilters'">
+                        <div id="services" data-list th:with="formFiltersId = 'formFilters'">
                             <header class="mb-2">
-                                <div th:class="'d-flex align-items-center flex-column flex-sm-row gap-3 ' + ${hasJobPositions ? 'justify-content-between' : 'justify-content-end'}">
-                                    <div th:if="${hasJobPositions}" class="search-box flex-grow-1 w-100 w-sm-auto">
+                                <div th:class="'d-flex align-items-center flex-column flex-sm-row gap-3 ' + ${hasServices ? 'justify-content-between' : 'justify-content-end'}">
+                                    <div th:if="${hasServices}" class="search-box flex-grow-1 w-100 w-sm-auto">
                                         <form class="position-relative" data-bs-toggle="search" data-bs-display="static">
                                             <input type="search" class="form-control form-control-sm search-input search" placeholder="Buscar en esta lista..." aria-label="Buscar">
                                             <i class="fa fa-magnifying-glass search-box-icon"></i>
                                         </form>
                                     </div>
                                     <div class="d-grid d-sm-flex gap-2 w-100 w-sm-auto">
-                                        <button th:if="${hasJobPositions}" id="btnFilters" type="button" class="btn btn-sm btn-phoenix-secondary d-none px-5" data-bs-toggle="collapse" data-bs-target="#filters" th:aria-expanded="${jobPositionListDtoFilter.openedFiltersSection}" aria-controls="filters" title="Filtros">
+                                        <button th:if="${hasServices}" id="btnFilters" type="button" class="btn btn-sm btn-phoenix-secondary d-none px-5" data-bs-toggle="collapse" data-bs-target="#filters" th:aria-expanded="${serviceListDtoFilter.openedFiltersSection}" aria-controls="filters" title="Filtros">
                                             <i class="fa fa-filter me-2"></i>
                                             Filtros
                                         </button>
-                                        <a sec:authorize="hasAnyRole('ROLE_MASTER', 'ROLE_ADMIN')" th:href="@{/job-positions/action/new}" class="btn btn-sm btn-primary px-5" role="button" title="Nuevo">
+                                        <a sec:authorize="hasAnyRole('ROLE_MASTER', 'ROLE_ADMIN')" th:href="@{/services/action/new}" class="btn btn-sm btn-primary px-5" role="button" title="Nuevo">
                                             <i class="fa fa-plus me-2"></i>
                                             Nuevo
                                         </a>
                                     </div>
                                 </div>
-                                <div th:if="${hasJobPositions}" class="row mt-3">
+                                <div th:if="${hasServices}" class="row mt-3">
                                     <div class="col">
-                                        <div id="filters" th:class="${jobPositionListDtoFilter.openedFiltersSection ? 'collapse show' : 'collapse'}">
-                                            <form th:id="${formFiltersId}" th:object="${jobPositionListDtoFilter}" th:action="@{/job-positions}" method="get" class="border border-2 border-start-0 border-bottom-0 border-end-0 py-3">
+                                        <div id="filters" th:class="${serviceListDtoFilter.openedFiltersSection ? 'collapse show' : 'collapse'}">
+                                            <form th:id="${formFiltersId}" th:object="${serviceListDtoFilter}" th:action="@{/services}" method="get" class="border border-2 border-start-0 border-bottom-0 border-end-0 py-3">
                                                 <input type="hidden" th:field="*{openedFiltersSection}" data-clean-value="false">
                                                 
                                                 <div class="row gy-3">
@@ -74,7 +74,7 @@
                                     </div>
                                 </div>
                             </header>
-                            <div th:if="${hasJobPositions}" class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
+                            <div th:if="${hasServices}" class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
                                 <div class="table-responsive scrollbar-overlay mx-n1 px-1">
                                     <table class="table table-sm fs--1 mb-0">
                                         <thead>
@@ -82,10 +82,10 @@
                                                 <th class="sort align-middle" scope="col" data-sort="name" title="NOMBRE">NOMBRE</th>
                                             </tr>
                                         </thead>
-                                        <tbody class="list" id="job-positions-table-body">
-                                            <tr th:each="jobPosition : ${jobPositions}" class="position-static">
+                                        <tbody class="list" id="services-table-body">
+                                            <tr th:each="service : ${services}" class="position-static">
                                                 <td class="name align-middle white-space-nowrap">
-                                                    <a th:href="@{/job-positions/{id}(id = ${jobPosition.id})}" class="link-primary" role="link" th:text="${jobPosition.name}" th:title="${jobPosition.name}"></a>
+                                                    <a th:href="@{/services/{id}(id = ${service.id})}" class="link-primary" role="link" th:text="${service.name}" th:title="${service.name}"></a>
                                                 </td>
                                             </tr>
                                         </tbody>

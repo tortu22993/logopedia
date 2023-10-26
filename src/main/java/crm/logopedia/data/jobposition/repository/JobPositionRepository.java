@@ -17,9 +17,9 @@ import java.util.Optional;
 public interface JobPositionRepository extends JpaRepository<JobPosition, Long> {
 
 	/**
-	 * Obtiene un equipo según su ID.
+	 * Obtiene un puesto de trabajo según su ID.
 	 *
-	 * @param id El ID del equipo a obtener
+	 * @param id El ID del puesto de trabajo a obtener
 	 * @return El puesto de trabajo con dicho ID
 	 */
 	@Override
