@@ -13,7 +13,7 @@
                         <th:block th:insert="~{fragments/common :: breadcrumb}"></th:block>
                         <nav class="d-flex align-items-center gap-2">
                             <div class="btn-reveal-trigger">
-                                <a th:href="@{/job-positions}" class="btn btn-sm btn-reveal" title="Listado">
+                                <a th:href="@{/services}" class="btn btn-sm btn-reveal" title="Listado">
                                     <i class="fa fa-arrow-left me-2"></i>
                                     Listado
                                 </a>
@@ -28,14 +28,14 @@
                                         <div class="card h-100">
                                             <div class="card-header d-flex align-items-center justify-content-between flex-column gap-3 flex-xl-row">
                                                 <div class="d-flex flex-column gap-2 text-center text-xl-start">
-                                                    <span title="Puesto de trabajo">
+                                                    <span title="Servicios">
                                                         <i class="fa fa-solid fa-notes-medical text-primary me-2"></i>
-                                                        Puesto de trabajo
+                                                       Servicios
                                                     </span>
                                                     <h4 class="card-title text-clip mb-0" th:text="${title}" th:title="${title}"></h4>
                                                 </div>
                                                 <div class="d-auto-grid w-100 gap-2 d-md-flex align-items-md-center w-md-auto">
-                                                    <a sec:authorize="hasAnyRole('ROLE_MASTER', 'ROLE_ADMIN', 'ROLE_MANAGER')" th:href="@{/job-positions/{id}/action/edit(id = ${jobPositionDetailDto.id})}" class="btn btn-sm btn-phoenix-primary" title="Editar">
+                                                    <a sec:authorize="hasAnyRole('ROLE_MASTER', 'ROLE_ADMIN', 'ROLE_MANAGER')" th:href="@{/services/{id}/action/edit(id = ${servicesDetailDto.id})}" class="btn btn-sm btn-phoenix-primary" title="Editar">
                                                         <i class="fa fa-pencil me-2"></i>
                                                         Editar
                                                     </a>
@@ -63,7 +63,7 @@
                                                                     <div class="col-xs-12 col-sm-6">
                                                                         <div class="form-group">
                                                                             <small title="Nombre">Nombre</small>
-                                                                            <p th:text="${jobPositionDetailDto.name}" th:title="${jobPositionDetailDto.name}"></p>
+                                                                            <p th:text="${servicesDetailDto.name}" th:title="${servicesDetailDto.name}"></p>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -84,8 +84,8 @@
                                                                         <div class="form-group">
                                                                             <small title="Creado por">Creado por</small>
                                                                             <p>
-                                                                                <a th:href="@{/users/{username}(username = ${jobPositionDetailDto.createdByUsername})}" class="link-primary" th:text="${jobPositionDetailDto.createdByFullName}" th:title="${jobPositionDetailDto.createdByFullName}"></a>,
-                                                                                <span th:with="createdAt = ${#dates.format(jobPositionDetailDto.createdAt, 'd MMMM, yyyy HH:mm')}" th:text="${createdAt}" th:title="${createdAt}"></span>
+                                                                                <a th:href="@{/users/{username}(username = ${servicesDetailDto.createdByUsername})}" class="link-primary" th:text="${servicesDetailDto.createdByFullName}" th:title="${servicesDetailDto.createdByFullName}"></a>
+                                                                                <span th:with="createdAt = ${#dates.format(servicesDetailDto.createdAt, 'd MMMM, yyyy HH:mm')}" th:text="${createdAt}" th:title="${createdAt}"></span>
                                                                             </p>
                                                                         </div>
                                                                     </div>
@@ -93,8 +93,8 @@
                                                                         <div class="form-group">
                                                                             <small title="Última modificación por">Última modificación por</small>
                                                                             <p>
-                                                                                <a th:href="@{/users/{username}(username = ${jobPositionDetailDto.lastModifiedByUsername})}" class="link-primary" th:text="${jobPositionDetailDto.lastModifiedByFullName}" th:title="${jobPositionDetailDto.lastModifiedByFullName}"></a>,
-                                                                                <span th:with="lastModifiedAt = ${#dates.format(jobPositionDetailDto.lastModifiedAt, 'd MMMM, yyyy HH:mm')}" th:text="${lastModifiedAt}" th:title="${lastModifiedAt}"></span>
+                                                                                <a th:href="@{/users/{username}(username = ${servicesDetailDto.lastModifiedByUsername})}" class="link-primary" th:text="${servicesDetailDto.lastModifiedByFullName}" th:title="${servicesDetailDto.lastModifiedByFullName}"></a>
+                                                                                <span th:with="lastModifiedAt = ${#dates.format(servicesDetailDto.lastModifiedAt, 'd MMMM, yyyy HH:mm')}" th:text="${lastModifiedAt}" th:title="${lastModifiedAt}"></span>
                                                                             </p>
                                                                         </div>
                                                                     </div>

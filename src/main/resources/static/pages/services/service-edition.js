@@ -22,7 +22,7 @@ document.querySelector('#cancelButton')?.addEventListener('click', () => {
         confirmButtonText: 'Continuar',
         actionConfirmButton: () => {
             const id = document.querySelector('#id')?.value;
-            const rootUrl = `${CONTEXT_PATH}/job-positions`;
+            const rootUrl = `${CONTEXT_PATH}/services`;
             const redirectUrl = id
                 ? `${rootUrl}/${id}`
                 : rootUrl;
