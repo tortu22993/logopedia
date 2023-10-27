@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <th:block th:insert="~{fragments/common :: head-commons}"></th:block>
+    </head>
+
+    <body>
+        <main class="main" id="top">
+            <div class="container-fluid px-0" data-layout="container">
+                <div class="container-fluid">
+                    <div class="bg-holder bg-auth-card-overlay"></div>
+                    <div class="row flex-center position-relative min-vh-100 g-0 py-5">
+                        <div class="col-11 col-sm-10 col-xl-8">
+                            <div class="card border border-300 auth-card">
+                                <div class="card-body pe-md-0">
+                                    <div class="row align-items-center gx-0 gy-5">
+                                        <div class="col-auto bg-100 dark__bg-1100 rounded-3 position-relative overflow-hidden auth-title-box">
+                                            <div class="bg-holder"></div>
+                                            <div class="position-relative px-4 pt-7 pb-7 pb-sm-5 pb-lg-7 text-center text-md-start px-lg-7">
+                                                <div class="true">
+                                                    <h3 class="mb-3 text-black" title="¡Bienvenido/a!">¡Bienvenido/a!</h3>
+                                                    <p class="text-700" title="Tu cuenta está casi lista, solo falta un paso más.">Tu cuenta está casi lista, solo falta un paso más.</p>
+                                                </div>
+                                            </div>
+                                            <div class="z-index--1 mb-6 d-none d-sm-block text-center mt-md-5">
+                                                <img th:src="@{/resources/images/logos/linkedin.svg}" alt="Logo de logipedium Consulting, S.L." class="customer-logo" width="250">
+                                            </div>
+                                        </div>
+                                        <div class="col mx-auto">
+                                            <div class="auth-form-box">
+                                                <div class="text-center">
+                                                    <h4 class="text-1000" title="Finalizar configuración">Finalizar configuración</h4>
+                                                    <p class="text-700 mb-5" title="Por favor, introduzca su contraseña">Por favor, introduzca su contraseña</p>
+                                                    
+                                                    <form th:object="${passwordChangeDto}" th:action="@{/auth/finish-account-configuration}" method="post" class="d-flex flex-column align-items-center text-start">
+                                                        <input type="hidden" name="token" th:value="${token}">
+                                                        <input type="hidden" name="userEmail" th:value="${userEmail}">
+                                                        
+                                                        <div class="row justify-content-start gap-3">
+                                                            <div class="col-12">
+                                                                <div class="form-group">
+                                                                    <label for="newPassword" title="Nueva contraseña" class="form-label">Nueva contraseña</label>
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-text cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" title="La contraseña debe tener, como mínimo, 8 caracteres:<ul class='text-start'><li>1 número.</li><li>1 carácter especial</li><li>1 letra mayúscula.</li><li>1 letra minúscula.</li></ul>" tabindex="-1">
+                                                                            <i class="fa fa-info-circle"></i>
+                                                                        </span>
+                                                                        <input type="password" th:field="*{newPassword}" class="form-control" th:errorClass="${'form-control is-invalid'}">
+                                                                    </div>
+																	<small class="invalid-feedback" th:if="${#fields.hasErrors('newPassword')}" th:errors="*{newPassword}"></small>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12">
+                                                                <div class="form-group">
+                                                                    <label for="confirmNewPassword" title="Confirma nueva contraseña" class="form-label">Confirmar nueva contraseña</label>
+                                                                    <input type="password" th:field="*{confirmNewPassword}" class="form-control" th:errorClass="${'form-control is-invalid'}">
+																	<small class="invalid-feedback" th:if="${#fields.hasErrors('confirmNewPassword')}" th:errors="*{confirmNewPassword}"></small>
+                                                                </div>
+                                                            </div>
+                                                    
+                                                            <div class="col-12 d-grid">
+                                                                <button type="submit" class="btn btn-primary" title="Finalizar configuración">Finalizar configuración</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

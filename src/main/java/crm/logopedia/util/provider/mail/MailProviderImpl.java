@@ -58,13 +58,13 @@ public class MailProviderImpl implements MailProvider {
 	/**
 	 * El logo de la aplicación.
 	 */
-	@Value("classpath:static/resources/images/logos/kerberos.svg")
+	@Value("classpath:static/resources/images/logos/linkedin.svg")
 	protected Resource applicationLogo;
 
 	/**
 	 * El logo de Logopedia.
 	 */
-	@Value("classpath:static/resources/images/customers/aelis.png")
+	@Value("classpath:static/resources/images/customers/Logopedia.png")
 	protected Resource logopediaLogo;
 
 	/**
