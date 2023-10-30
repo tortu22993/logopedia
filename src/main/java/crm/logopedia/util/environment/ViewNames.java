@@ -3,6 +3,7 @@ package crm.logopedia.util.environment;
 
 import crm.logopedia.data.jobposition.controller.JobPositionController;
 import crm.logopedia.data.jobposition.model.entity.JobPosition;
+import crm.logopedia.data.patient.controller.PatientController;
 import crm.logopedia.data.services.controller.ServicesController;
 import crm.logopedia.data.services.model.entity.Services;
 import crm.logopedia.data.user.controller.UserController;
@@ -51,6 +52,14 @@ public abstract class ViewNames {
      * @see UserController
      */
     private static final String ROOT_USERS = ROOT_PAGES + "/users";
+
+    /**
+     * La carpeta raíz contenedora de todos los ficheros .html
+     * de las vistas relativas a los pacientes.
+     *
+     * @see PatientController
+     */
+    private static final String ROOT_PATIENTS = ROOT_PAGES + "/patients";
 
 
     /**
@@ -123,6 +132,14 @@ public abstract class ViewNames {
      * El nombre del fichero .html de la vista de error 500.
      */
     public static final String ERROR_500 = ROOT_ERROR + "/500";
+
+    /**
+     * El nombre del fichero .html de la vista del listado
+     * de pacientes.
+     *
+     * @see PatientController
+     */
+    public static final String PATIENT_LIST = ROOT_PATIENTS + "/patient-list";
 
 
     /**

@@ -27,3 +27,7 @@ UPDATE PerfilesUsuarios SET puestoTrabajoId = 2 WHERE id = 2;
 
 INSERT INTO [dbo].[Servicios]([nombre], [fechaCreacion], [fechaUltimaModificacion], [nombreUsuarioCreador], [nombreUsuarioUltimoModificador]) VALUES('Servicio de logopedia', GETDATE(), GETDATE(), 'enrique.escalante', 'enrique.escalante');
 INSERT INTO [dbo].[Servicios]([nombre], [fechaCreacion], [fechaUltimaModificacion], [nombreUsuarioCreador], [nombreUsuarioUltimoModificador]) VALUES('Servicio de psicologia', GETDATE(), GETDATE(), 'enrique.escalante', 'enrique.escalante');
+
+
+INSERT INTO [dbo].[Pacientes]([nombre], [primerApellido], [fechaNacimiento], [activo], [lopd], [consentimientoCoordinacionEscuelas], [fechaCreacion], [fechaUltimaModificacion], [nombreUsuarioCreador], [nombreUsuarioUltimoModificador]) VALUES('Juan', 'García','2021-8-8', 1, 1, 1, GETDATE(), GETDATE(), 'enrique.escalante', 'enrique.escalante');
+INSERT INTO [dbo].[Pacientes]([nombre], [primerApellido], [fechaNacimiento], [activo], [lopd], [consentimientoCoordinacionEscuelas], [fechaCreacion], [fechaUltimaModificacion], [nombreUsuarioCreador], [nombreUsuarioUltimoModificador]) VALUES('Avril', 'Escalante','2022-7-7', 1, 1, 1, GETDATE(), GETDATE(), 'enrique.escalante', 'enrique.escalante');

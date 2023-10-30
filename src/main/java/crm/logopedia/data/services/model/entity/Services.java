@@ -14,7 +14,7 @@ import lombok.*;
 public class Services extends AbstractAuditableEntity{
 
     /**
-     * El ID del equipo.
+     * El ID del servicio.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

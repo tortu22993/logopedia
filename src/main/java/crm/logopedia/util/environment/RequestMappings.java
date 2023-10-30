@@ -2,6 +2,7 @@ package crm.logopedia.util.environment;
 
 
 import crm.logopedia.data.jobposition.controller.JobPositionController;
+import crm.logopedia.data.patient.controller.PatientController;
 import crm.logopedia.data.services.controller.ServicesController;
 import crm.logopedia.data.user.controller.UserController;
 import crm.logopedia.security.controller.AuthController;
@@ -25,6 +26,10 @@ public abstract class RequestMappings {
      */
     public static final String USERS = "/users";
 
+    /**
+     * El endpoint del controlador {@link PatientController}.
+     */
+    public static final String PATIENTS = "/patients";
     /**
      * El endpoint del controlador {@link JobPositionController}.
      */
