@@ -3,11 +3,13 @@ package crm.logopedia.data.patient.service;
 import crm.logopedia.data.patient.model.dto.PatientListDto;
 import crm.logopedia.data.patient.model.entity.Patient;
 import crm.logopedia.data.patient.repository.PatientRepository;
+import crm.logopedia.data.patient.repository.specification.PatientSpecification;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +24,7 @@ public class PatientServiceImpl implements PatientService{
      */
     private final PatientRepository PATIENT_REPOSITORY;
 
+
     /**
      * El gestor de mapeado de objetos.
      */
@@ -33,6 +36,8 @@ public class PatientServiceImpl implements PatientService{
     @Value("${params.sql.query-params.max-results-per-search}")
     protected Integer maxResultsPerPage;
 
+
+
     @PostConstruct
     private void onPostConstruct() {
         // Entidad a ListDTO
@@ -43,7 +48,9 @@ public class PatientServiceImpl implements PatientService{
         });
     }
 
-    @Override
+
+
+    /*@Override
     public Page<PatientListDto> findByFilter(PatientListDto patientListDto, Pageable pageable) {
         final var example = Example.of(
                 convertToEntity(patientListDto),
@@ -59,6 +66,13 @@ public class PatientServiceImpl implements PatientService{
                 .collect(Collectors.toList());
 
         return new PageImpl<>(patients, pageable, pagination.getTotalElements());
+    }*/
+
+    @Override
+    public Page<PatientListDto> findByFilter(String name, String school, Pageable pageable) {
+        Specification<Patient> spec = new PatientSpecification(name, school);
+        Page<Patient> result = PATIENT_REPOSITORY.findAll(spec, pageable);
+        return result.map(this::convertToListDto);
     }
 
     @Override

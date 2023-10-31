@@ -13,6 +13,7 @@ import crm.logopedia.util.environment.ViewNames;
 import crm.logopedia.util.pagination.PageRender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -88,6 +89,8 @@ public class PatientController {
     @GetMapping({ "", "/" })
     @Secured({ RoleType.Code.MASTER, RoleType.Code.ADMIN, RoleType.Code.MANAGER, RoleType.Code.RESPONSIBLE })
     public String renderListView(PatientListDto patientListDtoFilter,
+                                 @RequestParam(name = "school", required = false) String school,
+                                 @RequestParam(name = "name", required = false) String name,
                                  @RequestParam(defaultValue = "0") Integer page,
                                  @RequestParam(required = false) Integer recordsPerPage, Model model) {
         if(recordsPerPage == null || recordsPerPage <= 0) {
@@ -98,8 +101,8 @@ public class PatientController {
 
         final var url = RequestMappings.PATIENTS;
         final var pageRequest = PageRequest.of(page, recordsPerPage);
-        final var patients = PATIENT_SERVICE.findByFilter(patientListDtoFilter, pageRequest);
-        final var pageRender = PageRender.newInstance(url, patients);
+        final var patientsCrit = PATIENT_SERVICE.findByFilter(name, school,  pageRequest);
+        final var pageRender = PageRender.newInstance(url, patientsCrit);
 
         final var breadcrumbOptions = List.of(
                 new BreadcrumbOption(menuSectionTitle, false, null),
@@ -116,4 +119,20 @@ public class PatientController {
 
         return ViewNames.PATIENT_LIST;
     }
+   /* @GetMapping("/search")
+    public String searchPatients(@RequestParam(required = false) String query, @RequestParam(defaultValue = "0") Integer page, Model model) {
+        // Realiza la búsqueda utilizando el valor de 'query' en tu servicio.
+        Page<PatientListDto> searchResults = PATIENT_SERVICE.findByFilter(query, Integer.valueOf(query), PageRequest.of(page, recordsPerPage));
+
+        final var url = RequestMappings.PATIENTS;
+        final var pageRender = PageRender.newInstance(url, searchResults);
+
+        // Actualiza el modelo con los resultados de la búsqueda y cualquier otro dato necesario.
+        model.addAttribute("searchQuery", query);
+        model.addAttribute("page", pageRender);
+        model.addAttribute("patients", pageRender.getPage().getContent());
+        model.addAttribute("title", "Resultados de la búsqueda"); // Puedes personalizar el título según sea necesario.
+
+        return ViewNames.PATIENT_LIST; // Reemplaza "resultView" con el nombre de tu vista de resultados.
+    }*/
 }

@@ -66,7 +66,7 @@ public class Patient extends AbstractAuditableEntity {
      * El nombre completo del paciente.
      */
     @Transient
-    private int age;
+    private Integer age;
 
     /**
      * El nombre del colegio del paciente

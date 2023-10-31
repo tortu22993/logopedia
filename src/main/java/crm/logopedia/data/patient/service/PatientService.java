@@ -12,11 +12,13 @@ public interface PatientService {
     /**
      * Devuelve una lista paginada de pacientes en función de un filtro.
      *
-     * @param patientListDto La plantilla que se utiliza como filtro
+     //* @param patientListDto La plantilla que se utiliza como filtro
      * @param pageable El objeto paginador que indica la página a obtener y el número de resultados
      * @return Una lista paginada de DTO de usuarios filtrados
      */
-    Page<PatientListDto> findByFilter(PatientListDto patientListDto, Pageable pageable);
+    //Page<PatientListDto> findByFilter(PatientListDto patientListDto, Pageable pageable);
+
+    Page<PatientListDto> findByFilter( String name, String school, Pageable pageable);
 
     /**
      * Obtiene la lista completa de pacientes.
@@ -24,4 +26,5 @@ public interface PatientService {
      * @return La lista completa de usuarios
      */
     List<PatientListDto> findAll();
+
 }

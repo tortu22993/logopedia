@@ -1,114 +1,140 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-    <head>
-		<th:block th:insert="~{fragments/common :: head-commons}"></th:block>
-		<script th:src="@{/pages/users/user-list.js}" type="module"></script>
-	</head>
-    <body>
-        <main id="top" class="main">
-            <div class="container-fluid px-0">
-                <th:block th:insert="~{fragments/menu-asides :: simple-left-vertical-menu}"></th:block>
-                <th:block th:insert="~{fragments/menu-headers :: simple-menu-header}"></th:block>
-                <div class="content" th:with="hasPatients = ${not #lists.isEmpty(patients)}">
-                    <th:block th:insert="~{fragments/common :: breadcrumb}"></th:block>
-                    <div class="mt-0 mt-md-3 mb-9">
-                        <div class="row g-2 mb-4">
-                            <div class="col-auto">
-                                <h4 class="mb-0" th:title="${title}">
-                                    <i class="fa fa-user-tie text-primary me-2"></i>
-                                    <span th:text="${title}"></span>
-                                </h4>
-                            </div>
+
+<head>
+    <th:block th:insert="~{fragments/common :: head-commons}"></th:block>
+    <script th:src="@{/pages/users/user-list.js}" type="module"></script>
+</head>
+
+<body>
+    <main id="top" class="main">
+        <div class="container-fluid px-0">
+            <th:block th:insert="~{fragments/menu-asides :: simple-left-vertical-menu}"></th:block>
+            <th:block th:insert="~{fragments/menu-headers :: simple-menu-header}"></th:block>
+            <div class="content" th:with="hasPatients = ${not #lists.isEmpty(patients)}">
+                <th:block th:insert="~{fragments/common :: breadcrumb}"></th:block>
+                <div class="mt-0 mt-md-3 mb-9">
+                    <div class="row g-2 mb-4">
+                        <div class="col-auto">
+                            <h4 class="mb-0" th:title="${title}">
+                                <i class="fa fa-user-tie text-primary me-2"></i>
+                                <span th:text="${title}"></span>
+                            </h4>
                         </div>
-                        <div th:if="${not hasPatients}" class="position-absolute top-50 start-50 translate-middle">
-                            <p class="mb-0" title="No hay elementos para mostrar.">No hay elementos para mostrar.</p>
-                        </div>
-                        <div id="users" data-list th:with="formFiltersId = 'formFilters'">
-                            <header class="mb-2">
+                    </div>
+                    <div th:if="${not hasPatients}" class="position-absolute top-50 start-50 translate-middle">
+                        <p class="mb-0" title="No hay elementos para mostrar.">No hay elementos para mostrar.</p>
+                    </div>
+                    <div id="users" data-list th:with="formFiltersId = 'formFilters'">
+                        <header class="mb-2">
+                            <form id="filterForm" th:action="@{/patients}" method="GET">
                                 <div th:class="'d-flex align-items-center flex-column flex-sm-row gap-3 ' + ${hasPatients ? 'justify-content-between' : 'justify-content-end'}">
                                     <div th:if="${hasPatients}" class="search-box flex-grow-1 w-100 w-sm-auto">
-                                        <form class="position-relative" data-bs-toggle="search" data-bs-display="static">
-                                            <input type="search" class="form-control form-control-sm search-input search" placeholder="Buscar en esta lista..." aria-label="Buscar">
-                                            <i class="fa fa-magnifying-glass search-box-icon"></i>
-                                        </form>
+                                        <input type="hidden" class="form-control form-control-sm" id="searchInput" value="" placeholder="Ingrese un nombre o un colegio" aria-label="Nombre">
+                                        <input type="text" class="form-control form-control-sm" name="name" value=""  aria-label="Nombre">
                                     </div>
                                     <div class="d-grid d-sm-flex gap-2 w-100 w-sm-auto">
-                                        <button id="btnFilters" type="button" class="btn btn-sm btn-phoenix-secondary d-none px-5" data-bs-toggle="collapse" data-bs-target="#filters" th:aria-expanded="${patientListDtoFilter.openedFiltersSection}" aria-controls="filters" title="Filtros">
+                                        <button type="submit" class="btn btn-sm btn-secondary" title="Filtrar">
                                             <i class="fa fa-filter me-2"></i>
-                                            Filtros
+                                            Filtrar
                                         </button>
-                                        <a sec:authorize="hasAnyRole('ROLE_MASTER', 'ROLE_ADMIN')" th:href="@{/users/action/new}" class="btn btn-sm btn-primary px-5" role="button" title="Nuevo">
+                                        <a sec:authorize="hasAnyRole('ROLE_MASTER', 'ROLE_ADMIN')"
+                                            th:href="@{/users/action/new}" class="btn btn-sm btn-primary px-5"
+                                            role="button" title="Nuevo">
                                             <i class="fa fa-plus me-2"></i>
                                             Nuevo
                                         </a>
                                     </div>
                                 </div>
-                                <div class="row mt-3">
-                                    <div class="col">
-                                        <div id="filters" th:class="${patientListDtoFilter.openedFiltersSection ? 'collapse show' : 'collapse'}">
-                                            <form th:id="${formFiltersId}" th:object="${patientListDtoFilter}" th:action="@{/patients}" method="get" class="border border-2 border-start-0 border-bottom-0 border-end-0 py-3">
-                                                <input type="hidden" th:field="*{openedFiltersSection}" data-clean-value="false">
-                                                
-                                                <div class="row gy-3">
-                                                    <div class="col-xs-12 col-sm-6 col-xl-3">
-                                                        <div class="form-group">
-                                                            <label for="fullName" class="form-label">Nombre completo</label>
-                                                            <input type="text" class="form-control" th:field="*{fullName}" data-clean-value>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xs-12 col-sm-6 col-xl-3">
-                                                        <div class="form-group">
-                                                            <label for="school" class="form-label">Colegio</label>
-                                                            <input type="text" class="form-control" th:field="*{school}" data-clean-value>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row justify-content-end mt-3">
-                                                    <div class="col-auto">
-                                                        <button id="btnClearFilters" type="button" class="btn btn-sm btn-phoenix-secondary" title="Limpiar">
-                                                            <i class="fa fa-eraser me-2"></i>
-                                                            Limpiar
-                                                        </button>
-                                                        <button type="submit" class="btn btn-sm btn-secondary" title="Buscar">
-                                                            <i class="fa fa-search me-2"></i>
-                                                            Buscar
-                                                        </button>
+                            </form>
+                            
+                            <div class="row mt-3">
+                                <div class="col">
+                                    <div id="filters"
+                                        th:class="${patientListDtoFilter.openedFiltersSection ? 'collapse show' : 'collapse'}">
+                                        <form th:id="${formFiltersId}" th:object="${patientListDtoFilter}"
+                                            th:action="@{/patients}" method="get"
+                                            class="border border-2 border-start-0 border-bottom-0 border-end-0 py-3">
+                                            <input type="hidden" th:field="*{openedFiltersSection}"
+                                                data-clean-value="false">
+
+                                            <div class="row gy-3">
+                                                <div class="col-xs-12 col-sm-6 col-xl-3">
+                                                    <div class="form-group">
+                                                        <label for="fullName" class="form-label">Nombre completo</label>
+                                                        <input type="text" class="form-control" th:field="*{fullName}"
+                                                            data-clean-value>
                                                     </div>
                                                 </div>
-                                            </form>
-                                        </div>
+                                                <div class="col-xs-12 col-sm-6 col-xl-3">
+                                                    <div class="form-group">
+                                                        <label for="school" class="form-label">Colegio</label>
+                                                        <input type="text" class="form-control" th:field="*{school}"
+                                                            data-clean-value>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row justify-content-end mt-3">
+                                                <div class="col-auto">
+                                                    <button id="btnClearFilters" type="button"
+                                                        class="btn btn-sm btn-phoenix-secondary" title="Limpiar">
+                                                        <i class="fa fa-eraser me-2"></i>
+                                                        Limpiar
+                                                    </button>
+                                                    <button type="submit" class="btn btn-sm btn-secondary"
+                                                        title="Buscar">
+                                                        <i class="fa fa-search me-2"></i>
+                                                        Buscar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
-                            </header>
-                            <div th:if="${hasPatients}" class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
-                                <div class="table-responsive scrollbar-overlay mx-n1 px-1">
-                                    <table class="table table-sm fs--1 mb-0">
-                                        <thead>
-                                            <tr>
-                                                <th class="sort align-middle" scope="col" data-sort="name" title="NOMBRE COMPLETO">NOMBRE COMPLETO</th>
-                                                <th class="sort align-middle" scope="col" data-sort="school" title="COLEGIO">COLEGIO</th>
-                                                <th class="sort align-middle" scope="col" data-sort="age" title="EDAD">EDAD</th>
-                                                <th class="sort align-middle" scope="col" data-sort="enabled" title="HABILITADO">HABILITADO</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="list" id="patients-table-body">
-                                            <tr th:each="patient : ${patients}" class="position-static">
-                                                <td class="name align-middle white-space-nowrap">
-                                                    <a th:href="@{/patients/{id}(id = ${patient.id})}" class="link-primary" th:text="${patient.fullName}" th:title="${patient.fullName}"></a>
-                                                </td>
-                                                <td class="school align-middle white-space-nowrap" th:text="${patient.school}" th:title="${patient.school}"></td>
-                                                <td class="age align-middle white-space-nowrap" th:text="${patient.age}" th:title="${patient.age}"></td>
-                                                <td class="enabled align-middle white-space-nowrap" th:with="enabled = ${patient.enabled ? 'Sí' : 'No'}" th:text="${enabled}" th:title="${enabled}"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <th:block th:insert="~{fragments/tables :: table-pagination(page = ${page}, formId = ${formFiltersId})}"></th:block>
                             </div>
+                        </header>
+                        <div th:if="${hasPatients}"
+                            class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
+                            <div class="table-responsive scrollbar-overlay mx-n1 px-1">
+                                <table class="table table-sm fs--1 mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="sort align-middle" scope="col" data-sort="name"
+                                                title="NOMBRE COMPLETO">NOMBRE COMPLETO</th>
+                                            <th class="sort align-middle" scope="col" data-sort="school"
+                                                title="COLEGIO">COLEGIO</th>
+                                            <th class="sort align-middle" scope="col" data-sort="age" title="EDAD">EDAD
+                                            </th>
+                                            <th class="sort align-middle" scope="col" data-sort="enabled"
+                                                title="HABILITADO">HABILITADO</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="list" id="patients-table-body">
+                                        <tr th:each="patient : ${patients}" class="position-static">
+                                            <td class="name align-middle white-space-nowrap">
+                                                <a th:href="@{/patients/{id}(id = ${patient.id})}" class="link-primary"
+                                                    th:text="${patient.fullName}" th:title="${patient.fullName}"></a>
+                                            </td>
+                                            <td class="school align-middle white-space-nowrap"
+                                                th:text="${patient.school}" th:title="${patient.school}"></td>
+                                            <td class="age align-middle white-space-nowrap" th:text="${patient.age}"
+                                                th:title="${patient.age}"></td>
+                                            <td class="enabled align-middle white-space-nowrap"
+                                                th:with="enabled = ${patient.enabled ? 'Sí' : 'No'}"
+                                                th:text="${enabled}" th:title="${enabled}"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <th:block
+                                th:insert="~{fragments/tables :: table-pagination(page = ${page}, formId = ${formFiltersId})}">
+                            </th:block>
                         </div>
                     </div>
                 </div>
             </div>
-        </main>
-    </body>
+        </div>
+    </main>
+</body>
+
 </html>

@@ -24,6 +24,8 @@ public class PatientListDto extends AbstractListDto {
      */
     private Long id;
 
+    private String name;
+
     /**
      * El nombre completo del paciente.
      */
@@ -37,7 +39,7 @@ public class PatientListDto extends AbstractListDto {
     /**
      * La edad del paciente
      */
-    private int age;
+    private Integer age;
 
     /**
      * Si el paciente se encuentra en activo o no

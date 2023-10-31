@@ -16,8 +16,7 @@ const $formFilters = document.querySelector('#formFilters');
  * @constant valueNames
  */
 const valueNames = [
-    'name',
-    'company'
+    'name'
 ];
 
 /**
