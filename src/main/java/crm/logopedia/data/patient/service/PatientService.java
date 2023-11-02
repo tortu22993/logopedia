@@ -1,7 +1,10 @@
 package crm.logopedia.data.patient.service;
 
+import crm.logopedia.data.patient.model.dto.PatientDetailDto;
 import crm.logopedia.data.patient.model.dto.PatientListDto;
+import crm.logopedia.data.user.model.dto.UserDetailDto;
 import crm.logopedia.data.user.model.dto.UserListDto;
+import jakarta.mail.MessagingException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -27,4 +30,7 @@ public interface PatientService {
      */
     List<PatientListDto> findAll();
 
+    PatientDetailDto findById(Long id);
+
+    PatientDetailDto save(PatientDetailDto patientDetailDto) throws MessagingException;
 }

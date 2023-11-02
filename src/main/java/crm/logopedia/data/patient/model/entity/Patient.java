@@ -129,7 +129,7 @@ public class Patient extends AbstractAuditableEntity {
      *
      * @param service El servicio a añadir
      */
-    public void addRole(Services service) {
+    public void addService(Services service) {
         services.add(service);
     }
 
@@ -138,7 +138,7 @@ public class Patient extends AbstractAuditableEntity {
      *
      * @param service El servicio a eliminar
      */
-    public void removeRole(Services service) {
+    public void removeService(Services service) {
         services.remove(service);
     }
 

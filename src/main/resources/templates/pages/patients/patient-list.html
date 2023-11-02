@@ -25,13 +25,13 @@
                     <div th:if="${not hasPatients}" class="position-absolute top-50 start-50 translate-middle">
                         <p class="mb-0" title="No hay elementos para mostrar.">No hay elementos para mostrar.</p>
                     </div>
-                    <div id="users" data-list th:with="formFiltersId = 'formFilters'">
+                    <div id="patients" data-list th:with="formFiltersId = 'formFilters'">
                         <header class="mb-2">
                             <form id="filterForm" th:action="@{/patients}" method="GET">
-                                <div th:class="'d-flex align-items-center flex-column flex-sm-row gap-3 ' + ${hasPatients ? 'justify-content-between' : 'justify-content-end'}">
-                                    <div th:if="${hasPatients}" class="search-box flex-grow-1 w-100 w-sm-auto">
+                                <div th:class="'d-flex align-items-center flex-column flex-sm-row gap-3 ' + ${hasPatients ? 'justify-content-between' : 'justify-content-between'}">
+                                    <div class="search-box flex-grow-1 w-100 w-sm-auto">
                                         <input type="hidden" class="form-control form-control-sm" id="searchInput" value="" placeholder="Ingrese un nombre o un colegio" aria-label="Nombre">
-                                        <input type="text" class="form-control form-control-sm" name="name" value=""  aria-label="Nombre">
+                                        <input type="text" class="form-control form-control-sm" name="name" value="" aria-label="Nombre">
                                     </div>
                                     <div class="d-grid d-sm-flex gap-2 w-100 w-sm-auto">
                                         <button type="submit" class="btn btn-sm btn-secondary" title="Filtrar">
@@ -39,7 +39,7 @@
                                             Filtrar
                                         </button>
                                         <a sec:authorize="hasAnyRole('ROLE_MASTER', 'ROLE_ADMIN')"
-                                            th:href="@{/users/action/new}" class="btn btn-sm btn-primary px-5"
+                                            th:href="@{/patients/action/new}" class="btn btn-sm btn-primary px-5"
                                             role="button" title="Nuevo">
                                             <i class="fa fa-plus me-2"></i>
                                             Nuevo

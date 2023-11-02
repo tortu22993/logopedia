@@ -141,6 +141,22 @@ public abstract class ViewNames {
      */
     public static final String PATIENT_LIST = ROOT_PATIENTS + "/patient-list";
 
+    /**
+     * El nombre del fichero .html de la vista del detalle
+     * de pacientes.
+     *
+     * @see PatientController
+     */
+    public static final String PATIENT_DETAIL = ROOT_PATIENTS + "/patient-detail";
+
+    /**
+     * El nombre del fichero .html de la vista del edition
+     * de pacientes.
+     *
+     * @see PatientController
+     */
+    public static final String PATIENT_EDITION = ROOT_PATIENTS + "/patient-edition";
+
 
     /**
      * El nombre del fichero .html de la vista del listado

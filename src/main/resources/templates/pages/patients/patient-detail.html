@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+		<th:block th:insert="~{fragments/common :: head-commons}"></th:block>
+	</head>
+    <body>
+        <main id="top" class="main">
+            <div class="container-fluid px-0">
+                <th:block th:insert="~{fragments/menu-asides :: simple-left-vertical-menu}"></th:block>
+                <th:block th:insert="~{fragments/menu-headers :: simple-menu-header}"></th:block>
+                <div class="content">
+                    <div class="d-flex align-items-center justify-content-end justify-content-md-between gap-3 mb-3">
+                        <th:block th:insert="~{fragments/common :: breadcrumb}"></th:block>
+                        <nav class="d-flex align-items-center gap-2">
+                            <div class="btn-reveal-trigger">
+                                <a th:href="@{/patients}" class="btn btn-sm btn-reveal" title="Listado">
+                                    <i class="fa fa-arrow-left me-2"></i>
+                                    Listado
+                                </a>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="mb-0">
+                        <div class="row g-5">
+                            <div class="col-12">
+                                <div class="row g-3 h-100">
+                                    <div class="col-12">
+                                        <div class="card h-100">
+                                            <div class="card-header d-flex align-items-center justify-content-between flex-column flex-md-row gap-3">
+                                                <div class="d-flex align-items-center gap-3 text-center text-md-start">
+                                                    <div class="flex-grow-1">
+                                                        <span title="Paciente">
+                                                            <i class="fa fa-users text-primary me-2"></i>
+                                                            Paciente
+                                                        </span>
+                                                        <h4 class="card-title text-clip mb-0" th:text="${title}" th:title="${title}"></h4>
+                                                    </div>
+                                                </div>
+                                                <div class="d-auto-grid d-md-flex align-items-center gap-2 w-100 w-md-auto">
+                                                    <a sec:authorize="hasAnyRole('ROLE_MASTER', 'ROLE_ADMIN', 'ROLE_MANAGER')" th:href="@{/patients/{id}/action/edit(id = ${patientDetailDto.id})}" class="btn btn-sm btn-phoenix-primary" title="Editar">
+                                                        <i class="fa fa-pencil me-2"></i>
+                                                        Editar
+                                                    </a>
+                                                    <button type="button" class="btn btn-sm btn-phoenix-warning" title="Agregar favorito">
+                                                        <i class="far fa-star me-2 me-sm-0"></i>
+                                                        <span class="d-inline d-sm-none">Agregar favorito</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row gy-3">
+                                                    <div class="col-auto">
+                                                        <small title="Escuela" class="d-block">Escuela</small>
+                                                        <p class="mb-0" th:text="${patientDetailDto.school}" th:title="${patientDetailDto.school}"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="card h-100">
+                                            <div class="card-body">
+                                                <div class="accordion">
+                                                    <!-- INFORMACIÓN GENERAL -->
+                                                    <div class="accordion-item px-0 border-0">
+                                                        <h3 id="generalInformationHeading" class="accordion-header">
+                                                            <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#generalInformationCollapse" aria-expanded="true" aria-controls="generalInformationCollapse" title="Información general">Información general</button>
+                                                        </h3>
+                                                        <div id="generalInformationCollapse" class="accordion-collapse collapse show" aria-labelledby="generalInformationHeading">
+                                                            <div class="accordion-body">
+                                                                <div class="row gy-3">
+                                                                    <div class="col-xs-12 col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <small title="Nombre completo">Nombre completo</small>
+                                                                            <p th:text="${patientDetailDto.fullName}" th:title="${patientDetailDto.fullName}"></p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xs-12 col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <small title="Colegio">Colegio</small>
+                                                                            <p th:text="${patientDetailDto.school}" th:title="${patientDetailDto.school}"></p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xs-12 col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <small title="Fecha de nacimiento">Fecha de nacimiento</small>
+                                                                            <p th:text="${patientDetailDto.birthdate}" th:title="${patientDetailDto.birthdate}"></p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xs-12">
+                                                                        <div class="form-group">
+                                                                            <small title="Observaciones">Observaciones</small>
+                                                                            <p th:text="${patientDetailDto.observations}" th:title="${patientDetailDto.observations}"></p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- INFORMACIÓN DE LA CUENTA -->
+                                                    <div class="accordion-item px-0 border-0">
+                                                        <h3 id="accountInformationHeading" class="accordion-header">
+                                                            <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accountInformationCollapse" aria-expanded="true" aria-controls="accountInformationCollapse" title="Información de la cuenta">Información de la cuenta</button>
+                                                        </h3>
+                                                        <div id="accountInformationCollapse" class="accordion-collapse collapse show" aria-labelledby="accountInformationHeading">
+                                                            <div class="accordion-body">
+                                                                <div class="row gy-3">
+                                                                    <div class="col-xs-12 col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <small title="Habilitado">Habilitado</small>
+                                                                            <p th:with="enabled = ${patientDetailDto.enabled ? 'Sí' : 'No'}" th:text="${enabled}" th:title="${enabled}"></p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xs-12 col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <small title="Ley de proteccion de datos">Ley de proteccion de datos</small>
+                                                                            <p th:with="lopd = ${patientDetailDto.lopd ? 'Sí' : 'No'}" th:text="${lopd}" th:title="${lopd}"></p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xs-12 col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <small title="Coordinacion con las escuelas">Coordinacion con las escuelas</small>
+                                                                            <p th:with="schoolCordination = ${patientDetailDto.schoolCordination ? 'Sí' : 'No'}" th:text="${schoolCordination}" th:title="${schoolCordination}"></p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xs-12">
+                                                                        <div class="form-group">
+                                                                            <small title="Servicios">Servicios</small>
+                                                                            <p th:text="${patientDetailDto.plainServices}" th:title="${patientDetailDto.plainServices}"></p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- INFORMACIÓN DEL SISTEMA -->
+                                                    <div class="accordion-item px-0 border-0">
+                                                        <h3 id="systemInformationHeading" class="accordion-header">
+                                                            <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#systemInformationCollapse" aria-expanded="true" aria-controls="systemInformationCollapse" title="Información del sistema">Información del sistema</button>
+                                                        </h3>
+                                                        <div id="systemInformationCollapse" class="accordion-collapse collapse show" aria-labelledby="systemInformationHeading">
+                                                            <div class="accordion-body">
+                                                                <div class="row gy-3">
+                                                                    <div class="col-xs-12 col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <small title="Creado por">Creado por</small>
+                                                                            <p>
+                                                                                <a th:href="@{/users/{username}(username = ${patientDetailDto.createdByUsername})}" class="link-primary" th:text="${patientDetailDto.createdByFullName}" th:title="${patientDetailDto.createdByFullName}"></a>,
+                                                                                <span th:with="createdAt = ${#dates.format(patientDetailDto.createdAt, 'd MMMM, yyyy HH:mm')}" th:text="${createdAt}" th:title="${createdAt}"></span>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xs-12 col-sm-6">
+                                                                        <div class="form-group">
+                                                                            <small title="Última modificación por">Última modificación por</small>
+                                                                            <p>
+                                                                                <a th:href="@{/users/{username}(username = ${patientDetailDto.lastModifiedByUsername})}" class="link-primary" th:text="${patientDetailDto.lastModifiedByFullName}" th:title="${patientDetailDto.lastModifiedByFullName}"></a>,
+                                                                                <span th:with="lastModifiedAt = ${#dates.format(patientDetailDto.lastModifiedAt, 'd MMMM, yyyy HH:mm')}" th:text="${lastModifiedAt}" th:title="${lastModifiedAt}"></span>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>
