@@ -199,8 +199,6 @@ public class PatientServiceImpl implements PatientService{
         final var existingPatient = existingPatientOptional.get();
 
 
-
-
         existingPatient.setName(patientDetailDto.getName());
         existingPatient.setMiddleName(patientDetailDto.getMiddleName());
         existingPatient.setLastName(patientDetailDto.getLastName());
