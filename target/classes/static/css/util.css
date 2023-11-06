@@ -1,0 +1,35 @@
+/*
+ * Fichero de utilidades de CSS.
+ *
+ * @author Enrique Escalante
+ */
+.text-overflow {
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+}
+
+.text-preline {
+    white-space: pre-line;
+}
+
+.text-clip {
+    hyphens: auto;
+    word-wrap: break-word;
+    word-break: break-word;
+    position: relative;
+    overflow: unset;
+    -webkit-line-clamp: 2;
+}
+
+.space-break {
+    white-space: break-spaces !important;
+}
+
+.d-auto-grid {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(200px, 1fr)
+    );
+}

@@ -1,0 +1,8 @@
+/*
+ * Fichero de estilos para enlaces.
+ *
+ * @author Enrique Escalante
+ */
+a:has(.svg-inline--fa):hover {
+    text-decoration: none;
+}

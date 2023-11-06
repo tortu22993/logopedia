@@ -1,0 +1,173 @@
+/*
+ * Fichero de estilos para controles:
+ * - Input.
+ * - Select.
+ * - Textarea.
+ *
+ * @author Enrique Escalante
+ */
+
+:root {
+    --kerberos-changed-value-color: #FAFFBD;
+    --kerberos-invalid-control-color: #ed2000;
+}
+
+.dark:root {
+    --kerberos-changed-value-color: #545735;
+}
+
+/* HTML */
+textarea {
+    min-height: 100px !important;
+}
+
+textarea::-webkit-scrollbar-corner {
+    background-color: transparent;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* Chrome, Safari, Edge, Opera */
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+input[type = "number"] {
+    -moz-appearance: textfield; /* Firefox */
+    appearance: none;
+}
+
+input[type = "search"]::-webkit-search-decoration,
+input[type = "search"][data-custom-cancel]::-webkit-search-cancel-button,
+input[type = "search"]::-webkit-search-results-button,
+input[type = "search"][data-custom-cancel]::-webkit-search-results-decoration {
+    display: none
+}
+
+.dark :is(input, select) {
+    color-scheme: dark;
+}
+
+/* Bootstrap */
+.form-select:focus {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+:is(.form-group, .form-floating):not(:has(.form-control, .form-select)) {
+    border-bottom: 1px solid var(--phoenix-border-color);
+}
+
+.form-group input[type = "checkbox"] {
+    display: block;
+    margin: .6rem 16px;
+    margin-left: 5px;
+}
+
+input[type = "checkbox"]:focus {
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    -ms-box-shadow: none !important;
+    -o-box-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.form-control {
+    font-size: 0.875rem;
+}
+
+:is(.form-control, .form-control-sm, .form-select).is-invalid:focus {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -ms-box-shadow: none;
+    -o-box-shadow: none;
+    box-shadow: none;
+}
+
+:is(.form-group, .form-floating):has(.form-control:focus, .form-select:focus) label {
+    color: var(--phoenix-primary);
+}
+
+.form-control:focus {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -ms-box-shadow: none;
+    -o-box-shadow: none;
+    box-shadow: none;
+    border-color: var(--phoenix-primary);
+}
+
+.form-label {
+    font-size: 0.75rem;
+    font-weight: normal;
+    text-transform: unset;
+    color: var(--phoenix-accordion-color);
+}
+
+.form-group .form-label {
+    padding-left: 5px;
+}
+
+:is(.form-group, .form-floating):not(:has(.form-control, .form-select, .table, table)) {
+    height: 100%;
+}
+
+:is(.form-group, .form-floating):not(:has(.form-control, .form-select)) small {
+    padding-left: 5px;
+}
+
+:is(.form-group, .form-floating):not(:has(.form-control, .form-select)) :is(p, div.table-responsive) {
+    padding: .3rem 5px;
+    padding-top: 0;
+    font-size: 0.875rem;
+    line-height: 1.49;
+    margin-bottom: 0;
+}
+
+:is(.form-group, .form-floating):not(:has(.form-control, .form-select)) td:first-child {
+    padding-left: 5px;
+}
+
+:is(.form-group, .form-floating):not(:has(.form-control, .form-select)) td:last-child {
+    padding-right: 5px;
+}
+
+
+:is(.form-group, .form-floating):not(:has(.form-control)) p:empty:after {
+    content: '\200b'; /* Espacio en blanco */
+}
+
+.input-group .input-group-text + :is(.form-control, .form-select) {
+    border-top-right-radius: .375rem !important;
+    border-bottom-right-radius: .375rem !important;
+    border-left: none;
+    padding-left: 0;
+}
+
+.input-group:has(.form-control:focus, .form-select:focus) .input-group-text {
+    border-color: var(--phoenix-primary);
+}
+
+.input-group .input-group-text {
+    background-color: transparent !important;
+    font-size: 1rem;
+    -webkit-transition: border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+    -o-transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+}
+
+:is(.form-group, .form-floating):has(.is-invalid) .form-label {
+    color: var(--kerberos-invalid-control-color) !important;
+}
+
+:is(.form-group, .form-floating):has(.is-invalid) .input-group-text {
+    border-color: var(--kerberos-invalid-control-color) !important;
+}
+
+:is(.form-control, .form-group, .choices__inner).control-changed-value,
+.input-group:has(.control-changed-value) .input-group-text {
+    background-color: var(--kerberos-changed-value-color) !important;
+}

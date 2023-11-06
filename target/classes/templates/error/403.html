@@ -1,0 +1,7 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <th:block th:insert="~{fragments/common :: head}"></th:block>
+    <body>
+        <th:block th:insert="~{fragments/error :: error(httpStatusCode = 403, title = '¡Acceso denegado!', message = 'Lo sentimos, pero no tienes permisos para visualizar esta página.')}"></th:block>
+    </body>
+</html>

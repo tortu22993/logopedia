@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title th:remove="all">Plantilla HTML para correos electrónicos con imágenes embebidas</title>
+	</head>
+	<body>
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td bgcolor="#01ACEC" style="background-color: #01ACEC; padding-top: 2px; padding-bottom: 3px;"></td>
+				<td bgcolor="#F9D102" style="background-color: #F9D102; padding-top: 2px; padding-bottom: 3px;"></td>
+				<td bgcolor="#F84405" style="background-color: #F84405; padding-top: 2px; padding-bottom: 3px;"></td>
+			</tr>
+			<tr>
+				<td align="center" valign="top" colspan="3">
+					<br>
+					<br>
+
+					<div>
+						<img src="cid:applicationLogo">
+					</div>
+
+					<br>
+					<br>
+
+					<table width="600" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td align="center" valign="top" bgcolor="#E1E1E1" style="background-color: #E1E1E1; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; color: #000000; padding: 10px 15px;">
+								<div>
+									<strong th:text="#{mail.welcome.title}" style="font-size: 32px;"></strong>
+									<br>
+									<th:block th:text="#{mail.welcome.subtitle}"></th:block>
+								</div>
+
+								<br>
+								<br>
+
+								<div>
+									<a th:href="${finishAccountConfigurationUrl}" th:text="#{mail.welcome.continue-button}" style="background-color: #01ACEC; color: #FFFFFF; text-decoration: none; font-size: 18px;"></a>
+								</div>
+								
+								<br>
+								<br>
+
+								<div>
+									<th:block th:text="#{mail.welcome.url-reminder} + ':'"></th:block>
+									<br>
+									<a th:href="${loginUrl}" th:text="${loginUrl}" style="color: #01ACEC; font-size: 18px;"></a>
+								</div>
+
+								<br>
+								<br>
+
+								<div>
+									<th:block th:text="#{mail.welcome.username-label} + ':'"></th:block>
+									<br>
+									<a th:href="'mailto:' + ${userEmail}" th:text="${userEmail}" style="color: #01ACEC; font-size: 18px;"></a>
+								</div>
+
+								<br>
+								<br>
+
+								<div>
+									<th:block th:text="#{mail.welcome.summary}"></th:block>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td align="left" valign="top" colspan="3">
+								<br>
+
+								<small th:text="#{mail.auto-response}"></small>
+								<br>
+
+								<div>
+									<img src="cid:logopediaLogo" width="200">
+								</div>
+							</td>
+						</tr>
+					</table>
+
+					<br>
+					<br>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

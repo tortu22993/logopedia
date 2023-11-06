@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+		<th:block th:insert="~{fragments/common :: head-commons}"></th:block>
+	</head>
+    <body>
+        <main id="top" class="main">
+            <div class="container-fluid px-0">
+                <th:block th:insert="~{fragments/menu-asides :: simple-left-vertical-menu}"></th:block>
+                <th:block th:insert="~{fragments/menu-headers :: simple-menu-header}"></th:block>
+                <div class="content" th:with="newPatient = ${#strings.isEmpty(patientDetailDto.id)}">
+                    <div class="d-flex align-items-center justify-content-end justify-content-md-between gap-3 mb-3">
+                        <th:block th:insert="~{fragments/common :: breadcrumb}"></th:block>
+                        <nav class="d-flex align-items-center gap-2">
+                            <div class="btn-reveal-trigger">
+                                <a th:if="${newPatient}" th:href="@{/patients}" class="btn btn-sm btn-reveal" title="Listado">
+                                    <i class="fa fa-arrow-left me-2"></i>
+                                    Listado
+                                </a>
+                                <a th:if="${not newPatient}" th:href="@{/patients/{id}(id = ${patientDetailDto.id})}" class="btn btn-sm btn-reveal" title="Salir del modo de edición">
+                                    <i class="fa fa-arrow-left me-2"></i>
+                                    Salir del modo de edición
+                                </a>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="mb-0">
+                        <div class="row g-5">
+                            <div class="col-12">
+                                <div class="row g-3 h-100">
+                                    <div class="col-12">
+                                        <div class="card h-100">
+                                            <div class="card-header d-flex align-items-center justify-content-between flex-column flex-md-row gap-3">
+                                                <div class="d-flex align-items-center gap-3 text-center text-md-start">
+                                                    <div class="flex-grow-1">
+                                                        <span title="Paciente">
+                                                            <i class="fa fa-users text-primary me-2"></i>
+                                                            Paciente
+														    <span th:if="${not newPatient}" class="badge badge-phoenix badge-phoenix-warning ms-2" title="Modo de edición">Modo de edición</span>
+                                                        </span>
+                                                        <h4 class="card-title text-clip mb-0" th:text="${title}" th:title="${title}"></h4>
+                                                    </div>
+                                                </div>
+                                                <div class="d-auto-grid d-md-flex align-items-center gap-2 w-100 w-md-auto">
+                                                    <button type="submit" class="btn btn-sm btn-primary" title="Guardar" form="formSave">
+                                                        <i class="fa fa-cloud me-2"></i>
+                                                        Guardar
+                                                    </button>
+                                                    <button id="cancelButton" type="button" class="btn btn-sm btn-phoenix-secondary" th:with="cancelButtonTitle = ${newPatient ? 'Cancelar' : 'Cancelar cambios'}" th:title="${cancelButtonTitle}">
+                                                        <i class="fa fa-ban me-2"></i>
+                                                        <th:block th:text="${cancelButtonTitle}" th:title="${cancelButtonTitle}"></th:block>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div th:if="${not newPatient}" class="card-body">
+                                                <div class="row gy-3">
+                                                    <div class="col-auto">
+                                                        <small title="Escuela" class="d-block">Escuela</small>
+                                                        <p class="mb-0" th:text="${patientDetailDto.school}" th:title="${patientDetailDto.school}"></p>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="card h-100">
+                                            <div class="card-body">
+                                                <div class="row gy-3">
+                                                    <div class="col-12">
+                                                        <form id="formSave" th:object="${patientDetailDto}" th:action="@{/patients/action/save}" method="post">
+                                                            <th:block th:insert="~{fragments/common :: error-warning}"></th:block>
+                                                            <input type="hidden" th:field="*{id}">
+
+                                                            <div class="accordion">
+                                                                <!-- INFORMACIÓN GENERAL -->
+                                                                <div class="accordion-item px-0 border-0">
+                                                                    <h3 id="generalInformationHeading" class="accordion-header">
+                                                                        <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#generalInformationCollapse" aria-expanded="true" aria-controls="generalInformationCollapse" title="Información general">Información general</button>
+                                                                    </h3>
+                                                                    <div id="generalInformationCollapse" class="accordion-collapse collapse show" aria-labelledby="generalInformationHeading">
+                                                                        <div class="accordion-body">
+                                                                            <div class="row gy-3">
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label for="name" class="form-label" title="Nombre">Nombre</label>
+                                                                                        <input type="text" class="form-control" th:field="*{name}" th:errorclass="${'form-control is-invalid'}">
+                                                                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label for="middleName" class="form-label" title="Primer apellido">Primer apellido</label>
+                                                                                        <input type="text" class="form-control" th:field="*{middleName}" th:errorclass="${'form-control is-invalid'}">
+                                                                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('middleName')}" th:errors="*{middleName}"></small>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label for="lastName" class="form-label" title="Segundo apellido">Segundo apellido</label>
+                                                                                        <input type="text" class="form-control" th:field="*{lastName}" th:errorclass="${'form-control is-invalid'}">
+                                                                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></small>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label for="school" class="form-label" title="Colegio">Colegio</label>
+                                                                                        <input type="text" class="form-control" th:field="*{school}" th:errorclass="${'form-control is-invalid'}">
+                                                                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('school')}" th:errors="*{school}"></small>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label for="birthdate" class="form-label" title="Fecha de nacimiento">Fecha de nacimiento</label>
+																						<input type="date" class="form-control" th:field="*{birthdate}" th:errorClass="${'form-control is-invalid'}">
+																						<small class="invalid-feedback" th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}"></small>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label for="observations" class="form-label" title="Observaciones">Observaciones</label>
+                                                                                        <input type="text" class="form-control" th:field="*{observations}" th:errorclass="${'form-control is-invalid'}">
+                                                                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('observations')}" th:errors="*{observations}"></small>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+            
+                                                                <!-- INFORMACIÓN DE LA CUENTA -->
+                                                                <div class="accordion-item px-0 border-0">
+                                                                    <h3 id="accountInformationHeading" class="accordion-header">
+                                                                        <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accountInformationCollapse" aria-expanded="true" aria-controls="accountInformationCollapse" title="Información de la cuenta">Información de la cuenta</button>
+                                                                    </h3>
+                                                                    <div id="accountInformationCollapse" class="accordion-collapse collapse show" aria-labelledby="accountInformationHeading">
+                                                                        <div class="accordion-body">
+                                                                            <div class="row gy-3">
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                            <label for="enabled" class="form-label" title="Habilitado">Habilitado</label>
+                                                                                            <input type="checkbox" class="form-check-input" id="enabled" th:field="*{enabled}" title="Habilitado" th:errorclass="${'form-control is-invalid'}">
+                                                                                            <small class="invalid-feedback" th:if="${#fields.hasErrors('enabled')}" th:errors="*{enabled}"></small>
+                                                                                        
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label for="lopd" class="form-label" title="Ley de proteccion de datos">Ley de proteccion de datos</label>
+                                                                                        <input type="checkbox" class="form-check-input" id="lopd" th:field="*{lopd}" title="Ley de proteccion de datos" th:errorclass="${'form-control is-invalid'}">
+                                                                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('lopd')}" th:errors="*{lopd}"></small>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label for="schoolCordination" class="form-label" title="Coordinacion con escuelas">Coordinacion con escuelas</label>
+                                                                                        <input type="checkbox" class="form-check-input" id="schoolCordination" th:field="*{schoolCordination}" title="Coordinacion con escuelas" th:errorclass="${'form-control is-invalid'}">
+                                                                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('schoolCordination')}" th:errors="*{schoolCordination}"></small>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-12">
+                                                                                    <div class="form-group">
+                                                                                        <label for="servicesId" class="form-label" title="Servicios">Servicios</label>
+                                                                                        <select class="form-select" th:field="*{servicesId}" th:errorclass="${'form-control is-invalid'}" data-choices multiple>
+                                                                                            <option th:each="service : ${services}" th:value="${service.id}" th:text="${service.name}"></option>
+                                                                                        </select>
+                                                                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('servicesId')}" th:errors="*{servicesId}"></small>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+            
+                                                                <!-- INFORMACIÓN DEL SISTEMA -->
+                                                                <div th:if="${not newPatient}" class="accordion-item px-0 border-0">
+                                                                    <h3 id="systemInformationHeading" class="accordion-header">
+                                                                        <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#systemInformationCollapse" aria-expanded="true" aria-controls="systemInformationCollapse" title="Información del sistema">Información del sistema</button>
+                                                                    </h3>
+                                                                    <div id="systemInformationCollapse" class="accordion-collapse collapse show" aria-labelledby="systemInformationHeading">
+                                                                        <div class="accordion-body">
+                                                                            <div class="row gy-3">
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <small title="Creado por">Creado por</small>
+                                                                                        <p>
+                                                                                            <a th:href="@{/users/{username}(username = ${patientDetailDto.createdByUsername})}" class="link-primary" th:text="*{createdByFullName}" th:title="*{createdByFullName}"></a>,
+                                                                                            <span th:with="createdAt = *{#dates.format(createdAt, 'd MMMM, yyyy HH:mm')}" th:text="${createdAt}" th:title="${createdAt}"></span>
+                                                                                        </p>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <small title="Última modificación por">Última modificación por</small>
+                                                                                        <p>
+                                                                                            <a th:href="@{/users/{username}(username = ${patientDetailDto.lastModifiedByUsername})}" class="link-primary" th:text="*{lastModifiedByFullName}" th:title="*{lastModifiedByFullName}"></a>,
+                                                                                            <span th:with="lastModifiedAt = *{#dates.format(lastModifiedAt, 'd MMMM, yyyy HH:mm')}" th:text="${lastModifiedAt}" th:title="${lastModifiedAt}"></span>
+                                                                                        </p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

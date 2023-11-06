@@ -1,0 +1,8 @@
+/*
+ * Estilos relativos al componente de paginación.
+ *
+ * @author Enrique Escalante
+ */
+.records-per-page-container {
+    width: 200px;
+}

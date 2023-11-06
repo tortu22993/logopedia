@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <th:block th:insert="~{fragments/common :: head-commons}"></th:block>
+        <script th:src="@{/pages/job-positions/job-position-edition.js}" type="module"></script>
+    </head>
+    <body>
+        <main id="top" class="main">
+            <div class="container-fluid px-0">
+                <th:block th:insert="~{fragments/menu-asides :: simple-left-vertical-menu}"></th:block>
+                <th:block th:insert="~{fragments/menu-headers :: simple-menu-header}"></th:block>
+                <div class="content" th:with="newJobPosition = ${jobPositionDetailDto.id == null}">
+                    <div class="d-flex align-items-center justify-content-end justify-content-md-between gap-3 mb-3">
+                        <th:block th:insert="~{fragments/common :: breadcrumb}"></th:block>
+                        <nav class="d-flex align-items-center gap-2">
+                            <div class="btn-reveal-trigger">
+                                <a th:if="${newJobPosition}" th:href="@{/job-positions}" class="btn btn-sm btn-reveal" title="Listado">
+                                    <i class="fa fa-arrow-left me-2"></i>
+                                    Listado
+                                </a>
+                                <a th:if="${not newJobPosition}" th:href="@{/job-positions/{id}(id = ${jobPositionDetailDto.id})}" class="btn btn-sm btn-reveal" title="Salir del modo de edición">
+                                    <i class="fa fa-arrow-left me-2"></i>
+                                    Salir del modo de edición
+                                </a>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="mb-0">
+                        <div class="row g-5">
+                            <div class="col-12">
+                                <div class="row g-3 h-100">
+                                    <div class="col-12">
+                                        <div class="card h-100">
+                                            <div class="card-header d-flex align-items-center justify-content-between flex-column gap-3 flex-sm-row">
+                                                <div class="d-flex flex-column gap-2 text-center text-sm-start">
+                                                    <span title="Puesto de trabajo">
+                                                        <i class="fa fa-solid fa-user-doctor text-primary me-2"></i>
+                                                        Puesto de trabajo
+                                                        <span th:if="${not newJobPosition}" class="badge badge-phoenix badge-phoenix-warning ms-2" title="Modo de edición">Modo de edición</span>
+                                                    </span>
+                                                    <h4 class="card-title text-clip mb-0" th:text="${title}" th:title="${title}"></h4>
+                                                </div>
+                                                <div class="d-auto-grid w-100 gap-2 d-sm-flex align-items-sm-center w-sm-auto">
+                                                    <button type="submit" class="btn btn-sm btn-primary" title="Guardar" form="formSave">
+                                                        <i class="fa fa-cloud me-2"></i>
+                                                        Guardar
+                                                    </button>
+                                                    <button id="cancelButton" type="button" class="btn btn-sm btn-phoenix-secondary" th:with="cancelButtonTitle = ${newJobPosition ? 'Cancelar' : 'Cancelar cambios'}" th:title="${cancelButtonTitle}">
+                                                        <i class="fa fa-ban me-2"></i>
+                                                        <th:block th:text="${cancelButtonTitle}" th:title="${cancelButtonTitle}"></th:block>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row gy-3">
+                                                    <div class="col-12">
+                                                        <form id="formSave" th:object="${jobPositionDetailDto}" th:action="@{/job-positions/action/save}" method="post">
+											                <th:block th:insert="~{fragments/common :: error-warning}"></th:block>      
+                                                            
+                                                            <input type="hidden" th:field="*{id}">
+
+                                                            <div class="accordion">
+                                                                <!-- INFORMACIÓN GENERAL -->
+                                                                <div class="accordion-item px-0 border-0">
+                                                                    <h3 id="generalInformationHeading" class="accordion-header">
+                                                                        <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#generalInformationCollapse" aria-expanded="true" aria-controls="generalInformationCollapse" title="Información general">Información general
+                                                                        </button>
+                                                                    </h3>
+                                                                    <div id="generalInformationCollapse" class="accordion-collapse collapse show" aria-labelledby="generalInformationHeading">
+                                                                        <div class="accordion-body">
+                                                                            <div class="row gy-3">
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label for="name" class="form-label" title="Nombre">Nombre</label>
+                                                                                        <input type="text" class="form-control" th:field="*{name}" th:errorClass="${'form-control is-invalid'}">
+                                                                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- INFORMACIÓN DEL SISTEMA -->
+                                                                <div th:if="${not newJobPosition}" class="accordion-item px-0 border-0">
+                                                                    <h3 id="systemInformationHeading" class="accordion-header">
+                                                                        <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#systemInformationCollapse"  aria-expanded="true"  aria-controls="systemInformationCollapse"  title="Información del sistema">Información del sistema</button>
+                                                                    </h3>
+                                                                    <div id="systemInformationCollapse" class="accordion-collapse collapse show"  aria-labelledby="systemInformationHeading">
+                                                                        <div class="accordion-body">
+                                                                            <div class="row gy-3" th:if="${not newJobPosition}">
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <small title="Creado por">Creado por</small>
+                                                                                        <p>
+                                                                                            <a th:href="@{/users/{username}(username = *{createdByUsername})}" class="link-primary" th:text="*{createdByFullName}" th:title="*{createdByFullName}"></a>,
+                                                                                            <span th:with="createdAt = *{#dates.format(createdAt, 'd MMMM, yyyy HH:mm')}" th:text="${createdAt}" th:title="${createdAt}"></span>
+                                                                                        </p>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <small title="Última modificación por">Última modificación por</small>
+                                                                                        <p>
+                                                                                            <a th:href="@{/users/{username}(username = *{lastModifiedByUsername})}" class="link-primary" th:text="*{lastModifiedByFullName}" th:title="*{lastModifiedByFullName}"></a>,
+                                                                                            <span th:with="lastModifiedAt = *{#dates.format(lastModifiedAt, 'd MMMM, yyyy HH:mm')}" th:text="${lastModifiedAt}" th:title="${lastModifiedAt}"></span>
+                                                                                        </p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

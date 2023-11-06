@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head></head>
+    <body>
+        <nav th:fragment="simple-left-vertical-menu" class="navbar navbar-vertical navbar-expand-lg">
+            <script>
+                const navbarStyle = window.config.phoenixNavbarStyle;
+
+                if(navbarStyle && navbarStyle !== 'transparent') {
+                    document.querySelector('body').classList.add(`navbar-${navbarStyle}`);
+                }
+            </script>
+            <div id="lateralMenu" class="navbar-collapse collapse">
+                <div class="navbar-vertical-content">
+                    <ul class="navbar-nav flex-column">
+                        <li class="nav-item">
+                            <div class="nav-item-wrapper">
+                                <a th:href="@{/my-apps}"
+                                        title="Mis aplicaciones"
+                                        th:class="${activeMenuPage == 'my-apps' ? 'nav-link label-1 active' : 'nav-link label-1'}"
+                                        data-bs-toggle
+                                        aria-expanded="false">
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-icon">
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="2" cy="2" r="2" fill="currentColor"></circle>
+                                                <circle cx="2" cy="8" r="2" fill="currentColor"></circle>
+                                                <circle cx="2" cy="14" r="2" fill="currentColor"></circle>
+                                                <circle cx="8" cy="8" r="2" fill="currentColor"></circle>
+                                                <circle cx="8" cy="14" r="2" fill="currentColor"></circle>
+                                                <circle cx="14" cy="8" r="2" fill="currentColor"></circle>
+                                                <circle cx="14" cy="14" r="2" fill="currentColor"></circle>
+                                                <circle cx="8" cy="2" r="2" fill="currentColor"></circle>
+                                                <circle cx="14" cy="2" r="2" fill="currentColor"></circle>
+                                            </svg>
+                                        </span>
+                                        <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text">Mis aplicaciones</span>
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <p class="navbar-vertical-label" title="General">General</p>
+                            <hr class="navbar-vertical-line">
+                            <div class="nav-item-wrapper">
+                                <a th:href="@{/dashboard/}"
+                                        title="Panel de control"
+                                        th:class="'nav-link label-1 ' + ${activeMenuPage == 'dashboard' ? 'active' : ''}"
+                                        data-bs-toggle
+                                        aria-expanded="false">
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-icon">
+                                            <i class="fa fa-gauge-high"></i>
+                                        </span>
+                                        <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text">Panel de control</span>
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="nav-item-wrapper">
+                                <a th:href="@{/projects}"
+                                        title="Agenda"
+                                        th:class="'nav-link label-1 ' + ${activeMenuPage == 'projects' ? 'active' : ''}"
+                                        data-bs-toggle
+                                        aria-expanded="false">
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-icon">
+                                            <i class="fa fa-calendar-days"></i>
+                                        </span>
+                                        <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text">Agenda</span>
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="nav-item-wrapper">
+                                <a th:href="@{/cases}"
+                                        title="Sesiones semana"
+                                        th:class="'nav-link label-1 ' + ${activeMenuPage == 'cases' ? 'active' : ''}"
+                                        data-bs-toggle
+                                        aria-expanded="false">
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-icon">
+                                            <i class="fa-solid fa-calendar-week"></i>
+                                        </span>
+                                        <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text">Sesiones semana</span>
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <p class="navbar-vertical-label" title="Gestión">Gestión</p>
+                            <hr class="navbar-vertical-line">
+                            <div class="nav-item-wrapper">
+                                <a th:href="@{/patients}"
+                                        title="Pacientes"
+                                        th:class="'nav-link label-1 ' + ${activeMenuPage == 'patients' ? 'active' : ''}"
+                                        data-bs-toggle
+                                        aria-expanded="false">
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-icon">
+                                            <i class="fa fa-user-tie"></i>
+                                        </span>
+                                        <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text">Pacientes</span>
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div sec:authorize="hasAnyRole('ROLE_MASTER', 'ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_RESPONSIBLE')" class="nav-item-wrapper">
+                                <a th:href="@{/products}"
+                                        title="Sesiones"
+                                        th:class="'nav-link label-1 ' + ${activeMenuPage == 'products' ? 'active' : ''}"
+                                        data-bs-toggle
+                                        aria-expanded="false">
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-icon">
+                                            <i class="fa-solid fa-list"></i>
+                                        </span>
+                                        <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text">Sesiones</span>
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div sec:authorize="hasAnyRole('ROLE_MASTER', 'ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_RESPONSIBLE')" class="nav-item-wrapper">
+                                <a th:href="@{/assets}"
+                                   title="Servicios"
+                                   th:class="'nav-link label-1 ' + ${activeMenuPage == 'assets' ? 'active' : ''}"
+                                   data-bs-toggle
+                                   aria-expanded="false">
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-icon">
+                                            <i class="fa-solid fa-hospital"></i>
+                                        </span>
+                                        <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text">Servicios</span>
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+                        </li>
+                        <li sec:authorize="hasAnyRole('ROLE_MASTER', 'ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_RESPONSIBLE')" class="nav-item">
+                            <p class="navbar-vertical-label" title="Administración">Administración</p>
+                            <hr class="navbar-vertical-line">
+                            <div class="nav-item-wrapper">
+                                <a th:href="@{/users}"
+                                        title="Usuarios"
+                                        th:class="${activeMenuPage == 'users' ? 'nav-link label-1 active' : 'nav-link label-1'}"
+                                        data-bs-toggle
+                                        aria-expanded="false">
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-icon">
+                                            <i class="fa fa-users"></i>
+                                        </span>
+                                        <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text">Usuarios</span>
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="nav-item-wrapper">
+                                <a th:href="@{/job-positions}"
+                                   title="Puestos de trabajo"
+                                   th:class="'nav-link label-1 ' + ${activeMenuPage == 'job-positions' ? 'active' : ''}"
+                                   data-bs-toggle
+                                   aria-expanded="false">
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-icon">
+                                            <i class="fa-solid fa-user-doctor"></i>
+                                        </span>
+                                        <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text">Puestos de trabajo</span>
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="nav-item-wrapper">
+                                <a th:href="@{/services}"
+                                   title="Servicios"
+                                   th:class="'nav-link label-1 ' + ${activeMenuPage == 'services' ? 'active' : ''}"
+                                   data-bs-toggle
+                                   aria-expanded="false">
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-icon">
+                                            <i class="fa-solid fa-notes-medical"></i>
+                                        </span>
+                                        <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text">Servicios</span>
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="navbar-vertical-footer">
+                <button class="btn d-flex align-items-center navbar-vertical-toggle border-0 fw-semi-bold w-100 text-start white-space-nowrap" title="Colapsar vista">
+                    <i class="fa fa-arrows-left-right-to-line fs-0"></i>
+                    <span class="navbar-vertical-footer-text ms-2">Colapsar vista</span>
+                </button>
+            </div>
+        </nav>
+    </body>
+</html>

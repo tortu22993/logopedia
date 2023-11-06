@@ -1,0 +1,165 @@
+/*
+ * Contiene estilos personalizados para el plugin Choices.js.
+ *
+ * @author Enrique Escalante
+ */
+.choices {
+    margin-bottom: 0;
+}
+
+.choices__inner {
+    background-color: transparent !important;
+    -webkit-transition: border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+    -o-transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+}
+
+.choices:is(.is-focused, .is-open) .choices__inner {
+    border-color: var(--phoenix-primary) !important;
+    box-shadow: none !important;
+}
+
+:is(.form-group, .form-floating):has(.choices:is(.is-focused, .is-open)) label {
+    color: var(--phoenix-primary);
+}
+
+.choices__placeholder {
+    opacity: 1;
+}
+
+:is(.form-group, .form-floating) .choices .choices__list {
+    scrollbar-width: normal;
+    scrollbar-color: var(--phoenix-secondary);
+    font-size: .8rem;
+    font-weight: 600;
+}
+
+:is(.form-group, .form-floating) .choices .choices__list::-webkit-scrollbar {
+    width: 16px;
+}
+
+:is(.form-group, .form-floating) .choices .choices__list::-webkit-scrollbar-thumb {
+    background-color: var(--phoenix-secondary);
+    border: 5px solid transparent;
+    background-clip: padding-box;
+    border-radius: 999px;
+}
+
+:is(.form-group, .form-floating) .choices .choices__list::-webkit-scrollbar-thumb:hover {
+    background-color: var(--phoenix-700);
+}
+
+:is(.form-group, .form-floating) .choices .choices__list::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.dark :is(.form-group, .form-floating) .choices .choices__list::-webkit-scrollbar-thumb {
+    background-color: var(--phoenix-600);
+}
+
+.dark :is(.form-group, .form-floating) .choices .choices__list::-webkit-scrollbar-thumb:hover {
+    background-color: var(--phoenix-500);
+}
+
+:is(.form-group, .form-floating) .choices .choices__list--dropdown {
+    margin-top: 7px !important;
+    padding-top: 0 !important;
+    border-radius: .375rem;
+    z-index: 21;
+}
+
+:is(.form-group, .form-floating) > .choices .choices__list[role = "listbox"] {
+    padding-top: 0 !important;
+}
+
+:is(.form-group, .form-floating) > .choices + label {
+    opacity: .65;
+    -webkit-transform: scale(0.85) translateY(-0.4rem) translateX(0.15rem);
+    transform: scale(0.85) translateY(-0.4rem) translateX(0.15rem);
+}
+
+.choices .choices__input {
+    font-size: 1rem;
+    border-top-left-radius: .375rem;
+    border-top-right-radius: .375rem;
+}
+
+.was-validated .choices:has(:invalid) ~ .invalid-feedback,
+.was-validated .choices:has(:invalid) ~ .invalid-tooltip,
+.choices:has(.is-invalid) ~ .invalid-feedback,
+.choices:has(.is-invalid) ~ .invalid-tooltip {
+	display: block;
+}
+
+.choices:has(.form-select:invalid) .choices__inner,
+.choices:has(.form-select.is-invalid) .choices__inner {
+	border-color: #ed2000 !important;
+    padding-right: calc(1.49em + 1rem);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23ed2000'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23ed2000' stroke='none'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(0.3725em + 0.25rem) center;
+    background-size: calc(0.745em + 0.5rem) calc(0.745em + 0.5rem);
+}
+
+:is(.form-group, .form-floating):has(.form-select:invalid):has(.choices.is-focused) label,
+:is(.form-group, .form-floating):has(.form-select.is-invalid):has(.choices.is-focused) label {
+    color: var(--phoenix-danger);
+}
+
+.choices:has(.form-select:invalid)::after,
+.choices:has(.form-select.is-invalid)::after {
+	right: 40px;
+}
+
+:is(.form-group, .form-floating) {
+    position: relative;
+}
+
+.dark .choices[data-type *= select-one]:not(.is-open)::after {
+    border-top-color: var(--phoenix-gray-900);
+}
+
+.dark .choices[data-type *= select-one].is-open::after {
+    border-bottom-color: var(--phoenix-gray-900);
+}
+
+.input-group .choices {
+    flex-grow: 1;
+}
+
+.input-group:has(.input-group-text) .choices .choices__inner {
+    border-left: none;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    padding-left: 0;
+}
+
+.input-group:has(.choices.is-focused) .input-group-text {
+    border-color: var(--phoenix-primary);
+}
+
+.input-group:has(.btn) .choices .choices__inner,
+.input-group:has(.btn) .choices.is-focused .choices__inner {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+.dark .choices__button {
+    filter: invert(1) !important;
+}
+
+.choices[data-type = "select-multiple"] .choices__button {
+    border-left: none !important;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM2ZTc4OTEiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0iZmVhdGhlciBmZWF0aGVyLXgiPjxsaW5lIHgxPSIxOCIgeTE9IjYiIHgyPSI2IiB5Mj0iMTgiPjwvbGluZT48bGluZSB4MT0iNiIgeTE9IjYiIHgyPSIxOCIgeTI9IjE4Ij48L2xpbmU+PC9zdmc+) !important;
+}
+
+.choices[data-type = "select-multiple"] .choices__input {
+    background-color: transparent !important;
+}
+
+.choices[data-type = "select-one"] .choices__inner,
+.choices[data-type = "select-multiple"] .choices__inner {
+    padding-bottom: 5.9px !important;
+}

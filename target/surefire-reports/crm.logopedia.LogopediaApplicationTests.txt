@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: crm.logopedia.LogopediaApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 13.968 s - in crm.logopedia.LogopediaApplicationTests

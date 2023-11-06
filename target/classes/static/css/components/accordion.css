@@ -1,0 +1,27 @@
+/*
+ * Fichero de estilos para acordeones.
+ *
+ * @author Enrique Escalante
+ */
+.accordion-item .accordion-header {
+    -webkit-transition: background-color 100ms ease, border-radius 300ms ease, padding 300ms ease;
+    -moz-transition: background-color 100ms ease, border-radius 300ms ease, padding 300ms ease;
+    -ms-transition: background-color 100ms ease, border-radius 300ms ease, padding 300ms ease;
+    -o-transition: background-color 100ms ease, border-radius 300ms ease, padding 300ms ease;
+    transition: background-color 100ms ease, border-radius 300ms ease, padding 300ms ease;
+}
+
+.accordion-item:has(.accordion-collapse.show) .accordion-header {
+    background-color: var(--kerberos-accordion-bg);
+    border-radius: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.accordion-item:has(.accordion-collapse.show) .accordion-button:after {
+    filter: grayscale(1) brightness(0);
+}
+
+.dark .accordion-item:has(.accordion-collapse.show) .accordion-button:after {
+    filter: grayscale(1) brightness(100);
+}

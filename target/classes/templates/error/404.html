@@ -1,0 +1,7 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <th:block th:insert="~{fragments/common :: head}"></th:block>
+    <body>
+        <th:block th:insert="~{fragments/error :: error(httpStatusCode = 404, title = '¡Página no encontrada!', message = '¡Pero no te preocupes! Nuestro avestruz está mirando por todas partes mientras esperas con seguridad.')}"></th:block>
+    </body>
+</html>

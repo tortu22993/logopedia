@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+		<th:block th:insert="~{fragments/common :: head-commons(includePhoenixConfig = false)}"></th:block>
+		<!--<script th:src="@{/pages/login/login.js}" type="module"></script>-->
+		<link rel="stylesheet" th:href="@{/pages/login/login.css}">
+	</head>
+    <body>
+        <main id="top" class="main">
+			<div class="container-fluid px-0">
+				<div class="row vh-100 g-0">
+					<div class="col-6 position-relative d-none d-lg-block">
+						<div class="bg-holder login-wallpaper">
+							<div class="login-wallpaper-content">
+								<h3 title="Logipedium">Logipedium</h3>
+								<p title="Gestiona tus pacientes de un modo sencillo y rápido">Gestiona tus pacientes de un modo sencillo y rápido</p>
+								<button class="btn btn-secondary" title="MÁS INFORMACIÓN">MÁS INFORMACIÓN</button>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-lg-6">
+						<div class="row flex-center h-100 g-0 px-4 px-sm-0 flex-grow-1">
+							<div class="col col-sm-6 col lg-7 col-xl-6">
+								<div class="d-flex flex-center text-decoration-none mb-4">
+									<div class="d-flex align-items-center fw-bolder fs-5 d-inline-block">
+										<img th:src="@{/resources/images/customers/Logopedia.png}" alt="Logipedium" loading="lazy" title="Logo de Logipedium" width="250">
+									</div>
+								</div>
+								<p class="text-danger fs--1" th:if="${param.error}">
+									[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]
+								</p>
+								<form id="loginForm" th:action="@{login}" method="post" th:class="${param.error != null ? 'needs-validation was-validated' : 'needs-validation'}" novalidate>
+									<div class="mb-3 text-start">
+										<label for="email" class="form-label" title="Correo electrónico">Correo electrónico</label>
+										<div class="form-icon-container">
+											<input type="email" id="email" name="email" placeholder="Correo electrónico" class="form-control form-icon-input" required autofocus>
+											<i class="fa fa-user fs--1 form-icon"></i>
+											<div class="invalid-feedback">Introduzca un correo electrónico.</div>
+										</div>
+									</div>
+									<div class="mb-3 text-start">
+										<label class="form-label" for="password" title="Contraseña">Contraseña</label>
+										<div class="form-icon-container">
+										  <input type="password" id="password" name="password" placeholder="Contraseña" class="form-control form-icon-input" required>
+										  <i class="fa fa-key fs--1 form-icon"></i>
+										  <div class="invalid-feedback">Introduzca una contraseña.</div>
+										</div>
+									</div>
+									<div class="row flex-between-center mb-7">
+										<div class="col-auto">
+											<div class="form-check mb-0">
+												<input type="checkbox" class="form-check-input accent-color-danger" id="rememberMe" name="rememberMe">
+												<label for="rememberMe" class="form-check-label mb-0" title="Recordarme">Recordarme</label>
+											</div>
+										</div>
+										<div class="col-auto">
+											<a href="#" class="fs--1 fw-semi-bold" title="¿Olvidó su contraseña?">¿Olvidó su contraseña?</a>
+										</div>
+									</div>
+									<div class="text-center">
+										<button type="submit" class="btn btn-primary w-100" title="Iniciar sesión">Iniciar sesión</button>
+									</div>
+								</form>
+							</div>
+							<footer class="d-flex flex-column text-center justify-content-center gap-3">
+								<small th:with="currentYear = ${#dates.year(#dates.createNow())}">
+									<span th:text="'&copy; ' + ${currentYear}" th:title="'&copy; ' + ${currentYear}">&copy</span>
+									<a href="https://www.linkedin.com/in/enriqueescalante" target="_blank" class="link-primary" title="Logipedium S.L.">Logipedium S.L.</a>
+									<span title="Todos los derechos reservados.">Todos los derechos reservados.</span>
+								</small>
+							</footer>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+    </body>
+</html>

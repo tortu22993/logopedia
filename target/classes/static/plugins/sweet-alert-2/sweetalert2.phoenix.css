@@ -1,0 +1,8 @@
+/*
+ * Contiene estilos personalizados para el plugin Sweetalert2.js.
+ *
+ * @author Enrique Escalante
+ */
+body.swal2-shown {
+    padding-right: 0 !important;
+}

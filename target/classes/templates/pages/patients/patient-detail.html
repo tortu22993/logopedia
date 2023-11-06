@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:with="newTime = ${timeDetailDto != null}, newTask = ${taskDetailDto != null}, isDetailsTab = ${selectedTab == null or selectedTab == 'details'}">
+    <head>
+		<th:block th:insert="~{fragments/common :: head-commons}"></th:block>
+        <link rel="stylesheet" th:href="@{/pages/cases/case-detail.css}">
+        <script th:src="@{/pages/cases/case-detail.js}" type="module"></script>
+	</head>
+    <body>
+        <main id="top" class="main">
+            <div class="container-fluid px-0">
+                <th:block th:insert="~{fragments/menu-asides :: simple-left-vertical-menu}"></th:block>
+                <th:block th:insert="~{fragments/menu-headers :: simple-menu-header}"></th:block>
+                <div class="content">
+                    <div class="d-flex align-items-center justify-content-end justify-content-md-between gap-3 mb-3">
+                        <th:block th:insert="~{fragments/common :: breadcrumb}"></th:block>
+                        <nav class="d-flex align-items-center gap-2">
+                            <div class="btn-reveal-trigger">
+                                <a th:href="@{/patients}" class="btn btn-sm btn-reveal" title="Listado">
+                                    <i class="fa fa-arrow-left me-2"></i>
+                                    Listado
+                                </a>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="mb-0">
+                        <div class="row g-5">
+                            <div class="col-12">
+                                <div class="row g-3 h-100">
+                                    <div class="col-12">
+                                        <div class="card h-100">
+                                            <div class="card-header d-flex align-items-center justify-content-between flex-column gap-3 flex-xl-row">
+                                                <div class="d-flex flex-column gap-2 text-center text-xl-start">
+                                                    <span title="Paciente">
+                                                        <i class="fa fa-suitcase text-primary me-2"></i>
+                                                        Paciente
+                                                    </span>
+                                                    <h4 class="card-title text-clip mb-0" th:text="${title}" th:title="${title}"></h4>
+                                                </div>
+                                                <div class="d-auto-grid w-100 gap-2 d-md-flex align-items-md-center w-md-auto">
+                                                    <a sec:authorize="hasAnyRole('ROLE_MASTER', 'ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_RESPONSIBLE')" th:href="@{/patients/{id}/action/edit(id = ${patientDetailDto.id})}" class="btn btn-sm btn-phoenix-primary" title="Editar">
+                                                        <i class="fa fa-pencil me-2"></i>
+                                                        Editar
+                                                    </a>
+                                                    <div th:if="${not patientDetailDto.enabled}" class="d-grid dropdown">
+                                                        <button class="btn btn-sm btn-phoenix-secondary dropdown-toggle transition-none" id="dropdownNewOptions" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent" title="Nuevo">
+                                                            <i class="fa fa-plus me-2"></i>
+                                                            Nuevo
+                                                        </button>
+                                                        <ul class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="dropdownNewOptions">
+                                                            <li>
+                                                                <a th:href="@{/cases/{id}/times/new(id = ${caseDetailDto.id})}" class="dropdown-item" title="Nuevo tiempo" data-create-time data-show-message>
+                                                                    <i class="fa fa-clock me-2"></i>
+                                                                    Sesion
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <button type="button" class="btn btn-sm btn-phoenix-warning" title="Agregar favorito">
+                                                        <i class="far fa-star me-2 me-sm-0"></i>
+                                                        <span class="d-inline d-sm-none">Agregar favorito</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row gy-3">
+                                                    <div class="col-auto">
+                                                        <small title="N.º de paciente" class="d-block">N.º de paciente</small>
+                                                        <span th:text="${patientDetailDto.id}" th:title="${patientDetailDto.id}" data-case-id></span>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <small title="Edad" class="d-block">Edad</small>
+                                                        <span th:text="${patientDetailDto.age}" th:title="${patientDetailDto.age}" data-case-id></span>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <small title="Colegio" class="d-block">Colegio</small>
+                                                        <a class="link-primary" th:text="${patientDetailDto.school}" th:title="${patientDetailDto.school}"></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row gy-3">
+                                                    <div class="col-12">
+                                                        <ul class="nav nav-pills gap-4">
+                                                            <li id="tabDetails" class="nav-item" role="presentation">
+                                                                <a th:href="@{/patients/{id}(id = ${patientDetailDto.id})}" th:class="${isDetailsTab ? 'nav-link active' : 'nav-link'}" aria-current="page" title="Detalles">Detalles</a>
+                                                            </li>
+                                                            <li id="tabContacts" class="nav-item" role="presentation">
+                                                                <a th:href="@{/patients/{id}/contacts(id = ${patientDetailDto.id})}" th:class="${selectedTab == 'contacts' ? 'nav-link active' : 'nav-link disabled'}" aria-current="page" title="Contactos">Contactos</a>
+                                                            </li>
+                                                            <li id="tabSession" class="nav-item" role="presentation">
+                                                                <a th:href="@{/patients/{id}/times(id = ${patientDetailDto.id})}" th:class="${selectedTab == 'times' ? 'nav-link active' : 'nav-link disabled'}" aria-current="page" title="Tiempos">Sesiones</a>
+                                                            </li>
+                                                            <li id="tabDocuments" class="nav-item" role="presentation">
+                                                                <a th:href="@{/patients/{id}/documents(id = ${patientDetailDto.id})}" th:class="${selectedTab == 'documents' ? 'nav-link active' : 'nav-link disabled'}" aria-current="page" title="Documentos">Documentos</a>
+                                                            </li>
+                                                        </ul>
+                                                        <div class="tab-content">
+                                                            <!-- PESTAÑA DE DETALLES -->
+                                                            <th:block th:if="${isDetailsTab}" th:insert="~{fragments/patients/patient-detail-details-tab :: details-tab}"></th:block>
+
+                                                            <!-- PESTAÑA DE CONTACTOS 
+                                                            <th:block th:if="${selectedTab == 'times'}" th:insert="~{fragments/cases/case-detail-times-tab :: times-tab}"></th:block>
+
+                                                            PESTAÑA DE SESION
+                                                            <th:block th:if="${selectedTab == 'tasks'}" th:insert="~{fragments/cases/case-detail-tasks-tab :: tasks-tab}"></th:block>
+
+                                                             PESTAÑA DE DOCUMENTOS -->
+                                                            <!--<th:block th:if="${selectedTab == 'documents'}" th:insert="~{fragments/cases/case-detail-documents-tab :: documents-tab}"></th:block>-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

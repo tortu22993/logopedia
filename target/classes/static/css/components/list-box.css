@@ -1,0 +1,340 @@
+/*
+ * Fichero de estilos para listas con formato de cajas.
+ *
+ * @author Enrique Escalante
+ */
+[data-list-box] .list-box-validations-container:empty {
+    display: none;
+}
+ 
+[data-list-box] .list-box-data-container:not(:empty) {
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+ .list-box-container {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    min-width: 0;
+}
+
+.list-box-container .list-box-scroller-container {
+    height: auto;
+    flex: 1;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    transform: translateZ(0);
+    position: relative;
+}
+
+.list-box-scroller-container .list-box-scroller {
+    position: static;
+    min-width: 100%;
+    height: 100%;
+    transform: translateZ(0);
+    text-size-adjust: none;
+}
+
+.list-box-container ul.list-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    overflow: unset;
+    list-style: none;
+    margin-bottom: 0;
+    padding-left: 0;
+}
+
+.list-box-container ul.list-box .list-box-item {
+    position: relative;
+    flex: 1;
+    margin-left: 0;
+    margin-right: 0;
+    min-width: 5rem;
+    text-align: center;
+    color: var(--phoenix-secondary);
+    background-color: var(--kerberos-accordion-bg);
+}
+
+.list-box-container ul.list-box .list-box-item:hover,
+.list-box-container ul.list-box .list-box-item:hover::before,
+.list-box-container ul.list-box .list-box-item:hover::after {
+    background-color: var(--kerberos-accordion-hover-bg);
+}
+
+.list-box-container ul.list-box .list-box-item::before,
+.list-box-container ul.list-box .list-box-item::after {
+    content: '';
+    position: absolute;
+    left: -.25rem;
+    right: -.3125rem;
+    cursor: pointer;
+    background-color: var(--kerberos-accordion-bg);
+}
+
+.list-box-container ul.list-box .list-box-item::before {
+    top: 0;
+    height: calc((2rem / 2) + 0.0625rem);
+    transform: skew(28deg) translate3d(0, 0, 0);
+}
+
+.list-box-container ul.list-box .list-box-item::after {
+    bottom: 0;
+    height: 1rem;
+    transform: skew(-30deg) translate3d(0, 0, 0);
+}
+
+.list-box-container ul.list-box .list-box-item:first-child {
+    border-top-left-radius: 2rem;
+    border-bottom-left-radius: 2rem;
+    padding-left: .625rem;
+}
+
+.list-box-container ul.list-box .list-box-item:first-child::before {
+    top: 0;
+    left: 1.125rem;
+}
+
+.list-box-container ul.list-box .list-box-item:first-child::after {
+    bottom: 0;
+    left: 1.125rem;
+}
+
+.list-box-container ul.list-box .list-box-item:last-child {
+    border-top-right-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+    padding-right: .625rem;
+}
+
+.list-box-container ul.list-box .list-box-item:last-child::before,
+.list-box-container ul.list-box .list-box-item:last-child::after {
+    right: .625rem;
+}
+
+.list-box-container ul.list-box .list-box-item.is-active,
+.list-box-container ul.list-box .list-box-item.is-active::before,
+.list-box-container ul.list-box .list-box-item.is-active::after {
+    background-color: var(--phoenix-primary);
+}
+
+.dark .list-box-container ul.list-box .list-box-item.is-active,
+.dark .list-box-container ul.list-box .list-box-item.is-active::before,
+.dark .list-box-container ul.list-box .list-box-item.is-active::after {
+    background-color: var(--phoenix-primary-500);
+}
+
+.list-box-container ul.list-box .list-box-item.is-completed,
+.list-box-container ul.list-box .list-box-item.is-completed::before,
+.list-box-container ul.list-box .list-box-item.is-completed::after {
+    background-color: var(--phoenix-success);
+}
+
+.dark .list-box-container ul.list-box .list-box-item.is-completed,
+.dark .list-box-container ul.list-box .list-box-item.is-completed::before,
+.dark .list-box-container ul.list-box .list-box-item.is-completed::after {
+    background-color: var(--phoenix-success-500);
+}
+
+.list-box-container ul.list-box .list-box-item .list-box-item-link-title {
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-transform: translate(0, 0, 0);
+    transform: translate(0, 0, 0);
+}
+
+.list-box-container ul.list-box .list-box-item.is-completed :is(.list-box-item-link-checker, .list-box-item-link-title) {
+    -webkit-transition: transform .2s linear;
+    -moz-transition: transform .2s linear;
+    -ms-transition: transform .2s linear;
+    -o-transition: transform .2s linear;
+    transition: transform .2s linear;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.list-box-container ul.list-box .list-box-item.is-completed .list-box-item-link-checker {
+    display: block;
+    -webkit-transform: translate(-50%, -50%) rotateX(0deg);
+    transform: translate(-50%, -50%) rotateX(0deg);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-backface-visibility: visible;
+    backface-visibility: visible;
+}
+
+.list-box-container ul.list-box .list-box-item:not(.is-completed) .list-box-item-link-checker {
+    display: none;
+}
+
+.list-box-container ul.list-box .list-box-item.is-completed .list-box-item-link-title {
+    transform: rotateX(180deg);
+}
+
+.list-box-container ul.list-box .list-box-item.is-completed:hover .list-box-item-link-checker {
+    -webkit-transform: translate(-50%, -50%) rotateX(-180deg);
+    transform: translate(-50%, -50%) rotateX(-180deg);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.list-box-container ul.list-box .list-box-item.is-completed:hover .list-box-item-link-title {
+    -webkit-transform: rotateX(0deg);
+    transform: rotateX(0deg);
+}
+
+.list-box-container ul.list-box .list-box-item > .list-box-item-link {
+    height: 2rem;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    z-index: 5;
+    cursor: pointer;
+    color: var(--phoenix-secondary);
+    font-size: .8rem;
+    padding: .5rem;
+}
+
+.dark .list-box-container ul.list-box .list-box-item > .list-box-item-link {
+    color: white;
+}
+
+.list-box-container ul.list-box .list-box-item.is-active:hover,
+.list-box-container ul.list-box .list-box-item.is-active:hover::before,
+.list-box-container ul.list-box .list-box-item.is-active:hover::after {
+    background-color: var(--phoenix-primary-600);
+}
+
+.list-box-container ul.list-box .list-box-item.is-completed:hover,
+.list-box-container ul.list-box .list-box-item.is-completed:hover::before,
+.list-box-container ul.list-box .list-box-item.is-completed:hover::after {
+    background-color: var(--phoenix-success-600);
+}
+
+.list-box-container ul.list-box .list-box-item:is(.is-active, .is-completed) > .list-box-item-link {
+    color: white;
+}
+
+.list-box-container ul.list-box .list-box-item.is-selected:first-child,
+.list-box-container ul.list-box .list-box-item.is-selected:last-child {
+    background-color: transparent;
+    border: 2px solid var(--phoenix-primary);
+}
+
+.dark .list-box-container ul.list-box .list-box-item.is-selected:first-child,
+.dark .list-box-container ul.list-box .list-box-item.is-selected:last-child {
+    background-color: var(--kerberos-accordion-bg);
+}
+
+.list-box-container ul.list-box .list-box-item.is-selected:first-child {
+    border-right: 0;
+}
+
+.list-box-container ul.list-box .list-box-item.is-selected:last-child {
+    border-left: 0;
+}
+
+.list-box-container ul.list-box .list-box-item.is-selected:last-child::before,
+.list-box-container ul.list-box .list-box-item.is-selected:last-child::after {
+    background-position: initial;
+}
+
+.list-box-container ul.list-box .list-box-item.is-selected:first-child::before,
+.list-box-container ul.list-box .list-box-item.is-selected:first-child::after,
+.list-box-container ul.list-box .list-box-item.is-selected:last-child::before,
+.list-box-container ul.list-box .list-box-item.is-selected:last-child::after {
+    background-color: transparent;
+    background-image: linear-gradient(
+        90deg,
+        var(--phoenix-primary, --phoenix-primary-600),
+        var(--phoenix-primary, --phoenix-primary-600) .125rem,
+        transparent .125rem
+    );
+}
+
+.dark .list-box-container ul.list-box .list-box-item.is-selected:first-child::before,
+.dark .list-box-container ul.list-box .list-box-item.is-selected:first-child::after,
+.dark .list-box-container ul.list-box .list-box-item.is-selected:last-child::before,
+.dark .list-box-container ul.list-box .list-box-item.is-selected:last-child::after {
+    background-color: var(--kerberos-accordion-bg);
+    background-image: linear-gradient(
+        90deg,
+        var(--phoenix-primary, --phoenix-primary-600),
+        var(--phoenix-primary, --phoenix-primary-600) .125rem,
+        var(--kerberos-accordion-bg) .125rem
+    );
+}
+
+.list-box-container ul.list-box .list-box-item.is-selected:first-child::before,
+.list-box-container ul.list-box .list-box-item.is-selected:last-child::before {
+    border-top: 2px solid var(--phoenix-primary);
+}
+
+.list-box-container ul.list-box .list-box-item.is-selected:first-child::after,
+.list-box-container ul.list-box .list-box-item.is-selected:last-child::after {
+    border-bottom: 2px solid var(--phoenix-primary);
+}
+
+.list-box-container ul.list-box .list-box-item.is-selected:first-child::before,
+.list-box-container ul.list-box .list-box-item.is-selected:last-child::before {
+    top: -.125rem;
+}
+
+.list-box-container ul.list-box .list-box-item.is-selected:first-child::after,
+.list-box-container ul.list-box .list-box-item.is-selected:last-child::after {
+    bottom: -.125rem;
+}
+
+.list-box-container ul.list-box .list-box-item.is-selected:first-child .list-box-item-link,
+.list-box-container ul.list-box .list-box-item.is-selected:last-child .list-box-item-link {
+    height: 1.75rem;
+}
+
+.list-box-container ul.list-box .list-box-item.is-selected::before,
+.list-box-container ul.list-box .list-box-item.is-selected::after {
+    background-color: white;
+    background-repeat: no-repeat;
+    background-size: .125rem 100%, .125rem 100%, 100% .125rem;
+    background-image:
+        linear-gradient(
+            90deg,
+            var(--phoenix-primary, --phoenix-primary-600),
+            var(--phoenix-primary, --phoenix-primary-600) .125rem,
+            transparent .125rem
+        ),
+        linear-gradient(
+            90deg,
+            var(--phoenix-primary, --phoenix-primary-600),
+            var(--phoenix-primary, --phoenix-primary-600) .125rem,
+            transparent .125rem
+        ),
+        linear-gradient(
+            var(--phoenix-primary, --phoenix-primary-600),
+            var(--phoenix-primary, --phoenix-primary-600) .125rem,
+            transparent .125rem
+        );
+}
+
+.list-box-container ul.list-box .list-box-item.is-selected::before {
+    background-position: top right, top left, top left;
+}
+
+.list-box-container ul.list-box .list-box-item.is-selected::after {
+    background-position: top right, top left, bottom left;
+}
+
+.list-box-container ul.list-box .list-box-item.is-selected > .list-box-item-link {
+    color: var(--phoenix-secondary);
+}
+
+.dark .list-box-container ul.list-box .list-box-item.is-selected .list-box-item-link {
+    color: white;
+}

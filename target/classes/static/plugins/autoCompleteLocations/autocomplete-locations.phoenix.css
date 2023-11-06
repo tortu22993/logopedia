@@ -1,0 +1,45 @@
+/*
+ * Contiene estilos personalizados para el plugin autoCompleteLocations.js.
+ *
+ * @author Enrique Escalante
+ * @author Enrique Escalante
+ */
+.auto-search-wrapper input {
+    padding: 0.5rem 2rem;
+    font-size: 0.875rem;
+    border: 1px solid var(--phoenix-input-border-color);
+}
+
+.auto-search-wrapper input:focus {
+    border-color: var(--phoenix-primary);
+}
+
+.auto-search-wrapper .auto-results-wrapper {
+    margin-top: 5px !important;
+    border-radius: .6rem;
+    border: 1px solid rgba(33 33 33 / .07);
+    box-shadow: 0 3px 6px rgba(149 157 165 / .15);
+    background-color: var(--phoenix-body-bg);
+}
+
+.auto-search-wrapper .auto-results-wrapper p {
+    margin-bottom: 0;
+}
+
+.auto-search-wrapper .auto-results-wrapper .auto-selected:not(.no-results) {
+    background-color: var(--phoenix-primary);
+    color: white;
+}
+
+.auto-search-wrapper .auto-results-wrapper .auto-selected.no-results {
+    cursor: auto;
+}
+
+.dark .auto-search-wrapper .auto-results-wrapper {
+    background-color: var(--phoenix-body-bg);
+    color: white;
+}
+
+.dark .auto-search-wrapper .auto-clear::before {
+    filter: invert(1);
+}

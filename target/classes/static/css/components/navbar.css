@@ -1,0 +1,27 @@
+/*
+ * Estilos relativos al componente de la barra de navegación superior.
+ *
+ * @author Enrique Escalante
+ */
+.navbar-brand-separator {
+    height: 40px;
+}
+
+.navbar.navbar-top .dropdown-nide-dots .card-body {
+    max-height: 20rem;
+}
+
+.navbar.navbar-top .navbar-application-selector-image {
+    width: 45px;
+    aspect-ratio: 2 / 1;
+}
+
+.navbar.navbar-top .feather {
+    width: 20px;
+    height: 20px;
+}
+
+.navbar.navbar-top .theme-control-toggle .feather {
+    width: 16px;
+    height: 16px;
+}

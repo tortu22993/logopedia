@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+		<th:block th:insert="~{fragments/common :: head-commons}"></th:block>
+        <script th:src="@{/pages/users/user-edition.js}" type="module"></script>
+	</head>
+    <body>
+        <main id="top" class="main">
+            <div class="container-fluid px-0">
+                <th:block th:insert="~{fragments/menu-asides :: simple-left-vertical-menu}"></th:block>
+                <th:block th:insert="~{fragments/menu-headers :: simple-menu-header}"></th:block>
+                <div class="content" th:with="newUser = ${#strings.isEmpty(userDetailDto.username)}">
+                    <div class="d-flex align-items-center justify-content-end justify-content-md-between gap-3 mb-3">
+                        <th:block th:insert="~{fragments/common :: breadcrumb}"></th:block>
+                        <nav class="d-flex align-items-center gap-2">
+                            <div class="btn-reveal-trigger">
+                                <a th:if="${newUser}" th:href="@{/users}" class="btn btn-sm btn-reveal" title="Listado">
+                                    <i class="fa fa-arrow-left me-2"></i>
+                                    Listado
+                                </a>
+                                <a th:if="${not newUser}" th:href="@{/users/{username}(username = ${userDetailDto.username})}" class="btn btn-sm btn-reveal" title="Salir del modo de edición">
+                                    <i class="fa fa-arrow-left me-2"></i>
+                                    Salir del modo de edición
+                                </a>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="mb-0">
+                        <div class="row g-5">
+                            <div class="col-12">
+                                <div class="row g-3 h-100">
+                                    <div class="col-12">
+                                        <div class="card h-100">
+                                            <div class="card-header d-flex align-items-center justify-content-between flex-column flex-md-row gap-3">
+                                                <div class="d-flex align-items-center gap-3 text-center text-md-start">
+                                                    <picture th:if="${not newUser}" class="image-upload">
+                                                        <label for="imageInput" class="position-relative">
+                                                            <img th:src="@{/resources/images/team/avatar-rounded.webp}" th:alt="'Foto de ' + ${userDetailDto.fullName}" class="rounded-circle" loading="lazy">
+                                                            <span class="position-absolute bottom-0 start-0 translate-middle badge rounded-pill text-primary bg-light" title="Editar imagen">
+                                                                <i class="fa fa-pencil"></i>
+                                                                <span class="visually-hidden">Cambiar imagen</span>
+                                                            </span>
+                                                        </label>
+                                                        <p class="image-description" title="Cambiar imagen">Cambiar imagen</p>
+                                                        <input type="file" id="imageInput" accept="image/png, image/jpeg, image/jpg">
+                                                    </picture>
+                                                    <div class="flex-grow-1">
+                                                        <span title="Usuario">
+                                                            <i class="fa fa-users text-primary me-2"></i>
+                                                            Usuario
+														    <span th:if="${not newUser}" class="badge badge-phoenix badge-phoenix-warning ms-2" title="Modo de edición">Modo de edición</span>
+                                                        </span>
+                                                        <h4 class="card-title text-clip mb-0" th:text="${title}" th:title="${title}"></h4>
+                                                    </div>
+                                                </div>
+                                                <div class="d-auto-grid d-md-flex align-items-center gap-2 w-100 w-md-auto">
+                                                    <button id="saveButton" type="button" class="btn btn-sm btn-primary" title="Guardar">
+                                                        <i class="fa fa-cloud me-2"></i>
+                                                        Guardar
+                                                    </button>
+                                                    <button id="cancelButton" type="button" class="btn btn-sm btn-phoenix-secondary" th:with="cancelButtonTitle = ${newUser ? 'Cancelar' : 'Cancelar cambios'}" th:title="${cancelButtonTitle}">
+                                                        <i class="fa fa-ban me-2"></i>
+                                                        <th:block th:text="${cancelButtonTitle}" th:title="${cancelButtonTitle}"></th:block>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div th:if="${not newUser}" class="card-body">
+                                                <div class="row gy-3">
+                                                    <div class="col-auto">
+                                                        <small title="Puesto de trabajo" class="d-block">Puesto de trabajo</small>
+                                                        <p class="mb-0" th:text="${userDetailDto.jobPositionName}" th:title="${userDetailDto.jobPositionName}"></p>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <small title="Correo electrónico" class="d-block">Correo electrónico</small>
+                                                        <a th:href="'mailto:' + ${userDetailDto.email}" class="link-primary" th:text="${userDetailDto.email}" th:title="${userDetailDto.email}"></a>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <small title="Móvil" class="d-block">Móvil</small>
+                                                        <a th:if="${not #strings.isEmpty(userDetailDto.phoneNumber)}" th:href="'tel:' + ${userDetailDto.phoneNumber}" class="link-primary" th:text="${userDetailDto.phoneNumber}" th:title="${userDetailDto.phoneNumber}"></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="card h-100">
+                                            <div class="card-body">
+                                                <div class="row gy-3">
+                                                    <div class="col-12">
+                                                        <form id="formSave" th:object="${userDetailDto}" th:action="@{/users/action/save}" method="post">
+                                                            <th:block th:insert="~{fragments/common :: error-warning}"></th:block>
+                                                            <input type="hidden" th:field="*{username}">
+
+                                                            <div class="accordion">
+                                                                <!-- INFORMACIÓN GENERAL -->
+                                                                <div class="accordion-item px-0 border-0">
+                                                                    <h3 id="generalInformationHeading" class="accordion-header">
+                                                                        <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#generalInformationCollapse" aria-expanded="true" aria-controls="generalInformationCollapse" title="Información general">Información general</button>
+                                                                    </h3>
+                                                                    <div id="generalInformationCollapse" class="accordion-collapse collapse show" aria-labelledby="generalInformationHeading">
+                                                                        <div class="accordion-body">
+                                                                            <div class="row gy-3">
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label for="name" class="form-label" title="Nombre">Nombre</label>
+                                                                                        <input type="text" class="form-control" th:field="*{name}" th:errorclass="${'form-control is-invalid'}">
+                                                                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label for="middleName" class="form-label" title="Primer apellido">Primer apellido</label>
+                                                                                        <input type="text" class="form-control" th:field="*{middleName}" th:errorclass="${'form-control is-invalid'}">
+                                                                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('middleName')}" th:errors="*{middleName}"></small>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label for="lastName" class="form-label" title="Segundo apellido">Segundo apellido</label>
+                                                                                        <input type="text" class="form-control" th:field="*{lastName}" th:errorclass="${'form-control is-invalid'}">
+                                                                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></small>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <th:block th:if="${newUser}">
+                                                                                            <label for="email" class="form-label" title="Correo electrónico">Correo electrónico</label>
+                                                                                            <input type="email" class="form-control" th:field="*{email}" th:errorclass="${'form-control is-invalid'}">
+                                                                                            <small class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+                                                                                        </th:block>
+                                                                                        <th:block th:if="${not newUser}">
+                                                                                            <small title="Correo electrónico">Correo electrónico</small>
+                                                                                            <p>
+                                                                                                <a th:href="'mailto:' + *{email}" th:text="*{email}" th:title="*{email}"></a>
+                                                                                            </p>
+                                                                                            <input type="hidden" th:field="*{email}">
+                                                                                        </th:block>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label for="dni" class="form-label" title="D.N.I.">D.N.I.</label>
+                                                                                        <input type="text" class="form-control" th:field="*{dni}" th:errorclass="${'form-control is-invalid'}">
+                                                                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></small>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label for="naf" class="form-label" title="N.A.F.">N.A.F.</label>
+                                                                                        <input type="text" class="form-control" th:field="*{naf}" th:errorclass="${'form-control is-invalid'}">
+                                                                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('naf')}" th:errors="*{naf}"></small>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label for="phoneNumber" class="form-label" title="Móvil (trabajo)">Móvil (trabajo)</label>
+                                                                                        <input type="tel" class="form-control" th:field="*{phoneNumber}" th:errorclass="${'form-control is-invalid'}">
+                                                                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></small>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label for="jobPositionId" class="form-label" title="Puesto de trabajo">Puesto de trabajo</label>
+                                                                                        <select class="form-select" th:field="*{jobPositionId}" th:errorclass="${'form-control is-invalid'}" data-choices>
+                                                                                            <option value="">--- Seleccionar---</option>
+                                                                                            <option th:each="jobPosition : ${jobPositions}" th:value="${jobPosition.id}" th:text="${jobPosition.name}"></option>
+                                                                                        </select>
+                                                                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('jobPositionId')}" th:errors="*{jobPositionId}"></small>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-12">
+                                                                                    <div class="form-group">
+                                                                                        <label for="duties" class="form-label" title="Funciones">Funciones</label>
+                                                                                        <input type="text" class="form-control" th:field="*{duties}" th:errorclass="${'form-control is-invalid'}">
+                                                                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('duties')}" th:errors="*{duties}"></small>
+                                                                                    </div>
+                                                                                </div>
+                                                                               
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+            
+                                                                <!-- INFORMACIÓN DE LA CUENTA -->
+                                                                <div class="accordion-item px-0 border-0">
+                                                                    <h3 id="accountInformationHeading" class="accordion-header">
+                                                                        <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accountInformationCollapse" aria-expanded="true" aria-controls="accountInformationCollapse" title="Información de la cuenta">Información de la cuenta</button>
+                                                                    </h3>
+                                                                    <div id="accountInformationCollapse" class="accordion-collapse collapse show" aria-labelledby="accountInformationHeading">
+                                                                        <div class="accordion-body">
+                                                                            <div class="row gy-3">
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <th:block th:if="${not newUser}">
+                                                                                            <label for="enabled" class="form-label" title="Habilitado">Habilitado</label>
+                                                                                            <input type="checkbox" class="form-check-input" id="enabled" th:field="*{enabled}" title="Habilitado" th:errorclass="${'form-control is-invalid'}">
+                                                                                            <small class="invalid-feedback" th:if="${#fields.hasErrors('enabled')}" th:errors="*{enabled}"></small>
+                                                                                        </th:block>
+                                                                                        <th:block th:if="${newUser}">
+                                                                                            <small title="Habilitado">Habilitado</small>
+                                                                                            <p th:with="enabled = *{enabled ? 'Sí' : 'No'}" th:text="${enabled}" th:title="${enabled}"></p>
+                                                                                        </th:block>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <small title="Cuenta verificada">Cuenta verificada</small>
+                                                                                        <p th:with="verifiedAccount = ${userDetailDto.verifiedAccount ? 'Sí' : 'No'}" th:text="${verifiedAccount}" th:title="${verifiedAccount}"></p>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <small title="Cuenta bloqueada">Cuenta bloqueada</small>
+                                                                                        <p th:with="lockedAccount = *{lockedAccount ? 'Sí' : 'No'}" th:text="${lockedAccount}" th:title="${lockedAccount}"></p>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <small title="Fecha de bloqueo">Fecha de bloqueo</small>
+                                                                                        <p th:with="lockedDate = *{#dates.format(lockedDate, 'd MMMM, yyyy HH:mm')}" th:text="${lockedDate}" th:title="${lockedDate}"></p>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-12">
+                                                                                    <div class="form-group">
+                                                                                        <label for="rolesId" class="form-label" title="Roles">Roles</label>
+                                                                                        <select class="form-select" th:field="*{rolesId}" th:errorclass="${'form-control is-invalid'}" data-choices multiple>
+                                                                                            <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.plainName}"></option>
+                                                                                        </select>
+                                                                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('rolesId')}" th:errors="*{rolesId}"></small>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+            
+                                                                <!-- INFORMACIÓN DEL SISTEMA -->
+                                                                <div th:if="${not newUser}" class="accordion-item px-0 border-0">
+                                                                    <h3 id="systemInformationHeading" class="accordion-header">
+                                                                        <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#systemInformationCollapse" aria-expanded="true" aria-controls="systemInformationCollapse" title="Información del sistema">Información del sistema</button>
+                                                                    </h3>
+                                                                    <div id="systemInformationCollapse" class="accordion-collapse collapse show" aria-labelledby="systemInformationHeading">
+                                                                        <div class="accordion-body">
+                                                                            <div class="row gy-3">
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <small title="Creado por">Creado por</small>
+                                                                                        <p>
+                                                                                            <a th:href="@{/users/{username}(username = *{createdByUsername})}" class="link-primary" th:text="*{createdByFullName}" th:title="*{createdByFullName}"></a>,
+                                                                                            <span th:with="createdAt = *{#dates.format(createdAt, 'd MMMM, yyyy HH:mm')}" th:text="${createdAt}" th:title="${createdAt}"></span>
+                                                                                        </p>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <small title="Última modificación por">Última modificación por</small>
+                                                                                        <p>
+                                                                                            <a th:href="@{/users/{username}(username = *{lastModifiedByUsername})}" class="link-primary" th:text="*{lastModifiedByFullName}" th:title="*{lastModifiedByFullName}"></a>,
+                                                                                            <span th:with="lastModifiedAt = *{#dates.format(lastModifiedAt, 'd MMMM, yyyy HH:mm')}" th:text="${lastModifiedAt}" th:title="${lastModifiedAt}"></span>
+                                                                                        </p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>
