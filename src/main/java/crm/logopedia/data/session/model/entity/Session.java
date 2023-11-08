@@ -6,7 +6,7 @@ import crm.logopedia.data.user.model.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Entity
@@ -68,8 +68,8 @@ public class Session {
     /**
      * La cantidad de tiempo
      */
-    @Column(name = "tiempo", nullable = false, precision = 28, scale = 2)
-    private BigDecimal time;
+    @Column(name = "hora", nullable = false, precision = 28, scale = 2)
+    private LocalTime hour;
 
     //TODO estadoSession, facturacion, tipoSession
 
