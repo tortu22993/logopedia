@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:with="newTime = ${timeDetailDto != null}, newTask = ${taskDetailDto != null}, isDetailsTab = ${selectedTab == null or selectedTab == 'details'}">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:with="newContact = ${contactDetailDto != null}, newTime = ${timeDetailDto != null}, newTask = ${taskDetailDto != null}, isDetailsTab = ${selectedTab == null or selectedTab == 'details'}">
     <head>
 		<th:block th:insert="~{fragments/common :: head-commons}"></th:block>
-        <link rel="stylesheet" th:href="@{/pages/cases/case-detail.css}">
-        <script th:src="@{/pages/cases/case-detail.js}" type="module"></script>
+        <script th:if="${newContact and selectedTab == 'contacts'}" th:src="@{/pages/patients/tabs/contacts-tab-new.js}" type="module"></script>
+        <script th:if="${not newContact and selectedTab == 'contacts'}" th:src="@{/pages/patients/tabs/contacts-tab-list.js}" type="module"></script>
 	</head>
     <body>
         <main id="top" class="main">
@@ -31,7 +31,7 @@
                                             <div class="card-header d-flex align-items-center justify-content-between flex-column gap-3 flex-xl-row">
                                                 <div class="d-flex flex-column gap-2 text-center text-xl-start">
                                                     <span title="Paciente">
-                                                        <i class="fa fa-suitcase text-primary me-2"></i>
+                                                        <i class="fa fa-user-tie text-primary me-2"></i>
                                                         Paciente
                                                     </span>
                                                     <h4 class="card-title text-clip mb-0" th:text="${title}" th:title="${title}"></h4>
@@ -89,7 +89,7 @@
                                                                 <a th:href="@{/patients/{id}(id = ${patientDetailDto.id})}" th:class="${isDetailsTab ? 'nav-link active' : 'nav-link'}" aria-current="page" title="Detalles">Detalles</a>
                                                             </li>
                                                             <li id="tabContacts" class="nav-item" role="presentation">
-                                                                <a th:href="@{/patients/{id}/contacts(id = ${patientDetailDto.id})}" th:class="${selectedTab == 'contacts' ? 'nav-link active' : 'nav-link disabled'}" aria-current="page" title="Contactos">Contactos</a>
+                                                                <a th:href="@{/patients/{id}/contacts(id = ${patientDetailDto.id})}" th:class="${selectedTab == 'contacts' ? 'nav-link active' : 'nav-link'}" aria-current="page" title="Contactos">Contactos</a>
                                                             </li>
                                                             <li id="tabSession" class="nav-item" role="presentation">
                                                                 <a th:href="@{/patients/{id}/times(id = ${patientDetailDto.id})}" th:class="${selectedTab == 'times' ? 'nav-link active' : 'nav-link disabled'}" aria-current="page" title="Tiempos">Sesiones</a>
@@ -102,9 +102,9 @@
                                                             <!-- PESTAÑA DE DETALLES -->
                                                             <th:block th:if="${isDetailsTab}" th:insert="~{fragments/patients/patient-detail-details-tab :: details-tab}"></th:block>
 
-                                                            <!-- PESTAÑA DE CONTACTOS 
-                                                            <th:block th:if="${selectedTab == 'times'}" th:insert="~{fragments/cases/case-detail-times-tab :: times-tab}"></th:block>
-
+                                                             <!-- PESTAÑA DE CONTACTOS -->
+                                                            <th:block th:if="${selectedTab == 'contacts'}" th:insert="~{fragments/patients/patient-detail-contacts-tab :: contacts-tab}"></th:block>
+                                                            <!--
                                                             PESTAÑA DE SESION
                                                             <th:block th:if="${selectedTab == 'tasks'}" th:insert="~{fragments/cases/case-detail-tasks-tab :: tasks-tab}"></th:block>
 

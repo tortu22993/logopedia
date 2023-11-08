@@ -2,6 +2,7 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head>
 		<th:block th:insert="~{fragments/common :: head-commons}"></th:block>
+        <script th:src="@{/pages/patients/patient-edition.js}" type="module"></script>
 	</head>
     <body>
         <main id="top" class="main">
@@ -34,7 +35,7 @@
                                                 <div class="d-flex align-items-center gap-3 text-center text-md-start">
                                                     <div class="flex-grow-1">
                                                         <span title="Paciente">
-                                                            <i class="fa fa-users text-primary me-2"></i>
+                                                            <i class="fa fa-user-tie text-primary me-2"></i>
                                                             Paciente
 														    <span th:if="${not newPatient}" class="badge badge-phoenix badge-phoenix-warning ms-2" title="Modo de edición">Modo de edición</span>
                                                         </span>

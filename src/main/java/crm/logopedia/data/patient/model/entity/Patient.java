@@ -1,14 +1,12 @@
 package crm.logopedia.data.patient.model.entity;
 
-import crm.logopedia.data.role.model.entity.Role;
+import crm.logopedia.data.contact.model.entity.Contact;
 import crm.logopedia.data.services.model.entity.Services;
 import crm.logopedia.util.ExtendedStringUtils;
 import crm.logopedia.util.abstraction.AbstractAuditableEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
@@ -99,7 +97,12 @@ public class Patient extends AbstractAuditableEntity {
     private Boolean schoolCordination;
 
     //TODO CONTACT, SESSIONS, DOCUMENTS, IMAGE
-
+    /**
+     * Los contactos relacionados con el paciente.
+     */
+    @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
+    @Builder.Default
+    private Set<Contact> contacts = new HashSet<>();
 
     /**
      * Los servicios del paciente.
@@ -140,6 +143,24 @@ public class Patient extends AbstractAuditableEntity {
      */
     public void removeService(Services service) {
         services.remove(service);
+    }
+
+    /**
+     * Añade un contacto a la colección de contactos del paciente.
+     *
+     * @param contact El contacto a añadir
+     */
+    public void addContact(Contact contact) {
+        contacts.add(contact);
+    }
+
+    /**
+     * Elimina un contacto a la colección de contactos del paciente.
+     *
+     * @param contact El contacto a eliminar
+     */
+    public void removeContact(Contact contact) {
+        contacts.remove(contact);
     }
 
     /**

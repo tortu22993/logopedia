@@ -1,15 +1,14 @@
 package crm.logopedia.data.patient.controller;
 
-import crm.logopedia.data.jobposition.model.dto.JobPositionDetailDto;
+import crm.logopedia.data.contact.model.dto.ContactDetailDto;
+import crm.logopedia.data.contact.model.entity.Contact;
+import crm.logopedia.data.contact.service.ContactService;
 import crm.logopedia.data.patient.model.dto.PatientDetailDto;
 import crm.logopedia.data.patient.model.dto.PatientListDto;
 import crm.logopedia.data.patient.service.PatientService;
-import crm.logopedia.data.role.model.entity.Role;
 import crm.logopedia.data.role.model.type.RoleType;
-import crm.logopedia.data.role.service.RoleService;
 import crm.logopedia.data.services.model.entity.Services;
 import crm.logopedia.data.services.service.ServicesService;
-import crm.logopedia.data.user.model.dto.UserDetailDto;
 import crm.logopedia.data.user.model.entity.User;
 import crm.logopedia.util.ExtendedStringUtils;
 import crm.logopedia.util.common.BreadcrumbOption;
@@ -49,6 +48,11 @@ public class PatientController {
      * El servicio de la entidad {@link User}.
      */
     private final PatientService PATIENT_SERVICE;
+
+    /**
+     * El servicio de la entidad {@link Contact}.
+     */
+    private final ContactService CONTACT_SERVICE;
 
     /**
      * El servicio de la entidad {@link Services}.
@@ -160,6 +164,7 @@ public class PatientController {
                 patientDetailDto,
                 model,
                 patientDetailDto.getFullName(),
+                null,
                 null
         );
 
@@ -181,7 +186,8 @@ public class PatientController {
                 patientDetailDto,
                 model,
                 "Nuevo Paciente",
-                getEditionParams()
+                getEditionParams(),
+                null
         );
 
         return ViewNames.PATIENT_EDITION;
@@ -213,7 +219,8 @@ public class PatientController {
                 patientDetailDto,
                 model,
                 patientDetailDto.getName(),
-                getEditionParams()
+                getEditionParams(),
+                "details"
         );
 
         return ViewNames.PATIENT_EDITION;
@@ -239,7 +246,8 @@ public class PatientController {
                     patientDetailDto,
                     model,
                     patientDetailDto.getName(),
-                    getEditionParams()
+                    getEditionParams(),
+                    "details"
             );
 
             return ViewNames.PATIENT_EDITION;
@@ -262,7 +270,140 @@ public class PatientController {
         );
     }
 
-    private void setDetailPageData(PatientDetailDto patientDetailDto, Model model, String viewTitle, Map<String, ?> params) {
+    /**
+     * Renderiza la vista del detalle de un paciente según su ID
+     * junto con una lista paginada de sus contactos.
+     *
+     * @param id El ID del paciente
+     * @param page El número de página a renderizar
+     * @param recordsPerPage El número de registros por página a renderizar
+     * @param model El modelo de datos para añadir a la vista
+     * @param request El objeto contenedor de los datos de la petición HTTP
+     * @return El nombre de la vista a renderizar
+     * @exception NoHandlerFoundException Si no se encuentra el cliente solicitado
+     */
+    @GetMapping("/{id}/contacts")
+    public String renderDetailViewWithContactsTab(@PathVariable Long id,
+                                                  @RequestParam(defaultValue = "0") Integer page,
+                                                  @RequestParam(required = false) Integer recordsPerPage, Model model,
+                                                  HttpServletRequest request) throws NoHandlerFoundException {
+        if(recordsPerPage == null || recordsPerPage <= 0) {
+            recordsPerPage = this.recordsPerPage;
+        } else if(recordsPerPage > maxRecordsPerPage) {
+            recordsPerPage = maxRecordsPerPage;
+        }
+
+        final var patientDetailDto = PATIENT_SERVICE.findById(id);
+
+        if(patientDetailDto == null) {
+            throw new NoHandlerFoundException(
+                    HttpMethod.GET.name(),
+                    request.getRequestURI(),
+                    new HttpHeaders()
+            );
+        }
+
+        final var url = RequestMappings.PATIENTS;
+        final var pageRequest = PageRequest.of(page, recordsPerPage);
+        final var contacts = CONTACT_SERVICE.findByPatientId(patientDetailDto.getId(), pageRequest);
+        final var pageRender = PageRender.newInstance(url, contacts);
+
+        setDetailPageData(
+                patientDetailDto,
+                model,
+                patientDetailDto.getName(),
+                getEditionParams(),
+                "contacts"
+        );
+
+        model.addAttribute("page", pageRender);
+        model.addAttribute("contacts", pageRender.getPage().getContent());
+
+        return ViewNames.PATIENT_DETAIL;
+    }
+
+    /**
+     * Renderiza la vista del detalle de un paciente según su
+     * ID junto con una plantilla vacía para crear un nuevo contacto.
+     *
+     * @param id El ID del cliente
+     * @param model El modelo de datos para añadir a la vista
+     * @param request El objeto contenedor de los datos de la petición HTTP
+     * @return El nombre de la vista a renderizar
+     * @exception NoHandlerFoundException Si no se encuentra el cliente solicitado
+     */
+    @GetMapping("/{id}/contacts/new")
+    public String renderDetailViewToCreateContact(@PathVariable Long id, Model model, HttpServletRequest request) throws NoHandlerFoundException {
+        final var patientDetailDto = PATIENT_SERVICE.findById(id);
+
+        if(patientDetailDto == null) {
+            throw new NoHandlerFoundException(
+                    HttpMethod.GET.name(),
+                    request.getRequestURI(),
+                    new HttpHeaders()
+            );
+        }
+
+        setDetailPageData(
+                patientDetailDto,
+                model,
+                patientDetailDto.getName(),
+                getEditionParams(),
+                "contacts"
+        );
+
+        model.addAttribute("contactDetailDto", CONTACT_SERVICE.getTemplateToCreateNew(patientDetailDto));
+
+        return ViewNames.PATIENT_DETAIL;
+    }
+
+    /**
+     * Valida la estructura del DTO de un contacto y, si es correcta, la guarda
+     * en la base de datos.
+     *
+     * @param contactDetailDto El DTO del contacto a guardar
+     * @param result El resultado de la validación de la estructura del DTO
+     * @param model El modelo de datos para añadir a la vista
+     * @param redirect Permite redirigir atributos a una URL específica
+     * @return La URL de redirección
+     */
+    @PostMapping("/{id}/contacts/save")
+    public String saveContact(@Valid ContactDetailDto contactDetailDto, BindingResult result,
+                              Model model, RedirectAttributes redirect) {
+        final var patientId = contactDetailDto.getPatientId();
+
+        if(result.hasErrors()) {
+            final var patientDetailDto = PATIENT_SERVICE.findById(patientId);
+
+            setDetailPageData(
+                    patientDetailDto,
+                    model,
+                    patientDetailDto.getName(),
+                    getEditionParams(),
+                    "contacts"
+            );
+
+            return ViewNames.PATIENT_DETAIL;
+        }
+
+        CONTACT_SERVICE.save(contactDetailDto);
+        COMMON_DATA_COMPONENT.setHttpDataResponse(
+                "El contacto ha sido guardado.",
+                HttpDataResponseType.SUCCESS,
+                redirect
+        );
+
+        return ExtendedStringUtils.concat(
+                "redirect:",
+                RequestMappings.PATIENTS,
+                "/",
+                contactDetailDto.getPatientId().toString(),
+                RequestMappings.CONTACTS
+        );
+    }
+
+
+    private void setDetailPageData(PatientDetailDto patientDetailDto, Model model, String viewTitle, Map<String, ?> params, String selectedTab) {
         final var rootEndpoint = RequestMappings.PATIENTS;
         final var title = patientDetailDto.getFullName() != null
                 ? (!viewTitle.isBlank()
@@ -282,6 +423,7 @@ public class PatientController {
 
         model.addAttribute("patientDetailDto", patientDetailDto);
         model.addAttribute("title", title.toUpperCase());
+        model.addAttribute("selectedTab", selectedTab);
 
         if(params != null) {
             params.forEach(model::addAttribute);
