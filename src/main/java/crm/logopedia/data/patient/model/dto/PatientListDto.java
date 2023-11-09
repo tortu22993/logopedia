@@ -2,7 +2,6 @@ package crm.logopedia.data.patient.model.dto;
 
 import crm.logopedia.data.services.model.dto.ServicesListDto;
 import crm.logopedia.util.abstraction.AbstractListDto;
-import jakarta.persistence.Column;
 import lombok.*;
 
 @Getter

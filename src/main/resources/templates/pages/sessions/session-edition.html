@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+		<th:block th:insert="~{fragments/common :: head-commons}"></th:block>
+        <script th:src="@{/pages/users/user-edition.js}" type="module"></script>
+	</head>
+    <body>
+        <main id="top" class="main">
+            <div class="container-fluid px-0">
+                <th:block th:insert="~{fragments/menu-asides :: simple-left-vertical-menu}"></th:block>
+                <th:block th:insert="~{fragments/menu-headers :: simple-menu-header}"></th:block>
+                <div class="content" th:with="newSession = ${#strings.isEmpty(sessionDetailDto.id)}">
+                    <div class="d-flex align-items-center justify-content-end justify-content-md-between gap-3 mb-3">
+                        <th:block th:insert="~{fragments/common :: breadcrumb}"></th:block>
+                        <nav class="d-flex align-items-center gap-2">
+                            <div class="btn-reveal-trigger">
+                                <a th:if="${newSession}" th:href="@{/sessions}" class="btn btn-sm btn-reveal" title="Listado">
+                                    <i class="fa fa-arrow-left me-2"></i>
+                                    Listado
+                                </a>
+                                <a th:if="${not newSession}" th:href="@{/sessions/{id}(id = ${sessionDetailDto.id})}" class="btn btn-sm btn-reveal" title="Salir del modo de edición">
+                                    <i class="fa fa-arrow-left me-2"></i>
+                                    Salir del modo de edición
+                                </a>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="mb-0">
+                        <div class="row g-5">
+                            <div class="col-12">
+                                <div class="row g-3 h-100">
+                                    <div class="col-12">
+                                        <div class="card h-100">
+                                            <div class="card-header d-flex align-items-center justify-content-between flex-column flex-md-row gap-3">
+                                                <div class="d-flex align-items-center gap-3 text-center text-md-start">
+                                                    <div class="flex-grow-1">
+                                                        <span title="Session">
+                                                            <i class="fa fa-list text-primary me-2"></i>
+                                                            Session
+														    <span th:if="${not newSession}" class="badge badge-phoenix badge-phoenix-warning ms-2" title="Modo de edición">Modo de edición</span>
+                                                        </span>
+                                                        <h4 class="card-title text-clip mb-0" th:text="${title}" th:title="${title}"></h4>
+                                                    </div>
+                                                </div>
+                                                <div class="d-auto-grid d-md-flex align-items-center gap-2 w-100 w-md-auto">
+                                                    <button id="saveButton" type="button" class="btn btn-sm btn-primary" title="Guardar">
+                                                        <i class="fa fa-cloud me-2"></i>
+                                                        Guardar
+                                                    </button>
+                                                    <button id="cancelButton" type="button" class="btn btn-sm btn-phoenix-secondary" th:with="cancelButtonTitle = ${newSession ? 'Cancelar' : 'Cancelar cambios'}" th:title="${cancelButtonTitle}">
+                                                        <i class="fa fa-ban me-2"></i>
+                                                        <th:block th:text="${cancelButtonTitle}" th:title="${cancelButtonTitle}"></th:block>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div th:if="${not newSession}" class="card-body">
+                                                <div class="row gy-3">
+                                                    <div class="col-auto">
+                                                        <small title="Paciente" class="d-block">Paciente</small>
+                                                        <p class="mb-0" th:text="${sessionDetailDto.patientName}" th:title="${sessionDetailDto.patientName}"></p>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <small title="Asunto" class="d-block">Asunto</small>
+                                                        <p class="mb-0" th:text="${sessionDetailDto.subject}" th:title="${sessionDetailDto.subject}"></p>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <small title="Terapeurta" class="d-block">Terapeuta</small>
+                                                        <p class="mb-0" th:text="${sessionDetailDto.ownerFullName}" th:title="${sessionDetailDto.ownerFullName}"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="card h-100">
+                                            <div class="card-body">
+                                                <div class="row gy-3">
+                                                    <div class="col-12">
+                                                        <form id="formSave" th:object="${sessionDetailDto}" th:action="@{/sessions/action/save}" method="post">
+                                                            <th:block th:insert="~{fragments/common :: error-warning}"></th:block>
+                                                            <input type="hidden" th:field="*{id}">
+
+                                                            <div class="accordion">
+                                                                <!-- INFORMACIÓN GENERAL -->
+                                                                <div class="accordion-item px-0 border-0">
+                                                                    <h3 id="generalInformationHeading" class="accordion-header">
+                                                                        <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#generalInformationCollapse" aria-expanded="true" aria-controls="generalInformationCollapse" title="Información general">Información general</button>
+                                                                    </h3>
+                                                                    <div id="generalInformationCollapse" class="accordion-collapse collapse show" aria-labelledby="generalInformationHeading">
+                                                                        <div class="accordion-body">
+                                                                            <div class="row gy-3">
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label for="patientId" class="form-label" title="Paciente">Paciente</label>
+                                                                                        <select class="form-select" th:field="*{patientId}" th:errorclass="${'form-control is-invalid'}" data-choices>
+                                                                                            <option value="">--- Seleccionar---</option>
+                                                                                            <option th:each="patient : ${patients}" th:value="${patient.id}" th:text="${patient.fullName}"></option>
+                                                                                        </select>
+                                                                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('patientId')}" th:errors="*{patientId}"></small>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label for="subject" class="form-label" title="Asunto">Asunto</label>
+                                                                                        <input type="text" class="form-control" th:field="*{subject}" th:errorclass="${'form-control is-invalid'}">
+                                                                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}"></small>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label for="serviceId" class="form-label" title="Servicio">Servicio</label>
+                                                                                        <select class="form-select" th:field="*{serviceId}" th:errorclass="${'form-control is-invalid'}" data-choices>
+                                                                                            <option value="">--- Seleccionar---</option>
+                                                                                            <option th:each="service : ${services}" th:value="${service.id}" th:text="${service.name}"></option>
+                                                                                        </select>
+                                                                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('serviceId')}" th:errors="*{serviceId}"></small>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label for="ownerUsername" class="form-label" title="Terapeuta">Terapeuta</label>
+                                                                                        <select class="form-select" th:field="*{ownerUsername}" th:errorclass="${'form-control is-invalid'}" data-choices>
+                                                                                            <option value="">--- Seleccionar---</option>
+                                                                                            <option th:each="user : ${users}" th:value="${user.username}" th:text="${user.fullName}"></option>
+                                                                                        </select>
+                                                                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('ownerUsername')}" th:errors="*{ownerUsername}"></small>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label for="sessionDate" class="form-label" title="Fecha">Fecha</label>
+                                                                                        <input type="date" class="form-control" th:field="*{sessionDate}" th:errorclass="${'form-control is-invalid'}">
+                                                                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('sessionDate')}" th:errors="*{sessionDate}"></small>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label for="hour" class="form-label" title="Hora">Hora</label>
+                                                                                        <input type="time" class="form-control" th:field="*{hour}" th:errorclass="${'form-control is-invalid'}">
+                                                                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('hour')}" th:errors="*{hour}"></small>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-12">
+                                                                                    <div class="form-group">
+                                                                                        <label for="details" class="form-label" title="Observaciones">Observaciones</label>
+                                                                                        <input type="text" class="form-control" th:field="*{details}" th:errorclass="${'form-control is-invalid'}">
+                                                                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('details')}" th:errors="*{details}"></small>
+                                                                                    </div>
+                                                                                </div>
+                                                                                
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- INFORMACIÓN DEL SISTEMA -->
+                                                                <div th:if="${not newSession}" class="accordion-item px-0 border-0">
+                                                                    <h3 id="systemInformationHeading" class="accordion-header">
+                                                                        <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#systemInformationCollapse" aria-expanded="true" aria-controls="systemInformationCollapse" title="Información del sistema">Información del sistema</button>
+                                                                    </h3>
+                                                                    <div id="systemInformationCollapse" class="accordion-collapse collapse show" aria-labelledby="systemInformationHeading">
+                                                                        <div class="accordion-body">
+                                                                            <div class="row gy-3">
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <small title="Creado por">Creado por</small>
+                                                                                        <p>
+                                                                                            <a th:href="@{/users/{username}(username = *{createdByUsername})}" class="link-primary" th:text="*{createdByFullName}" th:title="*{createdByFullName}"></a>,
+                                                                                            <span th:with="createdAt = *{#dates.format(createdAt, 'd MMMM, yyyy HH:mm')}" th:text="${createdAt}" th:title="${createdAt}"></span>
+                                                                                        </p>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-12 col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <small title="Última modificación por">Última modificación por</small>
+                                                                                        <p>
+                                                                                            <a th:href="@{/users/{username}(username = *{lastModifiedByUsername})}" class="link-primary" th:text="*{lastModifiedByFullName}" th:title="*{lastModifiedByFullName}"></a>,
+                                                                                            <span th:with="lastModifiedAt = *{#dates.format(lastModifiedAt, 'd MMMM, yyyy HH:mm')}" th:text="${lastModifiedAt}" th:title="${lastModifiedAt}"></span>
+                                                                                        </p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

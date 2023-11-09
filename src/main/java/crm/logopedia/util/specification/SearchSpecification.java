@@ -2,8 +2,8 @@ package crm.logopedia.util.specification;
 
 
 import crm.logopedia.util.http.request.FilterRequest;
-import crm.logopedia.util.http.request.SortRequest;
 import crm.logopedia.util.http.request.SearchRequest;
+import crm.logopedia.util.http.request.SortRequest;
 import jakarta.persistence.criteria.*;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;

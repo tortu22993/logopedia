@@ -2,8 +2,8 @@ package crm.logopedia.security.handler;
 
 import crm.logopedia.security.context.AuthUserService;
 import crm.logopedia.security.context.AuthenticatedUser;
-import jakarta.servlet.ServletException;
 import crm.logopedia.util.environment.RequestMappings;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

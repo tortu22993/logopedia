@@ -1,9 +1,5 @@
 package crm.logopedia.data.services.controller;
 
-import crm.logopedia.data.jobposition.model.dto.JobPositionDetailDto;
-import crm.logopedia.data.jobposition.model.dto.JobPositionListDto;
-import crm.logopedia.data.jobposition.model.entity.JobPosition;
-import crm.logopedia.data.jobposition.service.JobPositionService;
 import crm.logopedia.data.role.model.type.RoleType;
 import crm.logopedia.data.services.model.dto.ServicesDetailDto;
 import crm.logopedia.data.services.model.dto.ServicesListDto;

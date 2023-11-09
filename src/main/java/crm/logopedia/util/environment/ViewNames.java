@@ -7,6 +7,7 @@ import crm.logopedia.data.jobposition.model.entity.JobPosition;
 import crm.logopedia.data.patient.controller.PatientController;
 import crm.logopedia.data.services.controller.ServicesController;
 import crm.logopedia.data.services.model.entity.Services;
+import crm.logopedia.data.session.controller.SessionController;
 import crm.logopedia.data.user.controller.UserController;
 import crm.logopedia.security.controller.AuthController;
 
@@ -69,6 +70,14 @@ public abstract class ViewNames {
      * @see PatientController
      */
     private static final String ROOT_PATIENTS = ROOT_PAGES + "/patients";
+
+    /**
+     * La carpeta raíz contenedora de todos los ficheros .html
+     * de las vistas relativas a las sesiones.
+     *
+     * @see SessionController
+     */
+    private static final String ROOT_SESSIONS = ROOT_PAGES + "/sessions";
 
 
     /**
@@ -188,6 +197,31 @@ public abstract class ViewNames {
      * @see PatientController
      */
     public static final String PATIENT_EDITION = ROOT_PATIENTS + "/patient-edition";
+
+
+    /**
+     * El nombre del fichero .html de la vista del listado
+     * de sessiones.
+     *
+     * @see SessionController
+     */
+    public static final String SESSION_LIST = ROOT_SESSIONS + "/session-list";
+
+    /**
+     * El nombre del fichero .html de la vista del detalle
+     * de sessiones.
+     *
+     * @see SessionController
+     */
+    public static final String SESSION_DETAIL = ROOT_SESSIONS + "/session-detail";
+
+    /**
+     * El nombre del fichero .html de la vista del edition
+     * de sessiones.
+     *
+     * @see SessionController
+     */
+    public static final String SESSION_EDITION = ROOT_SESSIONS + "/session-edition";
 
 
     /**

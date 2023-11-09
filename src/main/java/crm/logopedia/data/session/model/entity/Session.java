@@ -3,6 +3,7 @@ package crm.logopedia.data.session.model.entity;
 import crm.logopedia.data.patient.model.entity.Patient;
 import crm.logopedia.data.services.model.entity.Services;
 import crm.logopedia.data.user.model.entity.User;
+import crm.logopedia.util.abstraction.AbstractAuditableEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,7 +17,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Session {
+public class Session extends AbstractAuditableEntity {
     /**
      * El ID del contacto.
      */
@@ -68,8 +69,8 @@ public class Session {
     /**
      * La cantidad de tiempo
      */
-    @Column(name = "hora", nullable = false, precision = 28, scale = 2)
-    private LocalTime hour;
+    @Column(name = "hora", nullable = false)
+    private Date hour;
 
     //TODO estadoSession, facturacion, tipoSession
 

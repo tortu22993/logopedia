@@ -33,6 +33,11 @@ public abstract class RequestMappings {
     public static final String CONTACTS = "/contacts";
 
     /**
+     * El endpoint del controlador {@link SessionController}.
+     */
+    public static final String SESSIONS = "/sessions";
+
+    /**
      * El endpoint del controlador {@link PatientController}.
      */
     public static final String PATIENTS = "/patients";

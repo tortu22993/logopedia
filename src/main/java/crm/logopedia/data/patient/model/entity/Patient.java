@@ -2,6 +2,7 @@ package crm.logopedia.data.patient.model.entity;
 
 import crm.logopedia.data.contact.model.entity.Contact;
 import crm.logopedia.data.services.model.entity.Services;
+import crm.logopedia.data.session.model.entity.Session;
 import crm.logopedia.util.ExtendedStringUtils;
 import crm.logopedia.util.abstraction.AbstractAuditableEntity;
 import jakarta.persistence.*;
@@ -103,6 +104,13 @@ public class Patient extends AbstractAuditableEntity {
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
     @Builder.Default
     private Set<Contact> contacts = new HashSet<>();
+
+    /**
+     * Los contactos relacionados con el paciente.
+     */
+    @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
+    @Builder.Default
+    private Set<Session> sessions = new HashSet<>();
 
     /**
      * Los servicios del paciente.
