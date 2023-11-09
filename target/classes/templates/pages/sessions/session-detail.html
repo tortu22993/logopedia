@@ -41,11 +41,10 @@
                                                         <i class="fa fa-pencil me-2"></i>
                                                         Editar
                                                     </a>
-                                                    <button type="button" class="btn btn-sm btn-danger" title="Exportar a PDF">
+                                                    <a th:href="@{/sessions/{id}/export/pdf(id = ${sessionDetailDto.id})}" class="btn btn-sm btn-danger" title="Exportar a PDF">
                                                         <i class="far fa-file-pdf me-2"></i>
-                                                        <span class="d-inline d-sm-none">Exportar a PDF</span>
                                                         Exportar a PDF
-                                                    </button>
+                                                    </a>
                                                 </div>
                                             </div>
                                             <div class="card-body">

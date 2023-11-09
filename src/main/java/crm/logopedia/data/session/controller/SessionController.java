@@ -1,5 +1,6 @@
 package crm.logopedia.data.session.controller;
 
+import com.lowagie.text.DocumentException;
 import crm.logopedia.data.contact.model.dto.ContactDetailDto;
 import crm.logopedia.data.patient.model.dto.PatientListDto;
 import crm.logopedia.data.patient.model.entity.Patient;
@@ -10,6 +11,7 @@ import crm.logopedia.data.services.service.ServicesService;
 import crm.logopedia.data.session.model.dto.SessionDetailDto;
 import crm.logopedia.data.session.model.dto.SessionListDto;
 import crm.logopedia.data.session.model.entity.Session;
+import crm.logopedia.data.session.model.pdf.SessionPdfExporter;
 import crm.logopedia.data.session.service.SessionService;
 import crm.logopedia.data.user.model.dto.UserDetailDto;
 import crm.logopedia.data.user.model.entity.User;
@@ -22,6 +24,7 @@ import crm.logopedia.util.environment.ViewNames;
 import crm.logopedia.util.http.enums.HttpDataResponseType;
 import crm.logopedia.util.pagination.PageRender;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,6 +41,10 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -254,6 +261,23 @@ public class SessionController {
                 "/",
                 savedSessionDetailDto.getId().toString()
         );
+    }
+
+    @GetMapping("/{id}/export/pdf")
+    public void exportToPDF(HttpServletResponse response,@PathVariable Long id) throws DocumentException, IOException {
+        response.setContentType("application/pdf");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=session_" + currentDateTime + ".pdf";
+        response.setHeader(headerKey, headerValue);
+
+        SessionDetailDto session = SESSION_SERVICE.findById(id);
+
+        SessionPdfExporter exporter = new SessionPdfExporter(session);
+        exporter.export(response);
+
     }
 
     private void setDetailPageData(SessionDetailDto sessionDetailDto, Model model, String viewTitle, Map<String, ?> params) {
