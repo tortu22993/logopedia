@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:with="newContact = ${contactDetailDto != null}, newTime = ${timeDetailDto != null}, newTask = ${taskDetailDto != null}, isDetailsTab = ${selectedTab == null or selectedTab == 'details'}">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:with="newContact = ${contactDetailDto != null}, newSession = ${sessionDetailDto != null}, newTask = ${taskDetailDto != null}, isDetailsTab = ${selectedTab == null or selectedTab == 'details'}">
     <head>
 		<th:block th:insert="~{fragments/common :: head-commons}"></th:block>
         <script th:if="${newContact and selectedTab == 'contacts'}" th:src="@{/pages/patients/tabs/contacts-tab-new.js}" type="module"></script>
@@ -92,7 +92,7 @@
                                                                 <a th:href="@{/patients/{id}/contacts(id = ${patientDetailDto.id})}" th:class="${selectedTab == 'contacts' ? 'nav-link active' : 'nav-link'}" aria-current="page" title="Contactos">Contactos</a>
                                                             </li>
                                                             <li id="tabSession" class="nav-item" role="presentation">
-                                                                <a th:href="@{/patients/{id}/times(id = ${patientDetailDto.id})}" th:class="${selectedTab == 'times' ? 'nav-link active' : 'nav-link disabled'}" aria-current="page" title="Tiempos">Sesiones</a>
+                                                                <a th:href="@{/patients/{id}/sessions(id = ${patientDetailDto.id})}" th:class="${selectedTab == 'sessions' ? 'nav-link active' : 'nav-link'}" aria-current="page" title="Sesiones">Sesiones</a>
                                                             </li>
                                                             <li id="tabDocuments" class="nav-item" role="presentation">
                                                                 <a th:href="@{/patients/{id}/documents(id = ${patientDetailDto.id})}" th:class="${selectedTab == 'documents' ? 'nav-link active' : 'nav-link disabled'}" aria-current="page" title="Documentos">Documentos</a>
@@ -105,10 +105,10 @@
                                                              <!-- PESTAÑA DE CONTACTOS -->
                                                             <th:block th:if="${selectedTab == 'contacts'}" th:insert="~{fragments/patients/patient-detail-contacts-tab :: contacts-tab}"></th:block>
                                                             <!--
-                                                            PESTAÑA DE SESION
-                                                            <th:block th:if="${selectedTab == 'tasks'}" th:insert="~{fragments/cases/case-detail-tasks-tab :: tasks-tab}"></th:block>
+                                                            PESTAÑA DE SESION-->
+                                                            <th:block th:if="${selectedTab == 'sessions'}" th:insert="~{fragments/patients/patient-detail-sessions-tab :: sessions-tab}"></th:block>
 
-                                                             PESTAÑA DE DOCUMENTOS -->
+                                                             <!--PESTAÑA DE DOCUMENTOS -->
                                                             <!--<th:block th:if="${selectedTab == 'documents'}" th:insert="~{fragments/cases/case-detail-documents-tab :: documents-tab}"></th:block>-->
                                                         </div>
                                                     </div>

@@ -97,12 +97,14 @@
                                                 <td class="patientName align-middle white-space-nowrap">
                                                     <a th:href="@{/patients/{id}(id = ${sessio.patientId})}" class="link-primary" th:text="${sessio.patientName}" th:title="${session.patientName}"></a>
                                                 </td>
-                                                <td class="subject align-middle white-space-nowrap" th:text="${sessio.subject}" th:title="${sessio.subject}"></td>
+                                                <td class="subject align-middle white-space-nowrap">
+                                                    <a th:href="@{/sessions/{id}(id = ${sessio.id})}" class="link-primary" th:text="${sessio.subject}" th:title="${session.subject}"></a>
+                                                </td>
                                                 <td class="email align-middle white-space-nowrap">
                                                     <a th:href="@{/services/{id}(id = ${sessio.serviceId})}" class="link-primary" th:text="${sessio.serviceName}" th:title="${session.serviceName}"></a>
                                                 </td>
                                                 <td class="ownerFullName align-middle white-space-nowrap" th:text="${sessio.ownerFullName}" th:title="${sessio.ownerFullName}"></td>
-                                                <td class="sessionDate align-middle white-space-nowrap" th:text="${sessio.sessionDate}" th:title="${sessio.sessionDate}"></td>
+                                                <td class="sessionDate align-middle white-space-nowrap" th:text="${#dates.format(sessio.sessionDate, 'dd-MM-yyyy')}" th:title="${#dates.format(sessio.sessionDate, 'dd-MM-yyyy')}"></td>
                                             </tr>
                                         </tbody>
                                     </table>

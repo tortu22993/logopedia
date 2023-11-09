@@ -159,7 +159,7 @@ public class SessionController {
         setDetailPageData(
                 sessionDetailDto,
                 model,
-                String.valueOf(sessionDetailDto.getId()),
+                String.valueOf(sessionDetailDto.getPatientName()),
                 null
         );
 
@@ -258,7 +258,7 @@ public class SessionController {
 
     private void setDetailPageData(SessionDetailDto sessionDetailDto, Model model, String viewTitle, Map<String, ?> params) {
         final var rootEndpoint = RequestMappings.SESSIONS;
-        final var title = StringUtils.hasLength(String.valueOf(sessionDetailDto.getId()))
+        final var title = StringUtils.hasLength(String.valueOf(sessionDetailDto.getPatientName()))
                 ? (!viewTitle.isBlank()
                 ? viewTitle
                 : "Editar session"

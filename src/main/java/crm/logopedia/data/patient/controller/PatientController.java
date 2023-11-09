@@ -5,11 +5,16 @@ import crm.logopedia.data.contact.model.entity.Contact;
 import crm.logopedia.data.contact.service.ContactService;
 import crm.logopedia.data.patient.model.dto.PatientDetailDto;
 import crm.logopedia.data.patient.model.dto.PatientListDto;
+import crm.logopedia.data.patient.model.entity.Patient;
 import crm.logopedia.data.patient.service.PatientService;
 import crm.logopedia.data.role.model.type.RoleType;
 import crm.logopedia.data.services.model.entity.Services;
 import crm.logopedia.data.services.service.ServicesService;
+import crm.logopedia.data.session.model.dto.SessionDetailDto;
+import crm.logopedia.data.session.model.entity.Session;
+import crm.logopedia.data.session.service.SessionService;
 import crm.logopedia.data.user.model.entity.User;
+import crm.logopedia.data.user.service.UserService;
 import crm.logopedia.util.ExtendedStringUtils;
 import crm.logopedia.util.common.BreadcrumbOption;
 import crm.logopedia.util.component.CommonDataComponent;
@@ -43,7 +48,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class PatientController {
     /**
-     * El servicio de la entidad {@link User}.
+     * El servicio de la entidad {@link Patient}.
      */
     private final PatientService PATIENT_SERVICE;
 
@@ -51,6 +56,16 @@ public class PatientController {
      * El servicio de la entidad {@link Contact}.
      */
     private final ContactService CONTACT_SERVICE;
+
+    /**
+     * El servicio de la entidad {@link Session}.
+     */
+    private final SessionService SESSION_SERVICE;
+
+    /**
+     * El servicio de la entidad {@link User}.
+     */
+    private final UserService USER_SERVICE;
 
     /**
      * El servicio de la entidad {@link Services}.
@@ -400,6 +415,126 @@ public class PatientController {
         );
     }
 
+    @GetMapping("/{id}/sessions")
+    public String renderDetailViewWithSessionsTab(@PathVariable Long id,
+                                                  @RequestParam(defaultValue = "0") Integer page,
+                                                  @RequestParam(required = false) Integer recordsPerPage, Model model,
+                                                  HttpServletRequest request) throws NoHandlerFoundException {
+        if(recordsPerPage == null || recordsPerPage <= 0) {
+            recordsPerPage = this.recordsPerPage;
+        } else if(recordsPerPage > maxRecordsPerPage) {
+            recordsPerPage = maxRecordsPerPage;
+        }
+
+        final var patientDetailDto = PATIENT_SERVICE.findById(id);
+
+        if(patientDetailDto == null) {
+            throw new NoHandlerFoundException(
+                    HttpMethod.GET.name(),
+                    request.getRequestURI(),
+                    new HttpHeaders()
+            );
+        }
+
+        final var url = RequestMappings.PATIENTS;
+        final var pageRequest = PageRequest.of(page, recordsPerPage);
+        final var sessions = SESSION_SERVICE.findByPatientId(patientDetailDto.getId(), pageRequest);
+        final var pageRender = PageRender.newInstance(url, sessions);
+
+        setDetailPageData(
+                patientDetailDto,
+                model,
+                patientDetailDto.getName(),
+                getEditionParams(),
+                "sessions"
+        );
+
+        model.addAttribute("page", pageRender);
+        model.addAttribute("sessions", pageRender.getPage().getContent());
+
+        return ViewNames.PATIENT_DETAIL;
+    }
+
+    /**
+     * Renderiza la vista del detalle de un paciente según su
+     * ID junto con una plantilla vacía para crear un nuevo contacto.
+     *
+     * @param id El ID del cliente
+     * @param model El modelo de datos para añadir a la vista
+     * @param request El objeto contenedor de los datos de la petición HTTP
+     * @return El nombre de la vista a renderizar
+     * @exception NoHandlerFoundException Si no se encuentra el cliente solicitado
+     */
+    @GetMapping("/{id}/sessions/new")
+    public String renderDetailViewToCreateSession(@PathVariable Long id, Model model, HttpServletRequest request) throws NoHandlerFoundException {
+        final var patientDetailDto = PATIENT_SERVICE.findById(id);
+
+        if(patientDetailDto == null) {
+            throw new NoHandlerFoundException(
+                    HttpMethod.GET.name(),
+                    request.getRequestURI(),
+                    new HttpHeaders()
+            );
+        }
+
+        setDetailPageData(
+                patientDetailDto,
+                model,
+                patientDetailDto.getName(),
+                getEditionParams(),
+                "sessions"
+        );
+
+        model.addAttribute("sessionDetailDto", SESSION_SERVICE.getTemplateToCreateNew(patientDetailDto));
+
+        return ViewNames.PATIENT_DETAIL;
+    }
+
+    /**
+     * Valida la estructura del DTO de un contacto y, si es correcta, la guarda
+     * en la base de datos.
+     *
+     * @param sessionDetailDto El DTO del contacto a guardar
+     * @param result El resultado de la validación de la estructura del DTO
+     * @param model El modelo de datos para añadir a la vista
+     * @param redirect Permite redirigir atributos a una URL específica
+     * @return La URL de redirección
+     */
+    @PostMapping("/{id}/sessions/save")
+    public String saveSession(@Valid SessionDetailDto sessionDetailDto, BindingResult result,
+                              Model model, RedirectAttributes redirect) {
+        final var patientId = sessionDetailDto.getPatientId();
+
+        if(result.hasErrors()) {
+            final var patientDetailDto = PATIENT_SERVICE.findById(patientId);
+
+            setDetailPageData(
+                    patientDetailDto,
+                    model,
+                    patientDetailDto.getName(),
+                    getEditionParams(),
+                    "sessions"
+            );
+
+            return ViewNames.PATIENT_DETAIL;
+        }
+
+        SESSION_SERVICE.save(sessionDetailDto);
+        COMMON_DATA_COMPONENT.setHttpDataResponse(
+                "La sesion ha sido guardado.",
+                HttpDataResponseType.SUCCESS,
+                redirect
+        );
+
+        return ExtendedStringUtils.concat(
+                "redirect:",
+                RequestMappings.PATIENTS,
+                "/",
+                sessionDetailDto.getPatientId().toString(),
+                RequestMappings.SESSIONS
+        );
+    }
+
 
     private void setDetailPageData(PatientDetailDto patientDetailDto, Model model, String viewTitle, Map<String, ?> params, String selectedTab) {
         final var rootEndpoint = RequestMappings.PATIENTS;
@@ -437,7 +572,9 @@ public class PatientController {
     private Map<String, ?> getEditionParams() {
         return Map.of(
                 "services",
-                SERVICES_SERVICE.findAll()
+                SERVICES_SERVICE.findAll(),
+                "users",
+                USER_SERVICE.findAll()
         );
     }
 }

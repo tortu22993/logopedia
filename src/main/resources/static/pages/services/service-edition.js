@@ -16,7 +16,7 @@ import { MESSAGE_TYPES, showMessage } from "../../js/util/confirm-message.js";
 document.querySelector('#cancelButton')?.addEventListener('click', () => {
     showMessage({
         title: 'Cancelar cambios',
-        message: 'Se cancelarán los cambios realizados sobre el puesto de trabajo. ¿Desea continuar?',
+        message: 'Se cancelarán los cambios realizados sobre el servicio. ¿Desea continuar?',
         type: MESSAGE_TYPES.QUESTION,
         showMessage: true,
         confirmButtonText: 'Continuar',

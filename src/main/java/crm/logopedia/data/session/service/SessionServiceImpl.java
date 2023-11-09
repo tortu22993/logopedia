@@ -1,5 +1,7 @@
 package crm.logopedia.data.session.service;
 
+import crm.logopedia.data.contact.model.dto.ContactDetailDto;
+import crm.logopedia.data.patient.model.dto.PatientDetailDto;
 import crm.logopedia.data.patient.model.entity.Patient;
 import crm.logopedia.data.patient.repository.PatientRepository;
 import crm.logopedia.data.session.model.dto.SessionDetailDto;
@@ -149,6 +151,15 @@ public class SessionServiceImpl implements SessionService{
         final var savedSession = SESSION_REPOSITORY.save(session);
 
         return convertToDetailDto(savedSession);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public SessionDetailDto getTemplateToCreateNew(PatientDetailDto patientDetailDto) {
+        return SessionDetailDto.builder()
+                .patientId(patientDetailDto.getId())
+                .patientName(patientDetailDto.getName())
+                .build();
     }
 
     /**

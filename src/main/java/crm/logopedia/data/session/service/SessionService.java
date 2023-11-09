@@ -1,5 +1,7 @@
 package crm.logopedia.data.session.service;
 
+import crm.logopedia.data.contact.model.dto.ContactDetailDto;
+import crm.logopedia.data.patient.model.dto.PatientDetailDto;
 import crm.logopedia.data.session.model.dto.SessionDetailDto;
 import crm.logopedia.data.session.model.dto.SessionListDto;
 import crm.logopedia.data.user.model.dto.UserListDto;
@@ -35,6 +37,15 @@ public interface SessionService {
      * @return El DTO del session guardado
      */
     SessionDetailDto save(SessionDetailDto sessionDetailDto);
+
+    /**
+     * Obtiene la plantilla de un DTO para crear un nueva session a partir de un
+     * DTO del paciente al cual estará asociado.
+     *
+     * @param patientDetailDto El DTO de detalle del paciente al que se asociará el contacto
+     * @return El DTO rellenado con datos necesarios para crear el contacto
+     */
+    SessionDetailDto getTemplateToCreateNew(PatientDetailDto patientDetailDto);
 
 
 }

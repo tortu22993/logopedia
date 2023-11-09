@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:with="hasLoggedInOnce = ${userDetailDto.enabled and userDetailDto.verifiedAccount}">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head>
 		<th:block th:insert="~{fragments/common :: head-commons}"></th:block>
-        <meta name="user-email" th:content="${userDetailDto.email}">
-        <script th:if="${not hasLoggedInOnce}" th:src="@{/pages/users/user-detail.js}" type="module"></script>
 	</head>
     <body>
         <main id="top" class="main">
@@ -15,7 +13,7 @@
                         <th:block th:insert="~{fragments/common :: breadcrumb}"></th:block>
                         <nav class="d-flex align-items-center gap-2">
                             <div class="btn-reveal-trigger">
-                                <a th:href="@{/users}" class="btn btn-sm btn-reveal" title="Listado">
+                                <a th:href="@{/sessions}" class="btn btn-sm btn-reveal" title="Listado">
                                     <i class="fa fa-arrow-left me-2"></i>
                                     Listado
                                 </a>
@@ -26,58 +24,43 @@
                         <div class="row g-5">
                             <div class="col-12">
                                 <div class="row g-3 h-100">
-                                    <div th:if="${not hasLoggedInOnce}" class="col-12">
-                                        <div class="alert alert-soft-warning fs--1 mb-0" role="alert">
-                                            <i class="fa fa-circle-info me-2"></i>
-                                            Este usuario aún no ha accedido al sistema. Si han pasado 24 horas desde que se dio de alta, puede
-                                            reenviar un correo electrónico para que le llegue una invitación de acceso.
-                                        </div>
-                                    </div>
                                     <div class="col-12">
                                         <div class="card h-100">
                                             <div class="card-header d-flex align-items-center justify-content-between flex-column flex-md-row gap-3">
                                                 <div class="d-flex align-items-center gap-3 text-center text-md-start">
-                                                    <picture>
-                                                        <img th:src="@{/resources/images/team/avatar-rounded.webp}" th:alt="'Foto de ' + ${userDetailDto.fullName}" class="rounded-circle" loading="lazy">
-                                                    </picture>
                                                     <div class="flex-grow-1">
-                                                        <span title="Usuario">
-                                                            <i class="fa fa-users text-primary me-2"></i>
-                                                            Usuario
+                                                        <span title="Sesion">
+                                                            <i class="fa fa-list text-primary me-2"></i>
+                                                            Sesion
                                                         </span>
                                                         <h4 class="card-title text-clip mb-0" th:text="${title}" th:title="${title}"></h4>
                                                     </div>
                                                 </div>
                                                 <div class="d-auto-grid d-md-flex align-items-center gap-2 w-100 w-md-auto">
-                                                    <a sec:authorize="hasAnyRole('ROLE_MASTER', 'ROLE_ADMIN', 'ROLE_MANAGER')" th:href="@{/users/{username}/action/edit(username = ${userDetailDto.username})}" class="btn btn-sm btn-phoenix-primary" title="Editar">
+                                                    <a sec:authorize="hasAnyRole('ROLE_MASTER', 'ROLE_ADMIN', 'ROLE_MANAGER')" th:href="@{/sessions/{id}/action/edit(id = ${sessionDetailDto.id})}" class="btn btn-sm btn-phoenix-primary" title="Editar">
                                                         <i class="fa fa-pencil me-2"></i>
                                                         Editar
                                                     </a>
-                                                    <form sec:authorize="hasAnyRole('ROLE_MASTER', 'ROLE_ADMIN')" id="sendNewEmailInvitationForm" th:if="${not hasLoggedInOnce}" th:action="@{/users/{username}/send-email-to-access(username = ${userDetailDto.username})}" method="post">
-                                                        <button id="sendNewEmailInvitationButton" type="button" class="btn btn-sm btn-phoenix-secondary" title="Reenviar invitación de acceso">
-                                                            <i class="fa fa-envelope me-2"></i>
-                                                            Reenviar invitación de acceso
-                                                        </button>
-                                                    </form>
-                                                    <button type="button" class="btn btn-sm btn-phoenix-warning" title="Agregar favorito">
-                                                        <i class="far fa-star me-2 me-sm-0"></i>
-                                                        <span class="d-inline d-sm-none">Agregar favorito</span>
+                                                    <button type="button" class="btn btn-sm btn-danger" title="Exportar a PDF">
+                                                        <i class="far fa-file-pdf me-2"></i>
+                                                        <span class="d-inline d-sm-none">Exportar a PDF</span>
+                                                        Exportar a PDF
                                                     </button>
                                                 </div>
                                             </div>
                                             <div class="card-body">
                                                 <div class="row gy-3">
                                                     <div class="col-auto">
-                                                        <small title="Puesto de trabajo" class="d-block">Puesto de trabajo</small>
-                                                        <p class="mb-0" th:text="${userDetailDto.jobPositionName}" th:title="${userDetailDto.jobPositionName}"></p>
+                                                        <small title="Paciente" class="d-block">Paciente</small>
+                                                        <p class="mb-0" th:text="${sessionDetailDto.patientName}" th:title="${sessionDetailDto.patientName}"></p>
                                                     </div>
                                                     <div class="col-auto">
-                                                        <small title="Correo electrónico" class="d-block">Correo electrónico</small>
-                                                        <a th:href="'mailto:' + ${userDetailDto.email}" class="link-primary" th:text="${userDetailDto.email}" th:title="${userDetailDto.email}"></a>
+                                                        <small title="Asunto" class="d-block">Asunto</small>
+                                                        <p class="mb-0" th:text="${sessionDetailDto.subject}" th:title="${sessionDetailDto.subject}"></p>
                                                     </div>
                                                     <div class="col-auto">
-                                                        <small title="Móvil" class="d-block">Móvil</small>
-                                                        <a th:if="${not #strings.isEmpty(userDetailDto.phoneNumber)}" th:href="'tel:' + ${userDetailDto.phoneNumber}" class="link-primary" th:text="${userDetailDto.phoneNumber}" th:title="${userDetailDto.phoneNumber}"></a>
+                                                        <small title="Terapeuta" class="d-block">Terapeuta</small>
+                                                        <p class="mb-0" th:text="${sessionDetailDto.ownerFullName}" th:title="${sessionDetailDto.ownerFullName}"></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -98,98 +81,50 @@
                                                                 <div class="row gy-3">
                                                                     <div class="col-xs-12 col-sm-6">
                                                                         <div class="form-group">
-                                                                            <small title="Nombre completo">Nombre completo</small>
-                                                                            <p th:text="${userDetailDto.fullName}" th:title="${userDetailDto.fullName}"></p>
+                                                                            <small title="Paciente">Paciente</small>
+                                                                            <p th:text="${sessionDetailDto.patientName}" th:title="${sessionDetailDto.patientName}"></p>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-xs-12 col-sm-6">
                                                                         <div class="form-group">
-                                                                            <small title="Correo electrónico">Correo electrónico</small>
-                                                                            <p>
-                                                                                <a th:href="'mailto:' + ${userDetailDto.email}" class="link-primary" th:text="${userDetailDto.email}" th:title="${userDetailDto.email}"></a>
-                                                                            </p>
+                                                                            <small title="Asunto">Asunto</small>
+                                                                            <p th:text="${sessionDetailDto.subject}" th:title="${sessionDetailDto.subject}"></p>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-xs-12 col-sm-6">
                                                                         <div class="form-group">
-                                                                            <small title="D.N.I.">D.N.I.</small>
-                                                                            <p th:text="${userDetailDto.dni}" th:title="${userDetailDto.dni}"></p>
+                                                                            <small title="Servicio">Servicio</small>
+                                                                            <p th:text="${sessionDetailDto.serviceName}" th:title="${sessionDetailDto.serviceName}"></p>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-xs-12 col-sm-6">
                                                                         <div class="form-group">
-                                                                            <small title="N.A.F.">N.A.F.</small>
-                                                                            <p th:text="${userDetailDto.naf}" th:title="${userDetailDto.naf}"></p>
+                                                                            <small title="Terapeuta">Terapeuta</small>
+                                                                            <p th:text="${sessionDetailDto.ownerFullName}" th:title="${sessionDetailDto.ownerFullName}"></p>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-xs-12 col-sm-6">
                                                                         <div class="form-group">
-                                                                            <small title="Móvil (trabajo)">Móvil (trabajo)</small>
-                                                                            <p th:if="${not #strings.isEmpty(userDetailDto.phoneNumber)}">
-                                                                                <a th:href="'tel:' + ${userDetailDto.phoneNumber}" th:text="${userDetailDto.phoneNumber}" th:title="${userDetailDto.phoneNumber}"></a>
-                                                                            </p>
+                                                                            <small title="Fecha">Fecha</small>
+                                                                            <p th:text="${#dates.format(sessionDetailDto.sessionDate, 'dd-MM-yyyy')}" th:title="${#dates.format(sessionDetailDto.sessionDate, 'dd-MM-yyyy')}"></p>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-xs-12 col-sm-6">
                                                                         <div class="form-group">
-                                                                            <small title="Puesto de trabajo">Puesto de trabajo</small>
-                                                                            <p th:text="${userDetailDto.jobPositionName}" th:title="${userDetailDto.jobPositionName}"></p>
+                                                                            <small title="Hora">Hora</small>
+                                                                            <p th:text="${#dates.format(sessionDetailDto.hour, 'HH:mm')}" th:title="${#dates.format(sessionDetailDto.hour, 'HH:mm')}"></p>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-xs-12">
                                                                         <div class="form-group">
-                                                                            <small title="Funciones">Funciones</small>
-                                                                            <p th:text="${userDetailDto.duties}" th:title="${userDetailDto.duties}"></p>
+                                                                            <small title="Observaciones">Observaciones</small>
+                                                                            <p th:text="${sessionDetailDto.details}" th:title="${sessionDetailDto.details}"></p>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-
-                                                    <!-- INFORMACIÓN DE LA CUENTA -->
-                                                    <div class="accordion-item px-0 border-0">
-                                                        <h3 id="accountInformationHeading" class="accordion-header">
-                                                            <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accountInformationCollapse" aria-expanded="true" aria-controls="accountInformationCollapse" title="Información de la cuenta">Información de la cuenta</button>
-                                                        </h3>
-                                                        <div id="accountInformationCollapse" class="accordion-collapse collapse show" aria-labelledby="accountInformationHeading">
-                                                            <div class="accordion-body">
-                                                                <div class="row gy-3">
-                                                                    <div class="col-xs-12 col-sm-6">
-                                                                        <div class="form-group">
-                                                                            <small title="Habilitado">Habilitado</small>
-                                                                            <p th:with="enabled = ${userDetailDto.enabled ? 'Sí' : 'No'}" th:text="${enabled}" th:title="${enabled}"></p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-xs-12 col-sm-6">
-                                                                        <div class="form-group">
-                                                                            <small title="Cuenta verificada">Cuenta verificada</small>
-                                                                            <p th:with="verifiedAccount = ${userDetailDto.verifiedAccount ? 'Sí' : 'No'}" th:text="${verifiedAccount}" th:title="${verifiedAccount}"></p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-xs-12 col-sm-6">
-                                                                        <div class="form-group">
-                                                                            <small title="Cuenta bloqueada">Cuenta bloqueada</small>
-                                                                            <p th:with="lockedAccount = ${userDetailDto.lockedAccount ? 'Sí' : 'No'}" th:text="${lockedAccount}" th:title="${lockedAccount}"></p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-xs-12 col-sm-6">
-                                                                        <div class="form-group">
-                                                                            <small title="Fecha de bloqueo">Fecha de bloqueo</small>
-                                                                            <p th:with="lockedDate = ${#dates.format(userDetailDto.lockedDate, 'd MMMM, yyyy HH:mm')}" th:text="${lockedDate}" th:title="${lockedDate}"></p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-xs-12">
-                                                                        <div class="form-group">
-                                                                            <small title="Roles">Roles</small>
-                                                                            <p th:text="${userDetailDto.plainRoles}" th:title="${userDetailDto.plainRoles}"></p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
                                                     <!-- INFORMACIÓN DEL SISTEMA -->
                                                     <div class="accordion-item px-0 border-0">
                                                         <h3 id="systemInformationHeading" class="accordion-header">
@@ -202,8 +137,8 @@
                                                                         <div class="form-group">
                                                                             <small title="Creado por">Creado por</small>
                                                                             <p>
-                                                                                <a th:href="@{/users/{username}(username = ${userDetailDto.createdByUsername})}" class="link-primary" th:text="${userDetailDto.createdByFullName}" th:title="${userDetailDto.createdByFullName}"></a>,
-                                                                                <span th:with="createdAt = ${#dates.format(userDetailDto.createdAt, 'd MMMM, yyyy HH:mm')}" th:text="${createdAt}" th:title="${createdAt}"></span>
+                                                                                <a th:href="@{/users/{username}(username = ${sessionDetailDto.createdByUsername})}" class="link-primary" th:text="${sessionDetailDto.createdByFullName}" th:title="${sessionDetailDto.createdByFullName}"></a>,
+                                                                                <span th:with="createdAt = ${#dates.format(sessionDetailDto.createdAt, 'd MMMM, yyyy HH:mm')}" th:text="${createdAt}" th:title="${createdAt}"></span>
                                                                             </p>
                                                                         </div>
                                                                     </div>
@@ -211,8 +146,8 @@
                                                                         <div class="form-group">
                                                                             <small title="Última modificación por">Última modificación por</small>
                                                                             <p>
-                                                                                <a th:href="@{/users/{username}(username = ${userDetailDto.lastModifiedByUsername})}" class="link-primary" th:text="${userDetailDto.lastModifiedByFullName}" th:title="${userDetailDto.lastModifiedByFullName}"></a>,
-                                                                                <span th:with="lastModifiedAt = ${#dates.format(userDetailDto.lastModifiedAt, 'd MMMM, yyyy HH:mm')}" th:text="${lastModifiedAt}" th:title="${lastModifiedAt}"></span>
+                                                                                <a th:href="@{/users/{username}(username = ${sessionDetailDto.lastModifiedByUsername})}" class="link-primary" th:text="${sessionDetailDto.lastModifiedByFullName}" th:title="${sessionDetailDto.lastModifiedByFullName}"></a>,
+                                                                                <span th:with="lastModifiedAt = ${#dates.format(sessionDetailDto.lastModifiedAt, 'd MMMM, yyyy HH:mm')}" th:text="${lastModifiedAt}" th:title="${lastModifiedAt}"></span>
                                                                             </p>
                                                                         </div>
                                                                     </div>
