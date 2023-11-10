@@ -52,7 +52,6 @@ import java.util.Map;
 @RequestMapping(RequestMappings.SESSIONS)
 @SessionAttributes({ "sessionDetailDto" })
 @RequiredArgsConstructor
-@Secured({ RoleType.Code.MASTER, RoleType.Code.ADMIN, RoleType.Code.MANAGER, RoleType.Code.RESPONSIBLE })
 public class SessionController {
 
     /**
@@ -120,7 +119,6 @@ public class SessionController {
     protected String activeMenuPage;
 
     @GetMapping({ "", "/" })
-    @Secured({ RoleType.Code.MASTER, RoleType.Code.ADMIN, RoleType.Code.MANAGER, RoleType.Code.RESPONSIBLE })
     public String renderListView(SessionListDto sessionListDtoFilter,
                                  @RequestParam(defaultValue = "0") Integer page,
                                  @RequestParam(required = false) Integer recordsPerPage, Model model) {

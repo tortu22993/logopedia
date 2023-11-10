@@ -119,7 +119,6 @@ public class PatientController {
      * @return El nombre de la vista a renderizar
      */
     @GetMapping({ "", "/" })
-    @Secured({ RoleType.Code.MASTER, RoleType.Code.ADMIN, RoleType.Code.MANAGER, RoleType.Code.RESPONSIBLE })
     public String renderListView(PatientListDto patientListDtoFilter,
                                  @RequestParam(name = "school", required = false) String school,
                                  @RequestParam(name = "name", required = false) String name,
