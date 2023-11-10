@@ -264,19 +264,24 @@ public class SessionController {
     }
 
     @GetMapping("/{id}/export/pdf")
-    public void exportToPDF(HttpServletResponse response,@PathVariable Long id) throws DocumentException, IOException {
-        response.setContentType("application/pdf");
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-        String currentDateTime = dateFormatter.format(new Date());
+    public void exportToPDF(HttpServletResponse response,@PathVariable Long id,SessionStatus sessionStatus,
+                            RedirectAttributes redirect) throws DocumentException, IOException {
 
-        String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=session_" + currentDateTime + ".pdf";
-        response.setHeader(headerKey, headerValue);
+        response.setContentType("application/pdf");
+        //DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+       //String currentDateTime = dateFormatter.format(new Date());
 
         SessionDetailDto session = SESSION_SERVICE.findById(id);
+        String paciente = session.getPatientName();
+        String fecha = String.valueOf(session.getSessionDate());
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=session_" + paciente + "_"+fecha+ ".pdf";
+        response.setHeader(headerKey, headerValue);
 
         SessionPdfExporter exporter = new SessionPdfExporter(session);
         exporter.export(response);
+
+        sessionStatus.setComplete();
 
     }
 

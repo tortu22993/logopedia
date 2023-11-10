@@ -11,6 +11,7 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.modelmapper.spi.MappingContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,7 +23,12 @@ import org.springframework.security.config.annotation.web.configurers.HeadersCon
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.header.writers.XXssProtectionHeaderWriter;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.util.StringUtils;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
+
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
 /**
  * Configura la seguridad de la aplicación estableciendo diversos parámetros
@@ -131,6 +137,12 @@ public class SecurityConfiguration {
      */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//para usar H2 console
+        /*http.authorizeHttpRequests(auth -> auth
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
+                ).headers(headers -> headers.frameOptions().disable())
+                .csrf(csrf -> csrf.ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")));
+*/
         http.authorizeHttpRequests(registry -> registry.requestMatchers(
             "/resources/**",
             "/css/**",
@@ -138,8 +150,11 @@ public class SecurityConfiguration {
             "/pages/**",
             "/plugins/**",
             "/auth/login",
-            "/auth/finish-account-configuration"
+            "/auth/finish-account-configuration",
+                "/h2-console/**"
         ).permitAll().anyRequest().authenticated());
+
+
 
         http.formLogin(loginConfigurator -> loginConfigurator.loginPage(RequestMappings.AUTH + "/login")
             .usernameParameter("email")

@@ -38,7 +38,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
             AUTH_USER_SERVICE.resetLoginAttempts(user.getEmail());
         }
 
-        setDefaultTargetUrl(RequestMappings.USERS);
+        setDefaultTargetUrl(RequestMappings.PATIENTS);
         super.onAuthenticationSuccess(request, response, authentication);
     }
 
