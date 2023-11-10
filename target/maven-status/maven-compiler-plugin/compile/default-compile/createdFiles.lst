@@ -2,7 +2,9 @@ crm\logopedia\data\role\model\type\package-info.class
 crm\logopedia\data\patient\model\package-info.class
 crm\logopedia\util\http\package-info.class
 crm\logopedia\util\specification\enums\package-info.class
+crm\logopedia\data\contact\repository\package-info.class
 crm\logopedia\security\provider\package-info.class
+crm\logopedia\data\contact\model\entity\package-info.class
 crm\logopedia\data\jobposition\model\dto\package-info.class
 crm\logopedia\data\role\model\entity\package-info.class
 crm\logopedia\data\services\controller\package-info.class
@@ -17,6 +19,7 @@ crm\logopedia\security\dto\package-info.class
 crm\logopedia\data\contact\package-info.class
 crm\logopedia\data\patient\repository\specification\specificationRepository\package-info.class
 crm\logopedia\security\controller\package-info.class
+crm\logopedia\data\contact\service\package-info.class
 crm\logopedia\validation\password\package-info.class
 crm\logopedia\util\provider\jwt\package-info.class
 crm\logopedia\data\jobposition\service\package-info.class
@@ -25,10 +28,15 @@ crm\logopedia\validation\password\rules\package-info.class
 crm\logopedia\security\interceptor\package-info.class
 crm\logopedia\data\jobposition\model\package-info.class
 crm\logopedia\validation\password\validators\package-info.class
+crm\logopedia\data\contact\controller\package-info.class
 crm\logopedia\util\common\repository\package-info.class
 crm\logopedia\util\abstraction\package-info.class
+crm\logopedia\data\contact\model\package-info.class
+crm\logopedia\data\session\model\pdf\package-info.class
 crm\logopedia\security\context\package-info.class
 crm\logopedia\util\provider\package-info.class
+crm\logopedia\data\session\repository\specification\package-info.class
+crm\logopedia\data\session\controller\package-info.class
 crm\logopedia\util\specification\package-info.class
 crm\logopedia\data\package-info.class
 crm\logopedia\data\role\package-info.class
@@ -37,6 +45,7 @@ crm\logopedia\data\user\model\dto\package-info.class
 crm\logopedia\util\contract\package-info.class
 crm\logopedia\util\component\package-info.class
 crm\logopedia\util\http\request\package-info.class
+crm\logopedia\data\session\repository\package-info.class
 crm\logopedia\data\services\package-info.class
 crm\logopedia\data\role\model\dto\package-info.class
 crm\logopedia\data\services\model\package-info.class
@@ -46,10 +55,13 @@ crm\logopedia\util\pagination\package-info.class
 crm\logopedia\data\jobposition\model\entity\package-info.class
 crm\logopedia\util\common\dto\package-info.class
 crm\logopedia\data\patient\package-info.class
+crm\logopedia\data\session\model\package-info.class
 crm\logopedia\data\role\model\package-info.class
 crm\logopedia\data\document\package-info.class
 crm\logopedia\util\common\package-info.class
+crm\logopedia\data\session\service\package-info.class
 crm\logopedia\util\api\package-info.class
 crm\logopedia\util\http\enums\package-info.class
 crm\logopedia\security\handler\package-info.class
+crm\logopedia\data\contact\model\dto\package-info.class
 crm\logopedia\util\provider\mail\package-info.class
