@@ -12,6 +12,8 @@ public interface DocumentService {
      */
     DocumentDto findById(Long id);
 
+    DocumentDto findByPatient(Long patient);
+
     /**
      * Guarda un documento en base al DTO recibido
      *

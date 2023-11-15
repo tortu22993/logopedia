@@ -63,5 +63,6 @@ crm\logopedia\data\session\service\package-info.class
 crm\logopedia\util\api\package-info.class
 crm\logopedia\util\http\enums\package-info.class
 crm\logopedia\security\handler\package-info.class
+crm\logopedia\data\document\model\package-info.class
 crm\logopedia\data\contact\model\dto\package-info.class
 crm\logopedia\util\provider\mail\package-info.class

@@ -1,5 +1,6 @@
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\data\services\service\ServicesServiceImpl.java
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\util\contract\Locatable.java
+C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\data\document\model\package-info.java
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\util\http\request\package-info.java
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\data\contact\controller\ContactController.java
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\data\contact\model\entity\package-info.java
@@ -21,6 +22,8 @@ C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\validat
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\data\role\model\entity\package-info.java
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\data\session\controller\SessionController.java
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\data\session\service\SessionService.java
+C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\data\document\model\dto\DocumentDto.java
+C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\data\document\controller\DocumentController.java
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\util\specification\enums\FieldType.java
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\security\dto\package-info.java
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\data\role\model\type\package-info.java
@@ -44,6 +47,7 @@ C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\data\pa
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\util\specification\SearchSpecification.java
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\data\role\repository\package-info.java
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\data\jobposition\model\dto\JobPositionDetailDto.java
+C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\data\document\service\DocumentServiceImpl.java
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\data\contact\model\entity\Contact.java
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\data\contact\service\ContactServiceImpl.java
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\data\session\model\pdf\SessionPdfExporter.java
@@ -102,6 +106,7 @@ C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\data\se
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\data\patient\controller\PatientController.java
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\validation\password\validators\ConfirmPasswordValidator.java
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\security\context\AuthenticatedUser.java
+C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\data\document\repository\DocumentRepository.java
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\data\session\model\entity\Session.java
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\data\user\repository\UserRepository.java
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\util\ExtendedStringUtils.java
@@ -130,8 +135,10 @@ C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\util\sp
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\security\handler\LoginFailureHandler.java
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\util\abstraction\package-info.java
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\util\environment\package-info.java
+C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\data\document\service\DocumentService.java
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\data\role\model\entity\Role.java
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\data\contact\controller\package-info.java
+C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\data\document\model\entity\Document.java
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\data\services\package-info.java
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\security\provider\AuthenticationProvider.java
 C:\Users\Enriq\OneDrive\Escritorio\logopedia\src\main\java\crm\logopedia\data\document\package-info.java
