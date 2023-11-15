@@ -534,6 +534,46 @@ public class PatientController {
         );
     }
 
+    @GetMapping("/{id}/documents")
+    public String renderDetailViewWithDocumentsTab(@PathVariable Long id,
+                                                  @RequestParam(defaultValue = "0") Integer page,
+                                                  @RequestParam(required = false) Integer recordsPerPage, Model model,
+                                                  HttpServletRequest request) throws NoHandlerFoundException {
+        if(recordsPerPage == null || recordsPerPage <= 0) {
+            recordsPerPage = this.recordsPerPage;
+        } else if(recordsPerPage > maxRecordsPerPage) {
+            recordsPerPage = maxRecordsPerPage;
+        }
+
+        final var patientDetailDto = PATIENT_SERVICE.findById(id);
+
+        if(patientDetailDto == null) {
+            throw new NoHandlerFoundException(
+                    HttpMethod.GET.name(),
+                    request.getRequestURI(),
+                    new HttpHeaders()
+            );
+        }
+
+        final var url = RequestMappings.PATIENTS;
+        final var pageRequest = PageRequest.of(page, recordsPerPage);
+        final var documents = SESSION_SERVICE.findByPatientId(patientDetailDto.getId(), pageRequest);
+        final var pageRender = PageRender.newInstance(url, documents);
+
+        setDetailPageData(
+                patientDetailDto,
+                model,
+                patientDetailDto.getName(),
+                getEditionParams(),
+                "documents"
+        );
+
+        model.addAttribute("page", pageRender);
+        model.addAttribute("documents", pageRender.getPage().getContent());
+
+        return ViewNames.PATIENT_DETAIL;
+    }
+
 
     private void setDetailPageData(PatientDetailDto patientDetailDto, Model model, String viewTitle, Map<String, ?> params, String selectedTab) {
         final var rootEndpoint = RequestMappings.PATIENTS;

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head></head>
+    <body>
+        <div th:fragment="documents-tab" id="tabDocumentsContent" class="tab-pane fade show active" role="tabpanel" aria-labelledby="tabDocuments" tabindex="0">
+            <header class="my-4">
+                <div>
+                    <div class="col-auto flex-grow-1">
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label"></label>
+                            <input class="form-control" type="file" id="formFile">
+                        </div>
+                    </div>
+                    <p class="text-center mb-0" title="No hay elementos para mostrar.">No hay elementos para mostrar.</p>
+                </div>
+            </header>
+            
+            <div id="fileList">
+                <h3>Archivos asociados al paciente:</h3>
+                <ul>
+                    <!-- Aquí se mostrarán los archivos asociados al paciente -->
+                    <!-- Puedes llenar esta lista dinámicamente desde tu backend usando Thymeleaf -->
+                    <!-- Ejemplo Thymeleaf: <li th:each="file : ${files}" th:text="${file.name}"></li> -->
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>

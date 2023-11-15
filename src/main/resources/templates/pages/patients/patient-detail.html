@@ -95,7 +95,7 @@
                                                                 <a th:href="@{/patients/{id}/sessions(id = ${patientDetailDto.id})}" th:class="${selectedTab == 'sessions' ? 'nav-link active' : 'nav-link'}" aria-current="page" title="Sesiones">Sesiones</a>
                                                             </li>
                                                             <li id="tabDocuments" class="nav-item" role="presentation">
-                                                                <a th:href="@{/patients/{id}/documents(id = ${patientDetailDto.id})}" th:class="${selectedTab == 'documents' ? 'nav-link active' : 'nav-link disabled'}" aria-current="page" title="Documentos">Documentos</a>
+                                                                <a th:href="@{/patients/{id}/documents(id = ${patientDetailDto.id})}" th:class="${selectedTab == 'documents' ? 'nav-link active' : 'nav-link'}" aria-current="page" title="Documentos">Documentos</a>
                                                             </li>
                                                         </ul>
                                                         <div class="tab-content">
@@ -109,7 +109,7 @@
                                                             <th:block th:if="${selectedTab == 'sessions'}" th:insert="~{fragments/patients/patient-detail-sessions-tab :: sessions-tab}"></th:block>
 
                                                              <!--PESTAÑA DE DOCUMENTOS -->
-                                                            <!--<th:block th:if="${selectedTab == 'documents'}" th:insert="~{fragments/cases/case-detail-documents-tab :: documents-tab}"></th:block>-->
+                                                            <th:block th:if="${selectedTab == 'documents'}" th:insert="~{fragments/patients/patient-detail-documents-tab :: documents-tab}"></th:block>
                                                         </div>
                                                     </div>
                                                 </div>
