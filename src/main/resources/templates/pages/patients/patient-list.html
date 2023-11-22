@@ -31,9 +31,13 @@
                                 <div th:class="'d-flex align-items-center flex-column flex-sm-row gap-3 ' + ${hasPatients ? 'justify-content-between' : 'justify-content-between'}">
                                     <div class="search-box flex-grow-1 w-100 w-sm-auto">
                                         <input type="hidden" class="form-control form-control-sm" id="searchInput" value="" placeholder="Ingrese un nombre o un colegio" aria-label="Nombre">
-                                        <input type="text" class="form-control form-control-sm" name="name" value="" aria-label="Nombre">
+                                        <input type="text" class="form-control form-control-sm" name="name" placeholder="Buscar por nombre o colegio..." value="" aria-label="Nombre">
                                     </div>
                                     <div class="d-grid d-sm-flex gap-2 w-100 w-sm-auto">
+                                        <button th:action="@{/patients}" class="btn btn-sm btn-terciary" title="Filtrar">
+                                            <i class="fa fa-trash me-2"></i>
+                                            Limpiar
+                                        </button>
                                         <button type="submit" class="btn btn-sm btn-secondary" title="Filtrar">
                                             <i class="fa fa-filter me-2"></i>
                                             Filtrar

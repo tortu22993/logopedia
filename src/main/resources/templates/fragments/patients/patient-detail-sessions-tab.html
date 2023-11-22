@@ -133,8 +133,7 @@
                                     </thead>
                                     <tbody class="list" id="sessions-table-body">
                                         <tr th:each="sessio : ${sessions}" class="position-static">
-                                            <td class="patientName align-middle white-space-nowrap">
-                                                <a th:href="@{/patients/{id}(id = ${sessio.patientId})}" class="link-primary" th:text="${sessio.patientName}" th:title="${session.patientName}"></a>
+                                            <td class="patientName align-middle white-space-nowrap" th:text="${sessio.patientName}" th:title="${session.patientName}">
                                             </td>
                                             <td class="subject align-middle white-space-nowrap">
                                                 <a th:href="@{/sessions/{id}(id = ${sessio.id})}" class="link-primary" th:text="${sessio.subject}" th:title="${session.subject}"></a>

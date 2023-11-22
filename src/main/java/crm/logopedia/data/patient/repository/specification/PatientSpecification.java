@@ -24,12 +24,14 @@ public class PatientSpecification implements Specification<Patient> {
             predicate = criteriaBuilder.or(
                     predicate,
                     criteriaBuilder.like(root.get("name"), "%" + name + "%"),
-                    criteriaBuilder.like(root.get("school"), "%" + name + "%")
+                    criteriaBuilder.like(root.get("school"), "%" + name + "%"),
+                    criteriaBuilder.like(root.get("middleName"),"%" + name + "%" )
             );
+
         } else {
             predicate = criteriaBuilder.or(
                     predicate,
-                    criteriaBuilder.equal(root.get("name"), root.get("name"))
+                    criteriaBuilder.isTrue(criteriaBuilder.literal(true))
             );
 
         }
