@@ -150,7 +150,7 @@ public class AuthController {
             redirect
         );
 
-        return "redirect:" + RequestMappings.USERS;
+        return "redirect:" + RequestMappings.PATIENTS;
     }
 
 }
